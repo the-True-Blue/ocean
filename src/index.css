@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  /* Fonts */
   --font-spartan: "League Spartan", sans-serif;
   --font-orbitron: "Orbitron", sans-serif;
   --font-poppins: "Poppins", sans-serif;
@@ -8,8 +9,16 @@
   --font-rajdhani: "Rajdhani", sans-serif;
   --font-inter: "Inter", sans-serif;
   --font-weight-600: 600;
+
+  /* Colors */
   --color-dark-blue: #0464d4;
   --color-light-blue: #08e9fc;
   --text-shadow-blue: 2px 2px 4px rgba(0, 0, 0, 0.5);
   --text-tiny: 8px;
+
+  /* Splash Animation */
+  --animate-splash: splash 0.8s ease-out forwards;
+  --animate-droplet-1: droplet1 0.6s ease-out forwards;
+  --animate-droplet-2: droplet2 0.7s ease-out forwards;
+  --animate-droplet-3: droplet3 0.5s ease-out forwards;
 }

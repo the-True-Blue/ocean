@@ -1,9 +1,19 @@
+import { useState } from "react";
 import React from "react";
 import heroImage from "../../assets/hero/hero.png";
 import heromobile from "../../assets/hero/heromobile.png";
 import ExploreBtn from "../ExploreBtn";
+import Modal from "./Modal";
 
 const Hero = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const videoSrc = "https://www.youtube.com/embed/your-video-id";
+
+  // Función para abrir el modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="h-[724px] md:h-screen relative w-full">
       {/* Imagen para Mobile (visible solo en pantallas pequeñas) */}
@@ -40,6 +50,7 @@ const Hero = () => {
         <ExploreBtn
           text="Explore"
           className="font-orbitron font-[700px] text-[15px]"
+          onClick={openModal}
         />
       </div>
 
@@ -63,6 +74,13 @@ const Hero = () => {
           OF EXPERIENCE
         </h1>
       </div>
+
+      {/* Modal Component */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        videoSrc={videoSrc}
+      />
     </div>
   );
 };

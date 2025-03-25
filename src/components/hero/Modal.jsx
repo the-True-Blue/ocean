@@ -131,14 +131,14 @@ const Modal = ({ isOpen, onClose, videoSrc }) => {
       </div>
 
       {/* Sección About me - segunda parte del modal */}
-      <div className="h-screen mt-[270px]  w-full flex items-center justify-center fixed top-0 z-40">
+      <div className="h-screen mt-[270px] flex items-center justify-center fixed top-0 z-50">
         {/* Contenedor del about me */}
         <div
           ref={aboutRef}
           className="relative w-full flex flex-col items-center justify-start md:mt-[130px] mt-[250px]"
         >
           {/* Wrapper para centrar todo el contenido */}
-          <div className="flex justify-center items-center w-full md:px-8 lg:px-16">
+          <div className="flex justify-center items-center w-full ps-28 md:px-8 lg:px-16">
             {/* Contenedor principal que incluye tanto el about me como la imagen */}
             <div className="relative mx-auto pl-16 md:pl-0 md:flex md:items-start md:gap-0 md:max-w-[1246px] md:justify-center md:w-full">
               {/* Botón de cierre - reposicionado */}
@@ -151,28 +151,51 @@ const Modal = ({ isOpen, onClose, videoSrc }) => {
               </button>
 
               {/* Profile picture and avatar container */}
-              <div className="absolute -top-20 -left-8 md:relative md:top-0 md:left-0 md:max-w-[266px] z-10">
+              <div className="absolute -top-20 -left-0 md:relative md:top-0 md:left-0 md:max-w-[266px] z-10">
                 <img
                   src={profilePicture}
                   alt="profilePicture"
-                  className="w-[140px] h-[110px] object-fill md:w-full md:h-full md:max-w-[266px] md:max-h-[279px]"
+                  className="w-[101px] h-[110px] object-fill md:w-full md:h-full md:max-w-[266px] md:max-h-[279px]"
                 />
-                <div className="relative md:bottom-10 bottom-5 flex items-center justify-center gap-1 bg-no-repeat w-[140px] h-[55px] bg-cover md:bg-[url(src/assets/hero/profile_container2.png)] bg-[url(src/assets/hero/profile_container.png)] md:w-full md:h-[104px]">
-                  <img
-                    src={avatar}
-                    alt="avatar"
-                    className="w-[18px] md:w-[34px]"
-                  />
+                <div className="relative md:bottom-10 bottom-5 flex items-center justify-center gap-1 bg-no-repeat w-[101px] h-[39px] bg-cover md:bg-[url(src/assets/hero/profile_container2.png)] bg-[url(src/assets/hero/profile_container.png)] md:w-full md:h-[104px]">
                   <div className="flex flex-col gap-1">
-                    <div className="flex items-center">
-                      <h3 className="text-tiny font-rajdhani text-white md:text-[22px]">
-                        @tempestdigital_
-                      </h3>
-                      <img
-                        src={check}
-                        alt="check-icon"
-                        className="w-[5px] md:w-[10px]"
-                      />
+                    <div className="flex flex-col items-start">
+                      <div className="flex gap-1">
+                        <img
+                          src={avatar}
+                          alt="avatar"
+                          className="w-[18px] md:w-[34px]"
+                        />
+                        <h3 className="text-tiny font-rajdhani text-white md:text-[14px]">
+                          @tempestdigital_
+                        </h3>
+                        <img
+                          src={check}
+                          alt="check-icon"
+                          className="w-[5px] h-[5px] md:w-[10px] md:h-[10px]"
+                        />
+                      </div>
+                      <div className="hidden lg:flex flex-col gap-1 text-[16px] ">
+                        <div className="flex gap-1">
+                          <h3 className="font-rajdhani text-white border-l-1 border-r-1 px-1">
+                            Game Programmer
+                          </h3>
+                          <h3 className="font-rajdhani text-white border-l-1 border-r-1 px-1">
+                            3D Artist
+                          </h3>
+                        </div>
+                        <div className="flex gap-1">
+                          <h3 className="font-rajdhani text-white border-l-1 border-r-1 px-1">
+                            Graphic Design
+                          </h3>
+                          <h3 className="font-rajdhani text-white border-l-1 border-r-1 px-1">
+                            Video Editing
+                          </h3>
+                        </div>
+                        <h3 className="font-rajdhani text-white border-l-1 border-r-1 px-1">
+                          Web Design & UI/UX
+                        </h3>
+                      </div>
                     </div>
                     <div className="hidden">
                       <h2>Psalm 3</h2>
@@ -185,7 +208,7 @@ const Modal = ({ isOpen, onClose, videoSrc }) => {
               {/* About me box */}
               <div className="border border-[#616161] md:h-86 rounded-md ps-[60px] pe-[23px] py-[24px] font-inter text-white w-[271px] md:w-auto md:max-w-[946px] md:ps-[42px] bg-[#FFFFFF1A] backdrop-blur-2xl">
                 <h1 className="text-[25.87px] font-[800] ">About me</h1>
-                <p className="text-tiny ">
+                <p className="text-[11.64px] leading-[20.7px] ">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Interdum quis amet, faucibus lorem. Lectus amet odio quis sed
                   adipiscing adipiscing magna non. Nullam turpis faucibus
