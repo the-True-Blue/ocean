@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --font-spartan: "League Spartan", sans-serif;
+  --font-orbitron: "Orbitron", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-aldrich: "Aldrich", sans-serif;
+  --font-rajdhani: "Rajdhani", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-weight-600: 600;
+  --color-dark-blue: #0464d4;
+  --color-light-blue: #08e9fc;
+  --text-shadow-blue: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  --text-tiny: 8px;
+}
