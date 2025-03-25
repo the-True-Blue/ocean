@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import Logo1 from "../assets/logo1.svg";
 import formIcon from "../assets/formIcon.png";
 import hambBtn from "../assets/hambBtn.png";
-import Modal from "./hero/Modal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const videoSrc = "https://www.youtube.com/embed/your-video-id";
 
   // Toggle mobile menu
   const toggleMenu = () => {
@@ -61,7 +58,7 @@ const Navbar = () => {
               className="text-white hover:text-blue-200 cursor-pointer"
               onClick={() => setIsModalOpen(true)}
             >
-              About
+              3D ART
             </div>
             <div className="text-white hover:text-blue-200 cursor-pointer">
               Graphic Design
@@ -144,13 +141,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
-      {/* Modal Component */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        videoSrc={videoSrc}
-      />
     </nav>
   );
 };
