@@ -4,7 +4,7 @@ import check from "../../assets/hero/check.png";
 import element1 from "../../assets/mid_waterfall/element1.png";
 import element2 from "../../assets/mid_waterfall/element2.png";
 import element3 from "../../assets/mid_waterfall/element3.png";
-import character from "../../assets/mid_waterfall/element3.png";
+import character from "../../assets/mid_waterfall/character.png";
 import enviroment from "../../assets/mid_waterfall/enviroment.png";
 import interior from "../../assets/mid_waterfall/interior.png";
 
@@ -20,6 +20,7 @@ const ArtCollectionCarousel = () => {
       element: "element1",
       username: "TEMPESTDIGITAL_",
       modal: "Image 1",
+      modalImage: character,
     },
     {
       id: 2,
@@ -27,6 +28,7 @@ const ArtCollectionCarousel = () => {
       element: "element2",
       username: "TEMPESTDIGITAL_",
       modal: "Image 2",
+      modalImage: interior,
     },
     {
       id: 3,
@@ -34,6 +36,7 @@ const ArtCollectionCarousel = () => {
       element: "element3",
       username: "TEMPESTDIGITAL_",
       modal: "Image 3",
+      modalImage: enviroment,
     },
   ];
 
@@ -90,7 +93,7 @@ const ArtCollectionCarousel = () => {
                         : element3
                     }
                     alt={card.title}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain transition-all duration-300 hover:brightness-125 hover:filter hover:drop-shadow-[0_0_15px_rgba(70,130,245,0.8)] hover:scale-105"
                   />
                 </div>
               </div>
@@ -151,7 +154,7 @@ const ArtCollectionCarousel = () => {
                               : element3
                           }
                           alt={card.title}
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-contain transition-all duration-300 hover:brightness-125 hover:filter hover:drop-shadow-[0_0_15px_rgba(70,130,245,0.8)] hover:scale-105"
                         />
                       </div>
                     </div>
@@ -222,27 +225,19 @@ const ArtCollectionCarousel = () => {
 
       {/* Modal */}
       {activeModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-4 rounded-lg max-w-lg w-full max-h-[90vh] overflow-auto">
-            <div className="flex justify-between mb-4">
-              <h3 className="text-white text-xl font-bold">
-                {cards.find((card) => card.id === activeModal).title}
-              </h3>
+        <div className="fixed inset-0 backdrop-blur-xl flex items-center justify-center z-50">
+          <div className=" p-4 rounded-lg md:max-w-[1036px] md:max-h-[622px] max-w-lg w-full max-h-[90vh] overflow-hidden">
+            <div className="flex justify-end mb-4">
               <button onClick={closeModal} className="text-white text-2xl">
                 &times;
               </button>
             </div>
-            <div className="bg-blue-900/70 h-64 rounded-lg flex items-center justify-center">
+            <div className="w-full rounded-lg flex items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-0"></div>
               <img
-                src={
-                  activeModal === 1
-                    ? element1
-                    : activeModal === 2
-                    ? element2
-                    : element3
-                }
+                src={cards.find((card) => card.id === activeModal).modalImage}
                 alt={cards.find((card) => card.id === activeModal).title}
-                className="max-w-full max-h-full object-contain"
+                className="w-full max-h-full object-cover "
               />
             </div>
           </div>
