@@ -7,30 +7,8 @@ import ai from "../../assets/video_editing/ai.png";
 
 const VideoEditing = () => {
   return (
-    <div
-      id="game-programming-section"
-      className="w-full md:h-[1260px] h-[759px] relative"
-    >
-      {/* Imagen para Mobile (visible solo en pantallas pequeñas) */}
-      <div
-        className="absolute inset-0 md:hidden w-full h-full bg-cover"
-        style={{
-          backgroundImage:
-            "url(src/assets/video_editing/mobile_background.png)",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "100% 100%",
-          height: "759px",
-        }}
-      ></div>
-
-      {/* Imagen para Desktop (oculta en pantallas pequeñas) */}
-      <div
-        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat hidden md:block"
-        style={{
-          backgroundImage: "url(src/assets/video_editing/background.png)",
-        }}
-      ></div>
+    <div className="w-full md:h-[1260px]  h-[759px] relative overflow-hidden">
+      <div className="absolute inset-0 h-full bg-center md:-right-0 -right-[260px] bg-cover bg-no-repeat bg-[url('src/assets/video_editing/background.png')]"></div>
 
       {/* Contenido */}
       <div className="relative z-10">
@@ -58,22 +36,22 @@ const VideoEditing = () => {
           <img
             src={ps}
             alt="ps"
-            className="absolute right-20 -z-10 opacity-90"
+            className="absolute right-10 -z-10 opacity-90"
           />
           <img
             src={ae}
             alt="ae"
-            className="absolute right-18 top-25 opacity-80"
+            className="absolute right-8 top-25 opacity-80"
           />
           <img
             src={pr}
             alt="pr"
-            className="absolute left-26 top-25 opacity-80"
+            className="absolute left-16 top-25 opacity-80"
           />
           <img
             src={ai}
             alt="ai"
-            className="absolute left-32 -z-10 opacity-90"
+            className="absolute left-18 -z-10 opacity-90"
           />
         </div>
       </div>
