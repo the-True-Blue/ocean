@@ -15,23 +15,11 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-[724px] md:h-screen relative w-full">
+    <div className="h-[1285px] md:h-screen relative w-full">
       {/* Imagen para Mobile (visible solo en pantallas pequeñas) */}
-      <div
-        className="absolute inset-0 md:hidden w-full"
-        style={{
-          backgroundImage: `url(${heromobile})`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "100% 100%",
-        }}
-      ></div>
 
       {/* Imagen para Desktop (oculta en pantallas pequeñas) */}
-      <div
-        className="absolute h-full inset-0 bg-center bg-cover bg-no-repeat hidden md:block "
-        style={{ backgroundImage: `url(${heroImage})` }}
-      ></div>
+      <div className="absolute inset-0 h-full bg-center  bg-cover bg-no-repeat bg-[url('src/assets/hero/hero.png')] "></div>
 
       {/* Contenido */}
       <div className="relative z-10 flex flex-col items-center gap-[19px] text-white">
@@ -55,11 +43,11 @@ const Hero = () => {
       </div>
 
       {/* Contenido */}
-      <div className="relative z-10 hidden md:flex flex-col items-center  mb-0 pt-[480px]">
+      <div className="relative z-10 flex flex-col items-center  mb-0 pt-[480px]">
         <h1 className="text-[32px]  font-poppins tracking-[15px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] md:text-[55px] text-[#094058] font-[800]  drop-shadow-lg">
           5 + YEARS
         </h1>
-        <div className="mt-[27px]  flex items-center text-[#FFFFFF] text-xl font-aldrich">
+        <div className="mt-[27px] gap-[33px] md:gap-0  flex flex-col md:flex-row items-center text-[#FFFFFF] md:text-xl text-[12px] font-aldrich">
           <div
             className="flex 
           "
@@ -70,7 +58,7 @@ const Hero = () => {
           </div>
           <h2 className="border-r-1 px-2">3D Generalist</h2>
         </div>
-        <h1 className="text-[52px] font-poppins text-white font-[800] tracking-[7px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] drop-shadow-lg mt-[37px]">
+        <h1 className="md:text-[52px] text-[32px] font-poppins text-white font-[800] tracking-[7px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] drop-shadow-lg mt-[37px]">
           OF EXPERIENCE
         </h1>
       </div>
