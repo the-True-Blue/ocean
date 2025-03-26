@@ -54,11 +54,8 @@ const Navbar = () => {
             <div className="text-white hover:text-blue-200  cursor-pointer">
               Game Programming
             </div>
-            <div
-              className="text-white hover:text-blue-200 cursor-pointer"
-              onClick={() => setIsModalOpen(true)}
-            >
-              3D ART
+            <div className="text-white hover:text-blue-200 cursor-pointer">
+              About
             </div>
             <div className="text-white hover:text-blue-200 cursor-pointer">
               Graphic Design
@@ -124,10 +121,7 @@ const Navbar = () => {
           <div className="text-white hover:text-blue-200  cursor-pointer">
             Game Programming
           </div>
-          <div
-            className="text-white hover:text-blue-200 cursor-pointer"
-            onClick={() => setIsModalOpen(true)}
-          >
+          <div className="text-white hover:text-blue-200 cursor-pointer">
             About
           </div>
           <div className="text-white hover:text-blue-200 cursor-pointer">
