@@ -157,23 +157,25 @@ const Modal = ({ isOpen, onClose, videoSrc }) => {
                   alt="profilePicture"
                   className="w-[101px] h-[110px] object-fill md:w-full md:h-full md:max-w-[266px] md:max-h-[279px]"
                 />
-                <div className="relative md:bottom-10 bottom-5 flex items-center justify-center gap-1 bg-no-repeat w-[101px] h-[39px] bg-cover md:bg-[url(src/assets/hero/profile_container2.png)] bg-[url(src/assets/hero/profile_container.png)] md:w-full md:h-[104px]">
-                  <div className="flex flex-col gap-1">
-                    <div className="flex flex-col items-start">
-                      <div className="flex gap-1">
+                <div className="relative md:bottom-10 bottom-5 flex items-center justify-center gap-1 bg-no-repeat w-[101px]  h-[39px] bg-cover md:bg-[url(src/assets/hero/profile_container2.png)] bg-[url(src/assets/hero/profile_container.png)] md:w-full md:h-[104px]">
+                  <div className="flex flex-col gap-1 ">
+                    <div className="flex flex-col items-start justify-center  w-fit ps-3">
+                      <div className="flex gap-1 ">
                         <img
                           src={avatar}
                           alt="avatar"
-                          className="w-[18px] md:w-[34px]"
+                          className="w-[15px] md:w-[34px]"
                         />
-                        <h3 className="text-tiny font-rajdhani text-white md:text-[14px]">
-                          @tempestdigital_
-                        </h3>
-                        <img
-                          src={check}
-                          alt="check-icon"
-                          className="w-[5px] h-[5px] md:w-[10px] md:h-[10px]"
-                        />
+                        <div className="flex">
+                          <h3 className="text-tiny font-rajdhani text-white md:text-[14px] flex justify-center">
+                            @tempestdigital_
+                          </h3>
+                          {/* <img
+                            src={check}
+                            alt="check-icon"
+                            className="w-[5px] h-[5px]  md:w-[10px] md:h-[10px]"
+                          /> */}
+                        </div>
                       </div>
                       <div className="hidden lg:flex flex-col gap-1 text-[16px] ">
                         <div className="flex gap-1">
