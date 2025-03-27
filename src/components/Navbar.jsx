@@ -32,14 +32,13 @@ const Navbar = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-blue-900/90 backdrop-blur-sm"
-          : "bg-transparent md:bg-transparent bg-white/[0.15]"
-      }`}
-      style={{ height: "61px" }}
+          ? "bg-blue-900/90 backdrop-blur-sm "
+          : " md:bg-transparent bg-white/[0.15] "
+      } h-[61px] md:h-[61px] ${scrolled ? "md:h-[75px]" : ""}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         {/* Desktop Navbar */}
-        <div className="hidden md:flex items-center justify-between py-[14px]">
+        <div className="hidden md:flex items-center justify-between h-full py-10">
           {/* Logo */}
           <div className="flex-shrink-0">
             <img
@@ -79,7 +78,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Navbar */}
-        <div className="flex md:hidden items-center justify-between h-16">
+        <div className="flex md:hidden items-center justify-between h-full">
           {/* Logo (Left) */}
           <div className="flex-shrink-0">
             <img
