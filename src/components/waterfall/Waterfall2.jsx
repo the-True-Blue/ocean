@@ -25,7 +25,7 @@ const Waterfall2 = () => {
         <div className="flex flex-col items-center md:block h-full">
           {/* Cards Container - Centrado en mobile, alineado a la derecha en desktop */}
           <div className="flex w-full items-center md:items-start justify-center md:justify-end md:pr-[75px] h-full md:pt-[180px]">
-            <div className="relative w-full max-w-md md:w-[483px] h-[510px] md:h-[647px] px-4 md:px-0">
+            <div className="relative w-82 max-w-md md:w-[483px] h-[510px] md:h-[647px] px-4 md:px-0">
               {/* Telescope Card - Posición ligeramente desplazada */}
               <div
                 className={`absolute ${
