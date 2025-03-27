@@ -170,11 +170,11 @@ const Modal = ({ isOpen, onClose, videoSrc }) => {
                           <h3 className="text-tiny font-rajdhani text-white md:text-[14px] flex justify-center">
                             @tempestdigital_
                           </h3>
-                          {/* <img
+                          <img
                             src={check}
                             alt="check-icon"
                             className="w-[5px] h-[5px]  md:w-[10px] md:h-[10px]"
-                          /> */}
+                          />
                         </div>
                       </div>
                       <div className="hidden lg:flex flex-col gap-1 text-[16px] ">
