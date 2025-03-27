@@ -1,5 +1,6 @@
 import React from "react";
-import GameCarousel from "./GameCarousel"; // Asegúrate de importar correctamente según tu estructura de carpetas
+import GameCarousel from "./GameCarousel";
+import background from "../../assets/game_programming/background.png";
 
 const GameProgrammingSection = () => {
   return (
@@ -7,24 +8,11 @@ const GameProgrammingSection = () => {
       id="game-programming-section"
       className="w-full md:h-[1260px] h-[822px] relative"
     >
-      {/* Imagen para Mobile (visible solo en pantallas pequeñas) */}
-      <div
-        className="absolute inset-0 md:hidden w-full h-full bg-cover"
-        style={{
-          backgroundImage:
-            "url(src/assets/game_programming/mobileBackground.png)",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "100% 100%",
-          height: "830px",
-        }}
-      ></div>
-
       {/* Imagen para Desktop (oculta en pantallas pequeñas) */}
       <div
-        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat hidden md:block"
+        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat "
         style={{
-          backgroundImage: "url(src/assets/game_programming/background.png)",
+          backgroundImage: `url(${background})`,
         }}
       ></div>
 

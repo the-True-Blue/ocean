@@ -4,11 +4,15 @@ import ps from "../../assets/video_editing/ps.png";
 import pr from "../../assets/video_editing/pr.png";
 import ae from "../../assets/video_editing/ae.png";
 import ai from "../../assets/video_editing/ai.png";
+import background from "../../assets/video_editing/background.png";
 
 const VideoEditing = () => {
   return (
     <div className="w-full   h-[759px] relative overflow-hidden">
-      <div className="absolute inset-0 h-full bg-center md:-right-0 -right-[260px] bg-cover bg-no-repeat bg-[url('src/assets/video_editing/background.png')]"></div>
+      <div
+        className="absolute inset-0 h-full bg-center md:-right-0 -right-[260px] bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url(${background})` }}
+      ></div>
 
       {/* Contenido */}
       <div className="relative z-10 w-full">

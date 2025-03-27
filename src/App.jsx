@@ -1,7 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/hero/Hero";
-import Hero2 from "./components/hero/Hero2";
 import GameProgrammingSection from "./components/game_programming/GameProgrammingSection";
 import VideoEditing from "./components/video_editing/VideoEditing";
 import GraphicDesign from "./components/graphic_design/GraphicDesign";
@@ -15,7 +14,6 @@ function App() {
     <>
       <Navbar />
       <Hero />
-      {/* <Hero2 /> */}
       <GameProgrammingSection />
       <VideoEditing />
       <GraphicDesign />
