@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Logo1 from "../assets/logo1.svg";
+import Logo1 from "../assets/Logo1.svg";
 import formIcon from "../assets/formIcon.png";
 import hambBtn from "../assets/hambBtn.png";
 
