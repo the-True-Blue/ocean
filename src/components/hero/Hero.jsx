@@ -1,7 +1,6 @@
 import { useState } from "react";
 import React from "react";
 import heroImage from "../../assets/hero/hero.png";
-import heromobile from "../../assets/hero/heromobile.png";
 import ExploreBtn from "../ExploreBtn";
 import Modal from "./Modal";
 
@@ -16,10 +15,11 @@ const Hero = () => {
 
   return (
     <div className="h-[1285px] md:h-screen relative w-full">
-      {/* Imagen para Mobile (visible solo en pantallas pequeñas) */}
-
       {/* Imagen para Desktop (oculta en pantallas pequeñas) */}
-      <div className="absolute inset-0 h-full bg-center  bg-cover bg-no-repeat bg-[url('src/assets/hero/hero.png')] "></div>
+      <div
+        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      ></div>
 
       {/* Contenido */}
       <div className="relative z-10 flex flex-col items-center gap-[19px] text-white">
