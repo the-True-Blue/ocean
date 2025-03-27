@@ -54,7 +54,7 @@ const Navbar = () => {
               Game Programming
             </div>
             <div className="text-white hover:text-blue-200 cursor-pointer">
-              About
+              3D ART
             </div>
             <div className="text-white hover:text-blue-200 cursor-pointer">
               Graphic Design
@@ -121,7 +121,7 @@ const Navbar = () => {
             Game Programming
           </div>
           <div className="text-white hover:text-blue-200 cursor-pointer">
-            About
+            3D ART
           </div>
           <div className="text-white hover:text-blue-200 cursor-pointer">
             Graphic Design

@@ -131,8 +131,7 @@ const Modal = ({ isOpen, onClose, videoSrc }) => {
       </div>
 
       {/* Sección About me - segunda parte del modal */}
-      <div className="h-screen mt-[270px] flex items-center justify-center fixed top-0 z-50">
-        {/* Contenedor del about me */}
+      <div className="h-screen mt-[270px]  items-center justify-center fixed top-0 z-50 hidden">
         <div
           ref={aboutRef}
           className="relative w-full flex flex-col items-center justify-start md:mt-[130px] mt-[250px]"
