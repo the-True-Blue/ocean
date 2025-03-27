@@ -3,11 +3,24 @@ import Logo1 from "../assets/Logo1.svg";
 import instagramIcon from "../assets/footer/instagram.svg";
 import linkedinIcon from "../assets/footer/linkedin.svg";
 import tiktokIcon from "../assets/footer/tiktok.svg";
+import background from "../assets/footer/background.png";
+import backgroundMobile from "../assets/footer/background_mobile.png";
 
 const Footer = () => {
   return (
     <div className="w-full h-[620px] md:h-[750px] relative">
-      <div className="absolute w-full h-full bg-no-repeat bg-cover bg-center md:bg-[url('src/assets/footer/background.png')] bg-[url('src/assets/footer/background_mobile.png')]"></div>
+      {/* Fondo para móvil (visible en pantallas pequeñas) */}
+      <div
+        className="absolute w-full h-full bg-no-repeat bg-cover bg-center md:hidden"
+        style={{ backgroundImage: `url(${backgroundMobile})` }}
+      ></div>
+
+      {/* Fondo para desktop (oculto en pantallas pequeñas) */}
+      <div
+        className="absolute w-full h-full bg-no-repeat bg-cover bg-center hidden md:block"
+        style={{ backgroundImage: `url(${background})` }}
+      ></div>
+
       <div className="absolute pt-[15px] ps-[17px] md:pt-20">
         <img src={Logo1} alt="logo" className="mb-15" />
         <div className="md:ps-[66px] flex flex-col items-start gap-3 font-orbitron text-white font-[700] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl">
