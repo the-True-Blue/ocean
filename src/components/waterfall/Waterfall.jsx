@@ -10,8 +10,8 @@ const Waterfall = () => {
         style={{ backgroundImage: `url(${background})` }}
       ></div>
 
-      <div className="absolute md:bottom-20  bottom-160 w-full pl-10 pr-12 pb-12">
-        <div className="text-white flex flex-col gap-15 md:gap-0 md:flex-row justify-between font-poppins font-[900]">
+      <div className="relative md:top-200 bottom-0 w-full pl-10 pr-12 pb-12">
+        <div className="text-white flex flex-col gap-0 md:gap-0 md:flex-row justify-between font-poppins font-[900]">
           <div className="flex flex-col items-center">
             <h1 className="md:text-[128px] text-[80px] text-center">20+</h1>
             <h2 className="md:text-[80px] text-[50px] text-center">Skills</h2>
