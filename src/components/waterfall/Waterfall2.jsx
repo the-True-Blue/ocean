@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import rocket from "../../assets/waterfall2/rocket.png";
 import telescope from "../../assets/waterfall2/telescope.png";
+import background from "../../assets/waterfall2/background.png";
 
 const Waterfall2 = () => {
   const [activeCard, setActiveCard] = useState("rocket");
@@ -11,6 +12,7 @@ const Waterfall2 = () => {
         className="absolute w-[120%] h-full bg-cover bg-no-repeat bg-[url('src/assets/waterfall2/background.png')] 
                      md:w-full md:right-0 
                      sm:right-[-20%]"
+        style={{ backgroundImage: `url(${background})` }}
       ></div>
 
       {/* Content */}

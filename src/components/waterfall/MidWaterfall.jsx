@@ -1,10 +1,14 @@
 import React from "react";
 import ArtCollectionCarousel from "./ArtCollectionCarousel";
+import background from "../../assets/mid_waterfall/background.png";
 
 const MidWaterfall = () => {
   return (
     <div className="w-full h-[745px]">
-      <div className="w-full h-full bg-no-repeat bg-cover bg-center bg-[url('src/assets/mid_waterfall/background.png')] flex justify-center items-center">
+      <div
+        className="w-full h-full bg-no-repeat bg-cover bg-center flex justify-center items-center"
+        style={{ backgroundImage: `url(${background})` }}
+      >
         {/* carousel component */}
         <div className="container mx-auto px-4">
           <ArtCollectionCarousel />
