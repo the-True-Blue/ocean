@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import VideosCarousel from "./VideosCarousel";
 
 const VideosModal = ({ onClose }) => {
+  const modalRef = useRef(null);
+
   // Add event listener to close modal with escape key
   useEffect(() => {
     const handleEscKey = (event) => {
@@ -23,7 +25,7 @@ const VideosModal = ({ onClose }) => {
 
   // Handle click outside modal content to close
   const handleOutsideClick = (e) => {
-    if (e.target === e.currentTarget) {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
       onClose();
     }
   };
@@ -33,10 +35,17 @@ const VideosModal = ({ onClose }) => {
       className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
       onClick={handleOutsideClick}
     >
-      <div className="relative w-full w-full h-full max-h-[80vh] md:max-h-[90vh] bg-gradient-to-b from-blue-900/40 to-indigo-900/40 rounded-lg overflow-hidden border border-blue-500/30">
+      <div
+        ref={modalRef}
+        className="relative w-full h-full max-h-[80vh] md:max-h-[90vh] bg-gradient-to-b from-blue-900/40 to-indigo-900/40 rounded-lg overflow-hidden border border-blue-500/30"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close button */}
         <button
-          onClick={onClose}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
           className="absolute top-4 right-4 z-50 text-white p-2 rounded-full bg-blue-600/50 hover:bg-blue-600/70 transition-colors duration-200"
         >
           <svg
