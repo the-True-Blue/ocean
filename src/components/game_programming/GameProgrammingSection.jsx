@@ -6,7 +6,7 @@ const GameProgrammingSection = () => {
   return (
     <div
       id="game-programming-section"
-      className="w-full md:h-[1260px] h-[822px] relative"
+      className="w-full md:h-[1260px] min-h-[822px] relative"
     >
       {/* Imagen para Desktop (oculta en pantallas pequeñas) */}
       <div
@@ -41,6 +41,9 @@ const GameProgrammingSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Este div es para asegurar que el contenedor tiene suficiente espacio en móvil */}
+      <div className="h-[200px] md:h-0 w-full"></div>
     </div>
   );
 };

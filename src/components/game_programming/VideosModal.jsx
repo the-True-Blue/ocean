@@ -4,7 +4,6 @@ import VideosCarousel from "./VideosCarousel";
 const VideosModal = ({ onClose }) => {
   const modalRef = useRef(null);
 
-  // Add event listener to close modal with escape key
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === "Escape") {
@@ -14,12 +13,38 @@ const VideosModal = ({ onClose }) => {
 
     document.addEventListener("keydown", handleEscKey);
 
-    // Prevent scrolling when modal is open
+    // Modificaciones para asegurar que el modal esté por encima de todo
     document.body.style.overflow = "hidden";
+    document.body.style.position = "relative";
+
+    // Ocultar temporalmente todos los elementos con z-index alto
+    const highZElements = document.querySelectorAll('[style*="z-index"]');
+    const originalZValues = new Map();
+
+    highZElements.forEach((element) => {
+      if (
+        element !== modalRef.current &&
+        !modalRef.current?.contains(element)
+      ) {
+        const zValue = window.getComputedStyle(element).zIndex;
+        if (zValue !== "auto" && parseInt(zValue) > 100) {
+          originalZValues.set(element, element.style.zIndex);
+          element.style.zIndex = "0";
+        }
+      }
+    });
 
     return () => {
       document.removeEventListener("keydown", handleEscKey);
       document.body.style.overflow = "auto";
+      document.body.style.position = "";
+
+      // Restaurar los z-index originales
+      highZElements.forEach((element) => {
+        if (originalZValues.has(element)) {
+          element.style.zIndex = originalZValues.get(element);
+        }
+      });
     };
   }, [onClose]);
 
@@ -32,13 +57,26 @@ const VideosModal = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+      className="fixed inset-0 z-[99999] flex items-center justify-center backdrop-blur-sm"
       onClick={handleOutsideClick}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        touchAction: "none",
+        isolation: "isolate" /* Crea un nuevo contexto de apilamiento */,
+      }}
     >
       <div
         ref={modalRef}
-        className="relative w-full h-full max-h-[80vh] md:max-h-[90vh] bg-gradient-to-b from-blue-900/40 to-indigo-900/40 rounded-lg overflow-hidden border border-blue-500/30"
+        className="relative w-full h-full max-h-[90dvh] bg-gradient-to-b from-blue-900/40 to-indigo-900/40 rounded-lg overflow-hidden border border-blue-500/30"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          contain: "layout" /* Mejora el rendimiento */,
+          maxWidth: "95vw",
+        }}
       >
         {/* Close button */}
         <button
@@ -46,7 +84,7 @@ const VideosModal = ({ onClose }) => {
             e.stopPropagation();
             onClose();
           }}
-          className="absolute top-4 right-4 z-50 text-white p-2 rounded-full bg-blue-600/50 hover:bg-blue-600/70 transition-colors duration-200"
+          className="absolute top-4 right-4 z-50 text-white p-2 rounded-full bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-md hover:shadow-blue-500/30 active:shadow-inner"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +92,7 @@ const VideosModal = ({ onClose }) => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 transition-transform duration-150 hover:rotate-90"
           >
             <path
               strokeLinecap="round"
