@@ -12,7 +12,8 @@ const GameCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
-  const [showVideosModal, setShowVideosModal] = useState(false); // Estado para controlar la visibilidad del modal
+  const [showVideosModal, setShowVideosModal] = useState(false);
+  const [isTouching, setIsTouching] = useState(false); // Nuevo estado para rastrear toques
 
   const projects = [
     {
@@ -84,9 +85,16 @@ const GameCarousel = () => {
     setActiveIndex(index);
   };
 
-  // Función para manejar el clic en el botón "View"
-  const handleViewClick = () => {
+  // Función modificada para manejar el clic en el botón "View"
+  const handleViewClick = (e) => {
+    // Detener la propagación del evento para evitar conflictos con eventos táctiles
+    e.stopPropagation();
+
+    // Prevenir el comportamiento por defecto
+    e.preventDefault();
+
     const currentProject = projects[activeIndex];
+
     if (currentProject.id === 6) {
       // Si es el proyecto con ID 6 (Sonic), abre el modal de videos
       setShowVideosModal(true);
@@ -96,16 +104,26 @@ const GameCarousel = () => {
     }
   };
 
-  // Touch handlers for mobile swipe
+  // Touch handlers for mobile swipe - modificados
   const handleTouchStart = (e) => {
+    // Si el toque se origina en el botón View o sus elementos hijos, no iniciamos el swipe
+    if (e.target.closest('button[data-view-button="true"]')) {
+      return;
+    }
+
+    setIsTouching(true);
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e) => {
+    if (!isTouching) return;
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e) => {
+    if (!isTouching) return;
+
+    // Solo procesamos el swipe si la diferencia es significativa
     if (touchStart - touchEnd > 50) {
       // Swipe left
       nextSlide();
@@ -114,6 +132,8 @@ const GameCarousel = () => {
       // Swipe right
       prevSlide();
     }
+
+    setIsTouching(false);
   };
 
   // Calcular los índices de elementos visibles
@@ -233,6 +253,7 @@ const GameCarousel = () => {
                         </h3>
                       </div>
                       <button
+                        data-view-button="true"
                         onClick={handleViewClick}
                         className="border-2 border-[#1F29AA] w-[38px] md:w-[88px] ms-auto cursor-pointer"
                       >
