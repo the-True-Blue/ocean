@@ -6,7 +6,7 @@ const MidWaterfall = () => {
   return (
     <div className="w-full h-[745px]">
       <div
-        className="w-full h-full bg-no-repeat bg-cover bg-center flex justify-center items-center"
+        className="w-full h-full bg-no-repeat bg-center bg-cover md:bg-cover xl:!bg-[length:100%_100%] flex justify-center items-center"
         style={{ backgroundImage: `url(${background})` }}
       >
         {/* carousel component */}

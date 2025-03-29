@@ -9,7 +9,7 @@ const Waterfall2 = () => {
   return (
     <div className="w-full h-[1260px] relative overflow-hidden">
       <div
-        className="absolute w-[120%] h-full bg-cover bg-no-repeat bg-[url('src/assets/waterfall2/background.png')] 
+        className="absolute w-[120%] h-full bg-cover bg-no-repeat md:bg-cover xl:!bg-[length:100%_100%]
                      md:w-full md:right-0 
                      sm:right-[-20%]"
         style={{ backgroundImage: `url(${background})` }}
@@ -26,17 +26,17 @@ const Waterfall2 = () => {
           {/* Cards Container - Centrado en mobile, alineado a la derecha en desktop */}
           <div className="flex w-full items-center md:items-start justify-center md:justify-end md:pr-[75px] h-full md:pt-[180px]">
             <div className="relative w-82 max-w-md md:w-[483px] h-[510px] md:h-[647px] px-4 md:px-0">
-              {/* Telescope Card - Posición ligeramente desplazada */}
+              {/* Telescope Card */}
               <div
                 className={`absolute ${
                   activeCard === "telescope"
-                    ? "top-0 left-0"
+                    ? "top-25 md:-left-20"
                     : "top-25 md:-left-20"
-                } w-full md:h-full md:w-[483px] h-[647px] rounded-2xl backdrop-blur-2xl p-6 transition-all duration-500 shadow-xl
+                } w-full md:w-[483px] h-100 md:h-[647px] border-gradient-web-design rounded-2xl backdrop-blur-2xl p-6 transition-all duration-500 shadow-xl
                   ${
                     activeCard === "telescope"
                       ? "z-20"
-                      : "z-10 backdrop-blur-3xl"
+                      : "z-10 bg-black/60 scale-[0.98] transform"
                   }
                   hover:shadow-[0_0_20px_rgba(147,197,253,0.5)] cursor-pointer`}
                 onMouseEnter={() => setActiveCard("telescope")}
@@ -46,13 +46,11 @@ const Waterfall2 = () => {
                     StarryNight
                   </h3>
 
-                  <p className="font-inter text-white text-sm md:text-[25px]">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Interdum quis amet, faucibus lorem. Lectus amet odio quis
-                    sed adipiscing adipiscing magna non. Nullam turpis faucibus
-                    ridiculus suscipit. Et blandit suspendisse curabitur eu
-                    congue dui ut.Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit.
+                  <p className="font-inter text-white text-sm md:text-[25px] md:leading-[50.2px] font-normal">
+                    This is a visual representation of an artwork turned into an
+                    interactive website. Using CSS, I animated a rotating galaxy
+                    with shiny stars representing links to different parts of
+                    the page.
                   </p>
 
                   <div className="mt-auto flex justify-end">
@@ -67,7 +65,7 @@ const Waterfall2 = () => {
                             "_blank"
                           )
                         }
-                        className="w-20 h-20 object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
+                        className="w-[163px] h-[181px] object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
                       />
                       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {Array.from({ length: 6 }).map((_, i) => (
@@ -88,14 +86,16 @@ const Waterfall2 = () => {
                 </div>
               </div>
 
-              {/* Rocket Card - Posición ligeramente desplazada */}
+              {/* Rocket Card */}
               <div
                 className={`absolute ${
-                  activeCard === "rocket"
-                    ? "top-0 left-0"
-                    : "top-25 md:-left-20"
-                } w-full md:h-full md:w-[483px] h-[647px] rounded-2xl backdrop-blur-2xl p-6 transition-all duration-500 shadow-xl
-                  ${activeCard === "rocket" ? "z-20" : "z-10"}
+                  activeCard === "rocket" ? "top-0 left-0" : "top-0 left-0"
+                } w-full md:w-[483px] h-100 md:h-[647px] border-gradient-web-design rounded-2xl backdrop-blur-2xl p-6 transition-all duration-500 shadow-xl
+                  ${
+                    activeCard === "rocket"
+                      ? "z-20"
+                      : "z-10 bg-black/60 scale-[0.98] transform"
+                  }
                   hover:shadow-[0_0_20px_rgba(167,139,250,0.5)] cursor-pointer`}
                 onMouseEnter={() => setActiveCard("rocket")}
               >
@@ -104,13 +104,11 @@ const Waterfall2 = () => {
                     Animated Comic
                   </h3>
 
-                  <p className="font-inter text-white text-sm md:text-[25px]">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Interdum quis amet, faucibus lorem. Lectus amet odio quis
-                    sed adipiscing adipiscing magna non. Nullam turpis faucibus
-                    ridiculus suscipit. Et blandit suspendisse curabitur eu
-                    congue dui ut.Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit.
+                  <p className="font-inter text-white text-sm md:text-[25px] md:leading-[50.2px] font-normal">
+                    An interactive page where you cna read a comic from the
+                    Sonic The Hedgehog series in an animated style. Using the JS
+                    library, I made seamless transitions and image cut-ins for
+                    each panel.
                   </p>
 
                   <div className="mt-auto flex justify-end">
@@ -125,7 +123,7 @@ const Waterfall2 = () => {
                             "_blank"
                           )
                         }
-                        className="w-20 h-20 object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
+                        className="w-[151px] h-[166px] object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
                       />
                       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {Array.from({ length: 6 }).map((_, i) => (

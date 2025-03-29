@@ -10,7 +10,7 @@ const VideoEditing = () => {
   return (
     <div className="w-full   h-[759px] relative overflow-hidden">
       <div
-        className="absolute inset-0 h-full bg-center md:-right-0 -right-[260px] bg-cover bg-no-repeat"
+        className="absolute inset-0 h-full bg-center bg-cover md:-right-0 -right-[260px] bg-no-repeat md:bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}
       ></div>
 

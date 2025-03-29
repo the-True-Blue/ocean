@@ -9,23 +9,23 @@ import avatar from "../../assets/hero/avatar.png";
 
 const GraphicDesign = () => {
   return (
-    <div className="h-[619px] hidden md:flex flex-col items-center bg-radial from-[#0445A5] to-[#031150] bg-cover">
-      <div className="w-full max-w-6xl pl-16 mt-10">
-        <h1 className="text-white font-orbitron text-[40px] font-[900] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl">
+    <div className="min-h-190 md:min-h-[619px] flex flex-col items-center bg-radial from-[#0445A5] to-[#031150] bg-cover pb-16">
+      <div className="w-full max-w-6xl px-4 md:pl-16 mt-10">
+        <h1 className="text-white font-orbitron text-[32px] md:text-[40px] font-[900] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl">
           Graphic Design
         </h1>
       </div>
 
       {/* Contenedor de tarjetas con efecto de superposición */}
       <div className="relative flex items-center justify-center mt-8 w-full z-30">
-        {/* Tarjeta central (al frente) con z-index más alto */}
-        <div className="relative z-30 mx-auto">
+        {/* Tarjeta central */}
+        <div className="relative z-30 mx-auto scale-[0.65] xs:scale-75 sm:scale-80  lg:scale-100 origin-center">
           <div className="rounded-3xl overflow-hidden">
             <img src={centerImg} alt="center image" className="w-[469px]" />
           </div>
 
-          {/* Tarjeta derecha (atrás) con z-index más bajo */}
-          <div className="absolute -right-20 top-15 -z-10 transform translate-x-1/2">
+          {/* Tarjeta derecha */}
+          <div className="absolute md:-right-20 right-10 md:top-15 top-52 -z-10 transform translate-x-1/2">
             <div className="relative rounded-3xl overflow-hidden">
               <img src={rectangle} alt="bg-rectangle" className="w-64" />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -38,8 +38,8 @@ const GraphicDesign = () => {
             </div>
           </div>
 
-          {/* Tarjeta izquierda (atrás) con z-index más bajo */}
-          <div className="absolute top-15 -left-20 -z-10 transform -translate-x-1/2">
+          {/* Tarjeta izquierda */}
+          <div className="absolute md:-left-20 left-10 md:top-15 top-52 -z-10 transform -translate-x-1/2">
             <div className="relative rounded-3xl overflow-hidden">
               <img src={rectangle} alt="bg-rectangle" className="w-64" />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -54,13 +54,9 @@ const GraphicDesign = () => {
         </div>
       </div>
 
-      {/* Contenedor de texto con esquinas recortadas */}
-      <div className="relative mt-0 w-[359px] max-w-xl">
+      {/* Contenedor de texto */}
+      <div className="relative mt-[150px] md:mt-8 w-[90%] max-w-[359px] mx-4">
         <div className="relative backdrop-blur-4xl p-6 rounded-lg border-[#FFFFFF47] border">
-          {/* Pseudoelementos para las esquinas recortadas */}
-          <div className="absolute top-0 left-0 w-8 h-8 bg-transparent rounded-tl-xl transform -translate-x-2 -translate-y-2"></div>
-          <div className="absolute top-0 right-0 w-8 h-8 bg-transparent rounded-tr-xl transform translate-x-2 -translate-y-2"></div>
-
           {/* Contenido del texto */}
           <div className="flex flex-col items-start">
             <div className="flex gap-2">
@@ -85,11 +81,16 @@ const GraphicDesign = () => {
 
         {/* Logo de Instagram que sale del contenedor */}
         <div className="absolute  border-[#6f75b6be] border-10  -bottom-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center">
-          <img
-            src={instagramIcon}
-            alt="Instagram"
-            className="w-8 h-8 object-cover -p-5"
-          />
+          <a
+            href="https://www.instagram.com/tempestdigital_/?locale=fr_CA&hl=ar"
+            target="_blank"
+          >
+            <img
+              src={instagramIcon}
+              alt="Instagram"
+              className="w-8 h-8 object-cover -p-5"
+            />
+          </a>
         </div>
       </div>
     </div>

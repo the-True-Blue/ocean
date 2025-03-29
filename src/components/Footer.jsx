@@ -17,7 +17,7 @@ const Footer = () => {
 
       {/* Fondo para desktop (oculto en pantallas pequeñas) */}
       <div
-        className="absolute w-full h-full bg-no-repeat bg-cover bg-center hidden md:block"
+        className="absolute w-full h-full bg-no-repeat bg-center hidden md:block md:bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}
       ></div>
 

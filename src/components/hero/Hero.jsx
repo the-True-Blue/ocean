@@ -14,10 +14,10 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-[1285px] md:h-screen relative w-full">
+    <div className="h-[1285px]  relative w-full ">
       {/* Imagen para Desktop (oculta en pantallas pequeñas) */}
       <div
-        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat"
+        className="absolute  inset-0 h-full bg-center bg-no-repeat bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${heroImage})` }}
       ></div>
 

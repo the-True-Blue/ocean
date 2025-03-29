@@ -63,11 +63,11 @@ const ArtCollectionCarousel = () => {
   return (
     <div className="relative">
       {/* Section Title */}
-      <div className="mb-8 px-6 flex items-center md:justify-between justify-center">
-        <h2 className="text-2xl md:text-[40px] font-orbitron font-[900] text-white">
+      <div className="mb-8 px-6 flex items-center mx-auto max-w-7xl md:justify-between justify-center">
+        <h2 className="text-2xl lg:text-[40px]  font-orbitron font-[900] text-white">
           3D ART Collection
         </h2>
-        <p className="hidden md:block max-w-[671px] font-orbitron text-2xl md:text-[20px] tracking-[9%] leading-[162%] font-[900] text-white">
+        <p className="hidden md:block max-w-[671px] font-orbitron lg:text-[20px] tracking-[9%] leading-[162%] font-[900] text-white">
           Here is work I did as a 3D artist, modeling characters and interior
           spaces in Maya, while designing environments in Unreal.{" "}
         </p>
@@ -114,7 +114,7 @@ const ArtCollectionCarousel = () => {
                   onClick={() => openModal(card.id)}
                   className="w-full py-2 px-4 rounded text-white font-medium"
                   style={{
-                    width: "209px",
+                    maxWidth: "209px",
                     height: "44px",
                     background:
                       "linear-gradient(92.23deg, #1194CA 50.63%, #4276CB 69.49%, #348CF0 100%, #87A0FF 117.04%)",
