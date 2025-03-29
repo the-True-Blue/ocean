@@ -6,7 +6,7 @@ const Waterfall = () => {
     <div className="w-full h-screen relative">
       {/* Fondo de imagen que cubre todo el componente */}
       <div
-        className="absolute w-full h-full bg-no-repeat bg-cover bg-center "
+        className="absolute w-full h-full bg-cover bg-no-repeat bg-center md:bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}
       ></div>
 
