@@ -75,7 +75,8 @@ const VideosCarousel = () => {
     }
   };
 
-  const handleVideoClick = () => {
+  const handleVideoClick = (e) => {
+    e.stopPropagation();
     setShowVideo(true);
   };
 
@@ -123,7 +124,7 @@ const VideosCarousel = () => {
                   className="absolute inset-0 flex items-center justify-center cursor-pointer"
                   onClick={handleVideoClick}
                 >
-                  <button className="bg-blue-500/70 hover:bg-blue-600/90 text-white rounded-full p-4 transition-colors duration-200">
+                  <button className="bg-blue-500/70 hover:bg-blue-600/90 active:bg-blue-700/80 text-white rounded-full p-4 transition-all duration-200 transform hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="currentColor"
@@ -171,7 +172,7 @@ const VideosCarousel = () => {
       <div className="flex items-center justify-between py-4 px-8">
         {/* Prev button */}
         <button
-          className="bg-blue-600/50 hover:bg-blue-600/70 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200"
+          className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30"
           onClick={prevSlide}
         >
           <svg
@@ -180,7 +181,7 @@ const VideosCarousel = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 transition-transform duration-150 hover:-translate-x-1"
           >
             <path
               strokeLinecap="round"
@@ -196,10 +197,10 @@ const VideosCarousel = () => {
             <button
               key={video.id}
               onClick={() => goToSlide(index)}
-              className={`transition-all duration-200 ${
+              className={`transition-all duration-200 hover:shadow-md hover:shadow-blue-400/30 ${
                 index === activeIndex
-                  ? "border-2 border-blue-400 scale-110"
-                  : "border border-blue-600/50 opacity-70"
+                  ? "border-2 border-blue-400 scale-110 hover:border-blue-500"
+                  : "border border-blue-600/50 opacity-70 hover:opacity-100 hover:border-blue-400"
               }`}
             >
               <img
@@ -213,7 +214,7 @@ const VideosCarousel = () => {
 
         {/* Next button */}
         <button
-          className="bg-blue-600/50 hover:bg-blue-600/70 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200"
+          className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30"
           onClick={nextSlide}
         >
           <svg
@@ -222,7 +223,7 @@ const VideosCarousel = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 transition-transform duration-150 hover:translate-x-1"
           >
             <path
               strokeLinecap="round"
