@@ -5,6 +5,7 @@ import pr from "../../assets/video_editing/pr.png";
 import ae from "../../assets/video_editing/ae.png";
 import ai from "../../assets/video_editing/ai.png";
 import background from "../../assets/video_editing/background.png";
+import bubble from "../../assets/video_editing/bubble.png"; // Add this import
 import CarouselModal from "./VideoProjectsCarousel";
 
 const VideoEditing = () => {
@@ -35,8 +36,11 @@ const VideoEditing = () => {
         </h1>
 
         <div className=" relative">
-          <div className="absolute  right-10 md:right-105 flex items-center justify-center mt-[43px] bg-[url(src/assets/video_editing/bubble.png)] bg-cover md:w-[262.53px] md:h-[230.53px] w-[135px] h-[130px] bg-no-repeat">
-            <h2 className="text-[7px] md:text-[14px] md:w-52  text-center w-20 text-white font-orbitron leading-[1.5]">
+          <div
+            className="absolute right-10 md:right-105 flex items-center justify-center mt-[43px] bg-cover md:w-[262.53px] md:h-[230.53px] w-[135px] h-[130px] bg-no-repeat"
+            style={{ backgroundImage: `url(${bubble})` }}
+          >
+            <h2 className="text-[7px] md:text-[14px] md:w-52 text-center w-20 text-white font-orbitron leading-[1.5]">
               Explore my video editing and post-production portfolio using Adobe
               Creative Suite, with experience in animation and VFX.
             </h2>
