@@ -14,13 +14,28 @@ function App() {
     <>
       <Navbar />
       <Hero />
-      <GameProgrammingSection />
-      <VideoEditing />
-      <GraphicDesign />
-      <Waterfall />
-      <MidWaterfall />
-      <Waterfall2 />
-      <Footer />
+      <div id="game-programming">
+        <GameProgrammingSection />
+      </div>
+      <div id="video-editing">
+        <VideoEditing />
+      </div>
+      <div id="graphic-design">
+        <GraphicDesign />
+      </div>
+      {/* Asumiendo que estas secciones corresponden a 3D ART y Web Design */}
+      <div>
+        <Waterfall />
+      </div>
+      <div id="3d-art">
+        <MidWaterfall />
+      </div>
+      <div id="web-design">
+        <Waterfall2 />
+      </div>
+      <div id="contact">
+        <Footer />
+      </div>
     </>
   );
 }

@@ -31,18 +31,33 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row md:gap-8 items-center gap-0 ms-5">
             <div className="flex gap-2 md:gap-8">
               <div className="bg-white/15 h-full rounded-full p-3">
-                <img src={linkedinIcon} className="w-[33px]" />
+                <a
+                  href="https://www.linkedin.com/in/dominique-mccormack-4213791b7/"
+                  target="_blank"
+                >
+                  <img src={linkedinIcon} className="w-[33px]" />
+                </a>
               </div>
               <div className="bg-white/15 h-full rounded-full p-3">
-                <img
-                  src={instagramIcon}
-                  alt="instagram-icon"
-                  className="invert w-[33px]"
-                />
+                <a
+                  href="https://www.instagram.com/tempestdigital_/"
+                  target="_blank"
+                >
+                  <img
+                    src={instagramIcon}
+                    alt="instagram-icon"
+                    className="invert w-[33px]"
+                  />
+                </a>
               </div>
             </div>
             <div className="bg-white/15 h-full rounded-full p-3">
-              <img src={tiktokIcon} alt="tiktok-icon" className="w-[33px]" />
+              <a
+                href="https://www.tiktok.com/@tempestdigital_?is_from_webapp=1&sender_device=pc"
+                target="_blank"
+              >
+                <img src={tiktokIcon} alt="tiktok-icon" className="w-[33px]" />
+              </a>
             </div>
           </div>
         </div>
