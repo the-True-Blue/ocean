@@ -24,6 +24,15 @@ const Navbar = () => {
     }
   };
 
+  // Función para navegar al Hero (inicio)
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setIsOpen(false);
+  };
+
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -51,8 +60,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         {/* Desktop Navbar */}
         <div className="hidden md:flex items-center justify-between h-full py-10">
-          {/* Logo */}
-          <div className="flex-shrink-0">
+          {/* Logo con navegación al Hero */}
+          <div className="flex-shrink-0 cursor-pointer" onClick={scrollToTop}>
             <img
               src={Logo1}
               alt="logo"
@@ -107,8 +116,8 @@ const Navbar = () => {
 
         {/* Mobile Navbar */}
         <div className="flex md:hidden items-center justify-between h-full">
-          {/* Logo (Left) */}
-          <div className="flex-shrink-0">
+          {/* Logo (Left) con navegación al Hero */}
+          <div className="flex-shrink-0 cursor-pointer" onClick={scrollToTop}>
             <img
               src={Logo1}
               alt="logo"
