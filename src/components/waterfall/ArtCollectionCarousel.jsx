@@ -4,13 +4,21 @@ import check from "../../assets/hero/check.png";
 import element1 from "../../assets/mid_waterfall/element1.png";
 import element2 from "../../assets/mid_waterfall/element2.png";
 import element3 from "../../assets/mid_waterfall/element3.png";
-import character from "../../assets/mid_waterfall/character.png";
-import enviroment from "../../assets/mid_waterfall/enviroment.png";
-import interior from "../../assets/mid_waterfall/interior.png";
+import character from "../../assets/mid_waterfall/character/Pumpkin1.jpg";
+import character1 from "../../assets/mid_waterfall/character/Pumpkin2.png";
+import character2 from "../../assets/mid_waterfall/character/Pumpkin3.png";
+import character3 from "../../assets/mid_waterfall/character/Pumpkin4.jpg";
+import character4 from "../../assets/mid_waterfall/character/Sonic1.png";
+import character5 from "../../assets/mid_waterfall/character/Sonic2.jpg";
+import character6 from "../../assets/mid_waterfall/character/Sonic3.jpg";
+import interior from "../../assets/mid_waterfall/interior/Fireplace.png";
+import interior1 from "../../assets/mid_waterfall/interior/room.png";
+import interior2 from "../../assets/mid_waterfall/interior/window.png";
 
 const ArtCollectionCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
+  const [currentModalSlide, setCurrentModalSlide] = useState(0);
 
   // Mock data for the three cards
   const cards = [
@@ -19,24 +27,92 @@ const ArtCollectionCarousel = () => {
       title: "3D Character Modeling",
       element: "element1",
       username: "TEMPESTDIGITAL_",
-      modal: "Image 1",
-      modalImage: character,
+      type: "images",
+      modalContent: [
+        {
+          type: "image",
+          src: character,
+          alt: "Character 1",
+        },
+        {
+          type: "image",
+          src: character1,
+          alt: "Character 2",
+        },
+        {
+          type: "image",
+          src: character2,
+          alt: "Character 1",
+        },
+        {
+          type: "image",
+          src: character3,
+          alt: "Character 1",
+        },
+        {
+          type: "image",
+          src: character4,
+          alt: "Character 1",
+        },
+        {
+          type: "image",
+          src: character5,
+          alt: "Character 1",
+        },
+        {
+          type: "image",
+          src: character6,
+          alt: "Character 1",
+        },
+      ],
     },
     {
       id: 2,
       title: "3D Interior Space",
       element: "element2",
       username: "TEMPESTDIGITAL_",
-      modal: "Image 2",
-      modalImage: interior,
+      type: "images",
+      modalContent: [
+        {
+          type: "image",
+          src: interior,
+          alt: "Interior 1",
+        },
+        {
+          type: "image",
+          src: interior1,
+          alt: "Interior 2",
+        },
+        {
+          type: "image",
+          src: interior2,
+          alt: "Interior 3",
+        },
+      ],
     },
     {
       id: 3,
       title: "3D Environment Art",
       element: "element3",
       username: "TEMPESTDIGITAL_",
-      modal: "Image 3",
-      modalImage: enviroment,
+      type: "videos",
+      modalContent: [
+        {
+          type: "video",
+          src: "https://drive.google.com/file/d/1zDJmaHilNZaOB2lEcmflQE48CdU4RhTX/preview",
+          alt: "Environment Video 1",
+        },
+        {
+          type: "video",
+          src: "https://drive.google.com/file/d/1nnITe7gkHjyo3Q2odsUBde0-ZDF2IRTG/preview",
+          alt: "Environment Video 2",
+        },
+        {
+          type: "video",
+          src: "https://drive.google.com/file/d/1AAkqrG9VvMC0At0Sdhcszfx4wnNxqAwG/preview",
+          alt: "Environment Video 3",
+        },
+      ],
     },
   ];
 
@@ -50,14 +126,45 @@ const ArtCollectionCarousel = () => {
     setCurrentSlide((prev) => (prev === 0 ? cards.length - 1 : prev - 1));
   };
 
+  // Modal carousel navigation
+  const nextModalSlide = () => {
+    if (activeModal) {
+      const card = cards.find((card) => card.id === activeModal);
+      setCurrentModalSlide((prev) =>
+        prev === card.modalContent.length - 1 ? 0 : prev + 1
+      );
+    }
+  };
+
+  const prevModalSlide = () => {
+    if (activeModal) {
+      const card = cards.find((card) => card.id === activeModal);
+      setCurrentModalSlide((prev) =>
+        prev === 0 ? card.modalContent.length - 1 : prev - 1
+      );
+    }
+  };
+
   // Open modal function
   const openModal = (id) => {
     setActiveModal(id);
+    setCurrentModalSlide(0); // Reset modal carousel to first slide
   };
 
   // Close modal function
   const closeModal = () => {
     setActiveModal(null);
+    setCurrentModalSlide(0);
+  };
+
+  // Convert Google Drive links to embed format
+  const getEmbedUrl = (url) => {
+    // Extract the file ID from the Google Drive link
+    const fileId = url.match(/\/d\/(.+?)\//) || url.match(/id=(.+?)&/);
+    if (fileId && fileId[1]) {
+      return `https://drive.google.com/file/d/${fileId[1]}/preview`;
+    }
+    return url;
   };
 
   return (
@@ -143,7 +250,6 @@ const ArtCollectionCarousel = () => {
                 >
                   <div className="p-4 h-full flex flex-col">
                     <div className="flex-grow flex items-center justify-center mb-3">
-                      {/* Use the actual imported elements for mobile view */}
                       <div className="w-full h-48 rounded-lg flex items-center justify-center">
                         <img
                           src={
@@ -223,22 +329,83 @@ const ArtCollectionCarousel = () => {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal with Carousel */}
       {activeModal && (
         <div className="fixed inset-0 backdrop-blur-xl flex items-center justify-center z-50">
-          <div className=" p-4 rounded-lg md:max-w-[1036px] md:max-h-[622px] max-w-lg w-full max-h-[90vh] overflow-hidden">
+          <div className="p-4 rounded-lg md:max-w-[1036px] md:max-h-[622px] max-w-lg w-full max-h-[90vh] overflow-hidden">
             <div className="flex justify-end mb-4">
               <button onClick={closeModal} className="text-white text-2xl">
                 &times;
               </button>
             </div>
+
             <div className="w-full rounded-lg flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0"></div>
-              <img
-                src={cards.find((card) => card.id === activeModal).modalImage}
-                alt={cards.find((card) => card.id === activeModal).title}
-                className="w-full max-h-full object-cover "
-              />
+              {/* Carousel Content */}
+              <div className="w-full h-full flex items-center justify-center">
+                {cards.find((card) => card.id === activeModal)?.modalContent[
+                  currentModalSlide
+                ]?.type === "image" ? (
+                  <img
+                    src={
+                      cards.find((card) => card.id === activeModal)
+                        ?.modalContent[currentModalSlide]?.src
+                    }
+                    alt={
+                      cards.find((card) => card.id === activeModal)
+                        ?.modalContent[currentModalSlide]?.alt
+                    }
+                    className="w-full max-h-[500px] object-contain"
+                  />
+                ) : (
+                  <iframe
+                    src={
+                      cards.find((card) => card.id === activeModal)
+                        ?.modalContent[currentModalSlide]?.src
+                    }
+                    title={
+                      cards.find((card) => card.id === activeModal)
+                        ?.modalContent[currentModalSlide]?.alt
+                    }
+                    className="w-full h-[500px]"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
+              </div>
+
+              {/* Modal Carousel Navigation */}
+              <div className="absolute top-1/2 transform -translate-y-1/2 flex justify-between w-full px-4">
+                <button
+                  onClick={prevModalSlide}
+                  className="bg-blue-800/80 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                >
+                  &lt;
+                </button>
+                <button
+                  onClick={nextModalSlide}
+                  className="bg-blue-800/80 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                >
+                  &gt;
+                </button>
+              </div>
+
+              {/* Modal Carousel Dots Indicator */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+                {cards
+                  .find((card) => card.id === activeModal)
+                  ?.modalContent.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentModalSlide(index)}
+                      className={`w-3 h-3 mx-1 rounded-full ${
+                        currentModalSlide === index
+                          ? "bg-blue-400"
+                          : "bg-gray-400"
+                      }`}
+                    />
+                  ))}
+              </div>
             </div>
           </div>
         </div>

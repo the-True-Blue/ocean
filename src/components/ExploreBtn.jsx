@@ -1,11 +1,8 @@
-import React, { useState, useRef } from "react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import React from "react";
 import arrow from "../assets/hero/arrow.png";
 
 const ExploreBtn = ({ text, onClick, className }) => {
-  const [showSplash, setShowSplash] = useState(false);
-
-  // SVG with custom shape including curved borders
+  // SVG con forma personalizada y bordes curvos (mantenemos esto para el diseño)
   const svgCode = `
     <svg xmlns="http://www.w3.org/2000/svg" width="143" height="63" viewBox="0 0 143 63">
       <defs>
@@ -54,67 +51,38 @@ const ExploreBtn = ({ text, onClick, className }) => {
     </svg>
   `;
 
-  // Convert SVG to Data URL
+  // Convertir SVG a URL de datos
   const svgDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
     svgCode
   )}`;
 
-  // Handle the click with splash effect and then open modal
-  const handleClick = () => {
-    // Show the splash effect
-    setShowSplash(true);
-
-    // After animation delay, call the onClick function (which will open the modal)
-    setTimeout(() => {
-      if (onClick) onClick();
-    }, 1000);
-
-    // Hide the splash after animation completes
-    setTimeout(() => {
-      setShowSplash(false);
-    }, 2500);
-  };
-
   return (
-    <div className="relative">
-      {/* Lottie Splash animation */}
-      {showSplash && (
-        <div className="absolute w-[500px] md:w-[700px] lg:w-[1000px] xl:w-[1200px] top-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
-          <DotLottieReact
-            src="https://lottie.host/40c7675f-19f6-48c7-956a-c3c0a174d30f/XRU0SofRWh.lottie"
-            autoplay
-            loop={false}
-          />
-        </div>
-      )}
-
-      <button
-        onClick={handleClick}
-        className={`
-          relative w-[143px] h-[63px] 
-          flex items-center justify-center 
-          cursor-pointer 
-          transition-transform duration-200 active:scale-95
-          focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50
-          ${className}
-        `}
-        style={{
-          backgroundImage: `url("${svgDataUrl}")`,
-          backgroundSize: "100% 100%",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        {/* Content: Text and arrow */}
-        <div className="relative z-10 flex items-center justify-center space-x-2">
-          <span className="font-medium text-white select-none">{text}</span>
-          <img
-            src={arrow}
-            alt="arrow"
-            className="w-[32px] h-[15.48px] object-contain"
-          />
-        </div>
-      </button>
-    </div>
+    <button
+      onClick={onClick}
+      className={`
+        relative w-[143px] h-[63px] 
+        flex items-center justify-center 
+        cursor-pointer 
+        transition-transform duration-200 active:scale-95
+        focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50
+        ${className}
+      `}
+      style={{
+        backgroundImage: `url("${svgDataUrl}")`,
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Contenido: Texto y flecha */}
+      <div className="relative z-10 flex items-center justify-center space-x-2">
+        <span className="font-medium text-white select-none">{text}</span>
+        <img
+          src={arrow}
+          alt="arrow"
+          className="w-[32px] h-[15.48px] object-contain"
+        />
+      </div>
+    </button>
   );
 };
 

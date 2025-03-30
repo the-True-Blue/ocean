@@ -12,6 +12,18 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  // Función para navegar suavemente a las secciones
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop - 75, // Ajuste para el navbar fijo
+        behavior: "smooth",
+      });
+      setIsOpen(false); // Cierra el menú móvil después de hacer clic
+    }
+  };
+
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -50,19 +62,34 @@ const Navbar = () => {
 
           {/* Center Navigation Links */}
           <div className="flex items-center w-full lg:mx-[112px] mx-5 justify-between font-orbitron font-[700] text-[0.25rem]  lg:text-[14px] lg:space-x-8 space-x-2">
-            <div className="text-white hover:text-blue-200  cursor-pointer">
+            <div
+              className="text-white hover:text-blue-200 cursor-pointer"
+              onClick={() => scrollToSection("game-programming")}
+            >
               Game Programming
             </div>
-            <div className="text-white hover:text-blue-200 cursor-pointer">
+            <div
+              className="text-white hover:text-blue-200 cursor-pointer"
+              onClick={() => scrollToSection("3d-art")}
+            >
               3D ART
             </div>
-            <div className="text-white hover:text-blue-200 cursor-pointer">
+            <div
+              className="text-white hover:text-blue-200 cursor-pointer"
+              onClick={() => scrollToSection("graphic-design")}
+            >
               Graphic Design
             </div>
-            <div className="text-white hover:text-blue-200  cursor-pointer">
+            <div
+              className="text-white hover:text-blue-200 cursor-pointer"
+              onClick={() => scrollToSection("video-editing")}
+            >
               Video Editing
             </div>
-            <div className="text-white hover:text-blue-200 cursor-pointer">
+            <div
+              className="text-white hover:text-blue-200 cursor-pointer"
+              onClick={() => scrollToSection("web-design")}
+            >
               Web Design
             </div>
           </div>
@@ -73,6 +100,7 @@ const Navbar = () => {
               src={formIcon}
               alt="Contact Form"
               className="w-[12px] h-[12px] object-contain cursor-pointer"
+              onClick={() => scrollToSection("contact")}
             />
           </div>
         </div>
@@ -94,6 +122,7 @@ const Navbar = () => {
               src={formIcon}
               alt="Contact Form"
               className="w-[24px] h-[24px] object-contain cursor-pointer"
+              onClick={() => scrollToSection("contact")}
             />
           </div>
 
@@ -117,19 +146,34 @@ const Navbar = () => {
         }`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/[0.15] backdrop-blur-sm">
-          <div className="text-white hover:text-blue-200  cursor-pointer">
+          <div
+            className="text-white hover:text-blue-200 cursor-pointer p-2"
+            onClick={() => scrollToSection("game-programming")}
+          >
             Game Programming
           </div>
-          <div className="text-white hover:text-blue-200 cursor-pointer">
+          <div
+            className="text-white hover:text-blue-200 cursor-pointer p-2"
+            onClick={() => scrollToSection("3d-art")}
+          >
             3D ART
           </div>
-          <div className="text-white hover:text-blue-200 cursor-pointer">
+          <div
+            className="text-white hover:text-blue-200 cursor-pointer p-2"
+            onClick={() => scrollToSection("graphic-design")}
+          >
             Graphic Design
           </div>
-          <div className="text-white hover:text-blue-200  cursor-pointer">
+          <div
+            className="text-white hover:text-blue-200 cursor-pointer p-2"
+            onClick={() => scrollToSection("video-editing")}
+          >
             Video Editing
           </div>
-          <div className="text-white hover:text-blue-200 cursor-pointer">
+          <div
+            className="text-white hover:text-blue-200 cursor-pointer p-2"
+            onClick={() => scrollToSection("web-design")}
+          >
             Web Design
           </div>
         </div>

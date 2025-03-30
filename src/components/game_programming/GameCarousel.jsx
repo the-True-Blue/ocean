@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import check from "../../assets/hero/check.png";
 import avatar from "../../assets/hero/avatar.png";
 import arrow from "../../assets/hero/arrow.png";
+import carouselArrow from "../../assets/game_programming/Arrow.png";
 import element1 from "../../assets/game_programming/element1.png";
 import element2 from "../../assets/game_programming/element2.png";
 import element3 from "../../assets/game_programming/element3.png";
@@ -146,43 +147,25 @@ const GameCarousel = () => {
       <div className="w-full relative overflow-hidden py-8 h-[300px] md:h-[400px] mx-auto max-w-7xl">
         {/* Navigation Arrows */}
         <button
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-40 bg-blue-600/30 hover:bg-blue-600/60 active:bg-blue-700/50 text-white rounded-full w-10 h-10 flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-40  text-white rounded-full w-10 h-10 flex items-center justify-center  transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
           onClick={prevSlide}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 transition-transform duration-150 hover:-translate-x-1"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg>
+          <img
+            src={carouselArrow}
+            alt="Previous"
+            className="w-6 h-6 transform rotate-180 transition-transform duration-150 hover:-translate-x-1"
+          />
         </button>
 
         <button
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-40 bg-blue-600/30 hover:bg-blue-600/60 active:bg-blue-700/50 text-white rounded-full w-10 h-10 flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-40  text-white rounded-full w-10 h-10 flex items-center justify-center  transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
           onClick={nextSlide}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
+          <img
+            src={carouselArrow}
+            alt="Next"
             className="w-6 h-6 transition-transform duration-150 hover:translate-x-1"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
+          />
         </button>
 
         {/* Carousel Items Container */}

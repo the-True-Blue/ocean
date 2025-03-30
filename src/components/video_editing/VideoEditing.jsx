@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import rocket from "../../assets/video_editing/rocket.png";
 import ps from "../../assets/video_editing/ps.png";
 import pr from "../../assets/video_editing/pr.png";
 import ae from "../../assets/video_editing/ae.png";
 import ai from "../../assets/video_editing/ai.png";
 import background from "../../assets/video_editing/background.png";
+import CarouselModal from "./VideoProjectsCarousel";
 
 const VideoEditing = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="w-full   h-[759px] relative overflow-hidden">
+    <div className="w-full h-[759px] relative overflow-hidden">
       <div
         className="absolute inset-0 h-full bg-center bg-cover md:-right-0 -right-[260px] bg-no-repeat md:bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}
@@ -59,16 +70,25 @@ const VideoEditing = () => {
           />
         </div>
         <div className="top-125 right-38 absolute hidden md:block">
-          <button className="text-white font-rajdhani font-[700] text-[48px] rounded-full px-[63px] py-[4px] bg-linear-to-r from-[#3BACE2] from-5% via-[#1270DC] via-75% to-[#4EF5FF] to-[100%] backdrop-blur-3xl;">
+          <button
+            className="text-white font-rajdhani font-[700] text-[48px] rounded-full px-[63px] py-[4px] bg-linear-to-r from-[#3BACE2] from-5% via-[#1270DC] via-75% to-[#4EF5FF] to-[100%] backdrop-blur-3xl hover:shadow-lg hover:shadow-blue-400/30 transition-all duration-300 transform hover:scale-105 active:scale-95"
+            onClick={openModal}
+          >
             View
           </button>
         </div>
       </div>
       <div className="bottom-[32px] md:hidden left-1/2 transform -translate-x-1/2 absolute">
-        <button className="text-white font-rajdhani font-[700] text-[32px] rounded-4xl px-[49px] py-[4px] bg-linear-to-r from-[#3BACE2] from-5% via-[#1270DC] via-75% to-[#4EF5FF] to-[100%] backdrop-blur-3xl;">
+        <button
+          className="text-white font-rajdhani font-[700] text-[32px] rounded-4xl px-[49px] py-[4px] bg-linear-to-r from-[#3BACE2] from-5% via-[#1270DC] via-75% to-[#4EF5FF] to-[100%] backdrop-blur-3xl hover:shadow-lg hover:shadow-blue-400/30 transition-all duration-300 transform hover:scale-105 active:scale-95"
+          onClick={openModal}
+        >
           View
         </button>
       </div>
+
+      {/* Carousel Modal */}
+      <CarouselModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
