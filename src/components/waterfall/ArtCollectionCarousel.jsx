@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import avatar from "../../assets/mid_waterfall/avatar.png";
 import check from "../../assets/hero/check.png";
 import element1 from "../../assets/mid_waterfall/element1.png";
@@ -19,6 +19,8 @@ const ArtCollectionCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
   const [currentModalSlide, setCurrentModalSlide] = useState(0);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
+  const videoContainerRef = useRef(null);
 
   // Mock data for the three cards
   const cards = [
@@ -116,6 +118,26 @@ const ArtCollectionCarousel = () => {
     },
   ];
 
+  // Effect to handle video loading state
+  useEffect(() => {
+    if (activeModal) {
+      const currentCard = cards.find((card) => card.id === activeModal);
+      if (
+        currentCard?.type === "videos" ||
+        currentCard?.modalContent[currentModalSlide]?.type === "video"
+      ) {
+        setIsVideoLoading(true);
+
+        // Reset loading state after a period (simulating load completion)
+        const timer = setTimeout(() => {
+          setIsVideoLoading(false);
+        }, 2500);
+
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [activeModal, currentModalSlide]);
+
   // Next slide function
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === cards.length - 1 ? 0 : prev + 1));
@@ -133,6 +155,11 @@ const ArtCollectionCarousel = () => {
       setCurrentModalSlide((prev) =>
         prev === card.modalContent.length - 1 ? 0 : prev + 1
       );
+
+      // Set loading state when navigating to a new slide
+      if (card.type === "videos" || card.modalContent[0].type === "video") {
+        setIsVideoLoading(true);
+      }
     }
   };
 
@@ -142,6 +169,11 @@ const ArtCollectionCarousel = () => {
       setCurrentModalSlide((prev) =>
         prev === 0 ? card.modalContent.length - 1 : prev - 1
       );
+
+      // Set loading state when navigating to a new slide
+      if (card.type === "videos" || card.modalContent[0].type === "video") {
+        setIsVideoLoading(true);
+      }
     }
   };
 
@@ -149,22 +181,39 @@ const ArtCollectionCarousel = () => {
   const openModal = (id) => {
     setActiveModal(id);
     setCurrentModalSlide(0); // Reset modal carousel to first slide
+
+    // Set loading state when opening a modal with videos
+    const card = cards.find((card) => card.id === id);
+    if (card.type === "videos" || card.modalContent[0].type === "video") {
+      setIsVideoLoading(true);
+    }
   };
 
   // Close modal function
   const closeModal = () => {
     setActiveModal(null);
     setCurrentModalSlide(0);
+    setIsVideoLoading(false);
   };
 
-  // Convert Google Drive links to embed format
-  const getEmbedUrl = (url) => {
-    // Extract the file ID from the Google Drive link
-    const fileId = url.match(/\/d\/(.+?)\//) || url.match(/id=(.+?)&/);
-    if (fileId && fileId[1]) {
-      return `https://drive.google.com/file/d/${fileId[1]}/preview`;
+  // Handle video loading complete
+  const handleVideoLoaded = () => {
+    setIsVideoLoading(false);
+  };
+
+  // Get current modal content
+  const getCurrentModalContent = () => {
+    if (!activeModal) return null;
+    const card = cards.find((card) => card.id === activeModal);
+    return card?.modalContent[currentModalSlide];
+  };
+
+  // Prevent clicks on the video from propagating to the carousel controls
+  const handleVideoContainerClick = (e) => {
+    // If we're clicking directly on the video container, prevent propagation
+    if (e.target === videoContainerRef.current) {
+      e.stopPropagation();
     }
-    return url;
   };
 
   return (
@@ -219,12 +268,14 @@ const ArtCollectionCarousel = () => {
                 </div>
                 <button
                   onClick={() => openModal(card.id)}
-                  className="w-full py-2 px-4 rounded text-white font-medium"
+                  className="w-full py-2 px-4 rounded text-white font-medium transition-all duration-200 transform hover:brightness-110 hover:scale-[1.02] active:brightness-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                   style={{
                     maxWidth: "209px",
                     height: "44px",
                     background:
                       "linear-gradient(92.23deg, #1194CA 50.63%, #4276CB 69.49%, #348CF0 100%, #87A0FF 117.04%)",
+                    boxShadow:
+                      "0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)",
                   }}
                 >
                   Check Out
@@ -283,12 +334,14 @@ const ArtCollectionCarousel = () => {
                       </div>
                       <button
                         onClick={() => openModal(card.id)}
-                        className="py-2 px-4 rounded text-white text-sm font-medium"
+                        className="py-2 cursor-pointer px-4 rounded text-white text-sm font-medium transition-all duration-200 transform hover:brightness-110 hover:scale-[1.02] active:brightness-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                         style={{
                           width: "133px",
                           height: "38px",
                           background:
                             "linear-gradient(92.23deg, #1194CA 50.63%, #4276CB 69.49%, #348CF0 100%, #87A0FF 117.04%)",
+                          boxShadow:
+                            "0 3px 5px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)",
                         }}
                       >
                         Check Out
@@ -342,56 +395,58 @@ const ArtCollectionCarousel = () => {
             <div className="w-full rounded-lg flex items-center justify-center relative overflow-hidden">
               {/* Carousel Content */}
               <div className="w-full h-full flex items-center justify-center">
-                {cards.find((card) => card.id === activeModal)?.modalContent[
-                  currentModalSlide
-                ]?.type === "image" ? (
+                {getCurrentModalContent()?.type === "image" ? (
                   <img
-                    src={
-                      cards.find((card) => card.id === activeModal)
-                        ?.modalContent[currentModalSlide]?.src
-                    }
-                    alt={
-                      cards.find((card) => card.id === activeModal)
-                        ?.modalContent[currentModalSlide]?.alt
-                    }
+                    src={getCurrentModalContent()?.src}
+                    alt={getCurrentModalContent()?.alt}
                     className="w-full max-h-[500px] object-contain"
                   />
                 ) : (
-                  <iframe
-                    src={
-                      cards.find((card) => card.id === activeModal)
-                        ?.modalContent[currentModalSlide]?.src
-                    }
-                    title={
-                      cards.find((card) => card.id === activeModal)
-                        ?.modalContent[currentModalSlide]?.alt
-                    }
-                    className="w-full h-[500px]"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  <div
+                    className="relative w-full h-[500px]"
+                    ref={videoContainerRef}
+                    onClick={handleVideoContainerClick}
+                  >
+                    {/* Loading spinner overlay */}
+                    {isVideoLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 z-10">
+                        <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                      </div>
+                    )}
+                    {/* Video iframe with modified source for better playback */}
+                    <iframe
+                      src={`${
+                        getCurrentModalContent()?.src
+                      }?autoplay=0&controls=1`}
+                      title={getCurrentModalContent()?.alt}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      onLoad={handleVideoLoaded}
+                    ></iframe>
+                  </div>
                 )}
               </div>
 
-              {/* Modal Carousel Navigation */}
-              <div className="absolute top-1/2 transform -translate-y-1/2 flex justify-between w-full px-4">
+              {/* Modal Carousel Navigation - Moved outside the video area */}
+              <div className="absolute top-1/2 transform -translate-y-1/2 flex justify-between w-full px-4 pointer-events-none">
                 <button
                   onClick={prevModalSlide}
-                  className="bg-blue-800/80 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                  className="bg-blue-800/80 text-white w-10 h-10 rounded-full flex items-center justify-center z-20 pointer-events-auto"
                 >
                   &lt;
                 </button>
                 <button
                   onClick={nextModalSlide}
-                  className="bg-blue-800/80 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                  className="bg-blue-800/80 text-white w-10 h-10 rounded-full flex items-center justify-center z-20 pointer-events-auto"
                 >
                   &gt;
                 </button>
               </div>
 
-              {/* Modal Carousel Dots Indicator */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+              {/* Modal Carousel Dots Indicator - Moved to top for video modal content */}
+              <div className="absolute top-0 left-0 right-0 flex justify-center mt-2 z-20">
                 {cards
                   .find((card) => card.id === activeModal)
                   ?.modalContent.map((_, index) => (
