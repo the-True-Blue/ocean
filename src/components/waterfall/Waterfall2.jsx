@@ -18,7 +18,7 @@ const Waterfall2 = () => {
       {/* Content */}
       <div className="relative z-10 h-full">
         {/* Web Design Projects Heading - Repositioned */}
-        <h2 className="font-orbitron text-[40px] font-bold text-white absolute top-[100px] right-[40px] z-20 md:block hidden">
+        <h2 className="font-orbitron text-[40px] font-bold text-white absolute top-[100px] right-[40px] z-20 md:block hidden [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl">
           Web Design Projects
         </h2>
 
@@ -42,7 +42,7 @@ const Waterfall2 = () => {
                 onMouseEnter={() => setActiveCard("telescope")}
               >
                 <div className="flex flex-col h-full justify-between">
-                  <h3 className="font-inter text-2xl md:text-[40px] font-bold text-white mb-4">
+                  <h3 className="font-inter text-2xl md:text-[40px] font-bold text-white mb-4 [text-shadow:_0px_4px_4px_rgba(255,255,255,0.5)] drop-shadow-xl">
                     StarryNight
                   </h3>
 
@@ -100,7 +100,7 @@ const Waterfall2 = () => {
                 onMouseEnter={() => setActiveCard("rocket")}
               >
                 <div className="flex flex-col h-full justify-between">
-                  <h3 className="font-inter text-2xl md:text-[40px] font-bold text-white mb-4">
+                  <h3 className="font-inter text-2xl md:text-[40px] font-bold text-white mb-4 [text-shadow:_0px_4px_4px_rgba(255,255,255,0.5)] drop-shadow-xl">
                     Animated Comic
                   </h3>
 

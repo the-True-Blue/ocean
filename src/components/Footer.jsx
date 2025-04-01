@@ -31,14 +31,7 @@ const Footer = () => {
       ></div>
 
       <div className="absolute pt-[15px] ps-[17px] md:pt-20">
-        {/* Logo con navegación al Hero */}
-        <img
-          src={Logo1}
-          alt="logo"
-          className="mb-15 cursor-pointer"
-          onClick={scrollToTop}
-        />
-        <div className="md:ps-[66px] flex flex-col items-start gap-3 font-orbitron text-white font-[700] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl">
+        <div className="md:ps-[66px] mt-15 flex flex-col items-start gap-3 font-orbitron text-white font-[700] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl">
           <h1 className="text-[24px] md:text-[32px]">Cool down</h1>
           <h1 className="text-[16px] md:text-[20px]">
             with <span className="text-[36px]  md:text-[40px]">TEMPEST</span>
