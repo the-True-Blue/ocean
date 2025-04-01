@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import rectangle from "../../assets/graphic_design/Rectangle.png";
 import centerImg from "../../assets/graphic_design/center_img.png";
 import leftImg from "../../assets/graphic_design/left_img.png";
@@ -8,23 +8,25 @@ import check from "../../assets/hero/check.png";
 import avatar from "../../assets/hero/avatar.png";
 
 const GraphicDesign = () => {
+  const [hoverCenter, setHoverCenter] = useState(false);
+  const [hoverLeft, setHoverLeft] = useState(false);
+  const [hoverRight, setHoverRight] = useState(false);
+
   return (
-    <div className="relative min-h-190 md:min-h-fit flex flex-col items-center pb-16 -mb-2">
-      {/* Fondo con gradiente mejorado */}
+    <div className="relative md:min-h-fit flex flex-col items-center pb-35 -mb-2">
+      {/* Background with improved gradient */}
       <div className="absolute inset-0 w-full h-full">
-        {/* Capa adicional para efecto radial en el centro */}
-        <div className="absolute inset-0 w-full h-full bg-radial to-transparent opacity-70 1c29b7"></div>
+        {/* Additional layer for radial effect in the center */}
+        <div className="absolute inset-0 w-full h-full bg-[#060757]"></div>
 
-        {/* Gradientes sutiles para las esquinas para mejor fusión */}
+        {/* Subtle gradients for corners for better blending */}
         <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-b from-[#083395] to-[#060757]"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-[#060757] from-65% via-[#070862] via-80% to-[#0e1a97] to-100%"></div>
-        <div className="absolute top-0 left-1/3 w-1/3 h-1/2 bg-gradient-to-b from-[#083395] to-[#060757]"></div>
-        <div className="absolute bottom-0 left-1/3 w-1/6 h-1/2 bg-linear-[140deg,#060757,55%,#1d29b0] "></div>
-        <div className="absolute bottom-0 right-1/3 w-1/6 h-1/2 bg-linear-[190deg,#060757,55%,#1d29b0] "></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-[#060757] from-65% via-[#070862] via-68% to-[#212eb4] to-100%"></div>
+        <div className="absolute top-0 left-1/3 w-1/3 h-1/2  bg-gradient-to-b from-[#083395] to-[#060757]"></div>
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-b from-[#083395] to-[#060757]"></div>
-        <div className="absolute bottom-0 right-0 w-1/3 h-1/2 bg-gradient-to-bl from-[#060757] from-5% via-[#03044e] via-74% to-[#1925aa] to-100%"></div>
+        <div className="absolute  bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#060757] from-65% via-[#070862] via-30% to-[#212eb4] to-100%"></div>
 
-        {/* Capa para puntos/estrellas - usando pseudo-elementos y CSS personalizado */}
+        {/* Layer for dots/stars - using pseudo-elements and custom CSS */}
         <div className="absolute inset-0 w-full h-full opacity-40 stars-background"></div>
         <div
           className="absolute inset-0 w-full h-full opacity-20 stars-background-small"
@@ -42,17 +44,35 @@ const GraphicDesign = () => {
         </h1>
       </div>
 
-      {/* Contenedor de tarjetas con efecto de superposición */}
-      <div className="relative flex items-center justify-center mt-8 w-full z-30">
-        {/* Tarjeta central */}
+      {/* Card container with overlay effect */}
+      <div className="relative flex items-center justify-center mt-8 w-full z-30 ">
+        {/* Center card */}
         <div className="relative z-30 mx-auto scale-[0.65] xs:scale-75 sm:scale-80 lg:scale-100 origin-center">
-          <div className="rounded-3xl overflow-hidden">
+          <div
+            className="rounded-3xl overflow-hidden transition-all duration-300 ease-in-out"
+            onMouseEnter={() => setHoverCenter(true)}
+            onMouseLeave={() => setHoverCenter(false)}
+            style={{
+              boxShadow: hoverCenter
+                ? "0 0 25px 5px rgba(251, 55, 255, 0.4)"
+                : "none",
+            }}
+          >
             <img src={centerImg} alt="center image" className="w-[469px]" />
           </div>
 
-          {/* Tarjeta derecha */}
+          {/* Right card */}
           <div className="absolute md:-right-20 right-10 md:top-15 top-52 -z-10 transform translate-x-1/2">
-            <div className="relative rounded-3xl overflow-hidden">
+            <div
+              className="relative rounded-3xl overflow-hidden transition-all duration-300 ease-in-out"
+              onMouseEnter={() => setHoverRight(true)}
+              onMouseLeave={() => setHoverRight(false)}
+              style={{
+                boxShadow: hoverRight
+                  ? "0 0 25px 5px rgba(251, 55, 255, 0.4)"
+                  : "none",
+              }}
+            >
               <img src={rectangle} alt="bg-rectangle" className="w-64" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <img
@@ -64,9 +84,18 @@ const GraphicDesign = () => {
             </div>
           </div>
 
-          {/* Tarjeta izquierda */}
+          {/* Left card */}
           <div className="absolute md:-left-20 left-10 md:top-15 top-52 -z-10 transform -translate-x-1/2">
-            <div className="relative rounded-3xl overflow-hidden">
+            <div
+              className="relative rounded-3xl overflow-hidden transition-all duration-300 ease-in-out"
+              onMouseEnter={() => setHoverLeft(true)}
+              onMouseLeave={() => setHoverLeft(false)}
+              style={{
+                boxShadow: hoverLeft
+                  ? "0 0 25px 5px rgba(251, 55, 255, 0.4)"
+                  : "none",
+              }}
+            >
               <img src={rectangle} alt="bg-rectangle" className="w-64" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <img
@@ -80,7 +109,7 @@ const GraphicDesign = () => {
         </div>
       </div>
 
-      {/* CSS para los puntos/estrellas - usando estilos en línea para no tener que modificar tu archivo CSS */}
+      {/* CSS for stars - using inline styles to avoid modifying CSS file */}
       <style jsx>{`
         .stars-background {
           background-image: radial-gradient(
