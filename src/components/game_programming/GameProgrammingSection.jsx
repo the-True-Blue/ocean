@@ -8,9 +8,9 @@ const GameProgrammingSection = () => {
       id="game-programming-section"
       className="w-full md:h-[1260px] min-h-[822px] relative"
     >
-      {/* Imagen para Desktop (oculta en pantallas pequeñas) */}
+      {/* Imagen para Desktop (oculta en pantallas pequeñas xl:!bg-[length:100%_100%]) */}
       <div
-        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat md:bg-cover xl:!bg-[length:100%_100%]"
+        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat "
         style={{
           backgroundImage: `url(${background})`,
         }}

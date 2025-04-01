@@ -60,7 +60,7 @@ const Hero = () => {
         />
       </div>
 
-      {/* Contenido de experiencia */}
+      {/* Contenido de experiencia
       <div className="relative z-10 flex flex-col items-center mb-0 pt-[480px]">
         <h1 className="text-[32px] font-poppins tracking-[15px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] md:text-[55px] text-[#094058] font-[800] drop-shadow-lg">
           5 + YEARS
@@ -76,7 +76,7 @@ const Hero = () => {
         <h1 className="md:text-[52px] text-[32px] font-poppins text-white font-[800] tracking-[7px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] drop-shadow-lg mt-[37px]">
           OF EXPERIENCE
         </h1>
-      </div>
+      </div> */}
 
       {/* Modal About Me */}
       <AboutModal
