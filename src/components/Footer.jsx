@@ -3,6 +3,7 @@ import Logo1 from "../assets/Logo1.svg";
 import instagramIcon from "../assets/footer/instagram.svg";
 import linkedinIcon from "../assets/footer/linkedin.svg";
 import tiktokIcon from "../assets/footer/tiktok.svg";
+import fiverIcon from "../assets/footer/Fiverr.png";
 import background from "../assets/footer/background.png";
 import backgroundMobile from "../assets/footer/background_mobile.png";
 
@@ -40,9 +41,9 @@ const Footer = () => {
         <div className="md:ps-[66px] flex flex-col items-start gap-3 font-orbitron text-white font-[700] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl">
           <h1 className="text-[24px] md:text-[32px]">Cool down</h1>
           <h1 className="text-[16px] md:text-[20px]">
-            with <span className="text-[36px] md:text-[40px]">TEMPEST</span>
+            with <span className="text-[36px]  md:text-[40px]">TEMPEST</span>
           </h1>
-          <div className="flex flex-col md:flex-row md:gap-8 items-center gap-0 ms-5">
+          <div className="flex md:flex-col  items-center gap-3 ms-5">
             <div className="flex gap-2 md:gap-8">
               <div className="bg-white/15 h-full rounded-full p-3">
                 <a
@@ -53,7 +54,7 @@ const Footer = () => {
                   <img
                     src={linkedinIcon}
                     alt="linkedin-icon"
-                    className="w-[33px]"
+                    className="md:w-[33px] w-[15px]"
                   />
                 </a>
               </div>
@@ -66,18 +67,36 @@ const Footer = () => {
                   <img
                     src={instagramIcon}
                     alt="instagram-icon"
-                    className="invert w-[33px]"
+                    className="invert md:w-[33px] w-[15px]"
+                  />
+                </a>
+              </div>
+              <div className="bg-white/15 h-full rounded-full p-3">
+                <a
+                  href="https://www.tiktok.com/@tempestdigital_?is_from_webapp=1&sender_device=pc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src={tiktokIcon}
+                    alt="tiktok-icon"
+                    className="md:w-[33px] w-[15px]"
                   />
                 </a>
               </div>
             </div>
+
             <div className="bg-white/15 h-full rounded-full p-3">
               <a
-                href="https://www.tiktok.com/@tempestdigital_?is_from_webapp=1&sender_device=pc"
+                href="https://www.fiverr.com/lexyblue3456"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={tiktokIcon} alt="tiktok-icon" className="w-[33px]" />
+                <img
+                  src={fiverIcon}
+                  alt="tiktok-icon"
+                  className="md:w-[33px] w-[15px]"
+                />
               </a>
             </div>
           </div>

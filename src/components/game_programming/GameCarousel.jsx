@@ -198,7 +198,7 @@ const GameCarousel = () => {
                   <img
                     src={projects[activeIndex].image}
                     alt={projects[activeIndex].title}
-                    className="md:w-[149px] md:h-[149px] w-[127px] h-[107px] object-contain transition-transform duration-300 hover:scale-105"
+                    className="md:w-[149px] md:h-[149px] w-[127px] h-[107px] object-contain transition-all duration-300 hover:brightness-125 hover:filter hover:drop-shadow-[0_0_15px_rgba(70,130,245,0.8)] hover:scale-105"
                   />
                 </div>
                 {/* Info container */}
@@ -219,10 +219,10 @@ const GameCarousel = () => {
                           />
                         </div>
                         <div className="text-white font-rajdhani text-nowrap">
-                          <h2 className="text-[7px] md:text-[20px] font-bold text-wrap leading-tight">
+                          <h2 className="text-[7px] md:text-[18px] font-bold text-wrap leading-tight">
                             "{projects[activeIndex].title}"
                           </h2>
-                          <h3 className="text-[6px] md:text-[15px] font-semibold text-white">
+                          <h3 className="text-[6px] md:text-[13px] font-semibold text-white">
                             {projects[activeIndex].username}
                           </h3>
                         </div>
