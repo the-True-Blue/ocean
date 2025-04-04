@@ -4,7 +4,16 @@ import projectImg from "../../assets/video_editing/proyects_img.png";
 import avatarImg from "../../assets/hero/avatar.png";
 import arrow from "../../assets/video_editing/Arrow.png";
 
-// Projects data
+// Projects data - move Kickstarter project to a separate variable
+const kickstarterProject = {
+  id: 11,
+  title: "Jungles of Kuauhtla Trailer",
+  description:
+    "Video editing for 'Jungles of Kuauhtla'. The trailer was featured on Kickstarter.",
+  videoUrl: "https://youtu.be/Cj-ykheti-Q?si=ipNRcNC0uqkOFC3D",
+  featured: true,
+};
+
 const projectsData = [
   {
     id: 1,
@@ -94,15 +103,34 @@ const VideoModal = ({ project, onClose }) => {
 
   useEffect(() => {
     if (project) {
-      // Extract Google Drive file ID
-      const getGoogleDriveFileId = (url) => {
-        const match = url.match(/[-\w]{25,}/);
-        return match ? match[0] : null;
-      };
+      // Check if it's a YouTube URL
+      if (
+        project.videoUrl.includes("youtu.be") ||
+        project.videoUrl.includes("youtube.com")
+      ) {
+        // Extract YouTube video ID
+        const getYoutubeVideoId = (url) => {
+          const regExp =
+            /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
+          const match = url.match(regExp);
+          return match && match[2].length === 11 ? match[2] : null;
+        };
 
-      const fileId = getGoogleDriveFileId(project.videoUrl);
-      if (fileId) {
-        setEmbedUrl(`https://drive.google.com/file/d/${fileId}/preview`);
+        const videoId = getYoutubeVideoId(project.videoUrl);
+        if (videoId) {
+          setEmbedUrl(`https://www.youtube.com/embed/${videoId}`);
+        }
+      } else {
+        // Handle Google Drive files
+        const getGoogleDriveFileId = (url) => {
+          const match = url.match(/[-\w]{25,}/);
+          return match ? match[0] : null;
+        };
+
+        const fileId = getGoogleDriveFileId(project.videoUrl);
+        if (fileId) {
+          setEmbedUrl(`https://drive.google.com/file/d/${fileId}/preview`);
+        }
       }
     }
   }, [project]);
@@ -165,10 +193,12 @@ const VideoModal = ({ project, onClose }) => {
 };
 
 // Project Card Component
-const ProjectCard = ({ project, onClick }) => {
+const ProjectCard = ({ project, onClick, featured = false }) => {
   return (
     <div
-      className="flex flex-col w-full rounded-lg overflow-hidden shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02] relative"
+      className={`flex flex-col w-full rounded-lg overflow-hidden shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02] relative ${
+        featured ? "border-2 border-yellow-400" : ""
+      }`}
       style={{
         height: "auto",
         aspectRatio: "369.38/503",
@@ -177,6 +207,13 @@ const ProjectCard = ({ project, onClick }) => {
       }}
       onClick={() => onClick(project)}
     >
+      {/* Featured badge if it's the featured project */}
+      {featured && (
+        <div className="absolute top-0 right-0 bg-yellow-400 text-blue-900 font-bold py-1 px-4 z-10 rounded-bl-lg shadow-md transform rotate-0 font-orbitron">
+          FEATURED
+        </div>
+      )}
+
       {/* Image container - exact height as specified */}
       <div
         className="w-full overflow-hidden"
@@ -199,11 +236,19 @@ const ProjectCard = ({ project, onClick }) => {
         }}
       >
         {/* Border layer with clip-path */}
-        <div className="absolute inset-0 -m-0.5 rounded-b-lg [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] bg-[#729a9f]"></div>
+        <div
+          className={`absolute inset-0 -m-0.5 rounded-b-lg [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] ${
+            featured ? "bg-yellow-500" : "bg-[#729a9f]"
+          }`}
+        ></div>
 
         {/* Content layer with gradient and clip-path */}
         <div
-          className="p-4 flex flex-col relative rounded-b-lg [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] bg-[linear-gradient(170deg,#6a7fac_0%,#305798_30%,#0933b9_60%)]"
+          className={`p-4 flex flex-col relative rounded-b-lg [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] ${
+            featured
+              ? "bg-[linear-gradient(170deg,#8a6c14_0%,#b58a0b_30%,#ffc107_60%)]"
+              : "bg-[linear-gradient(170deg,#6a7fac_0%,#305798_30%,#0933b9_60%)]"
+          }`}
           style={{ height: "100%" }}
         >
           <h3 className="text-lg font-bold text-white mb-2 font-orbitron truncate">
@@ -233,6 +278,102 @@ const ProjectCard = ({ project, onClick }) => {
           <p className="text-white/90 overflow-hidden text-sm line-clamp-3 font-rajdhani">
             {project.description}
           </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Featured Project Component
+const FeaturedProject = ({ project, onClick }) => {
+  return (
+    <div className="w-full mb-4 md:mb-8 relative">
+      {/* Ultra-compact mobile, normal on desktop */}
+      <div className="flex flex-row w-full backdrop-blur-sm bg-black/20 rounded-lg overflow-hidden shadow-xl border border-yellow-400">
+        {/* Featured tag - smaller on mobile */}
+        <div className="absolute -top-1 -right-1 z-10">
+          <div className="bg-yellow-400 text-blue-900 py-0.5 sm:py-1 px-2 sm:px-3 text-[10px] sm:text-xs font-bold shadow-md font-orbitron rounded-br-lg">
+            FEATURED
+          </div>
+        </div>
+
+        {/* Mobile design: ultra-compact side-by-side layout */}
+        <div className="flex flex-row w-full">
+          {/* Thumbnail side - very compact on mobile */}
+          <div className="w-2/5 md:w-2/5 p-1.5 sm:p-3">
+            <div
+              className="w-full overflow-hidden cursor-pointer rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+              onClick={() => onClick(project)}
+              style={{ aspectRatio: "16/9" }}
+            >
+              <div
+                className="w-full h-full bg-black flex items-center justify-center relative overflow-hidden"
+                style={{
+                  backgroundImage: `url(${projectImg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                {/* Play button overlay - tiny on mobile */}
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-yellow-500/80 flex items-center justify-center pl-0.5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8"
+                    >
+                      <path d="M8 5.14v14l11-7-11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content side - extremely compact on mobile */}
+          <div className="w-3/5 md:w-3/5 p-1.5 sm:p-3 md:p-4 flex flex-col justify-center">
+            {/* Title - single line, smaller text on mobile */}
+            <h3 className="text-sm sm:text-lg md:text-xl font-bold text-yellow-400 truncate font-orbitron">
+              {project.title}
+            </h3>
+
+            {/* User info - hidden on smallest screens */}
+            <div className="hidden sm:flex items-center my-1">
+              <img
+                src={avatarImg}
+                alt="Avatar"
+                className="w-4 h-4 sm:w-5 sm:h-5 rounded-full mr-1"
+              />
+              <span className="font-medium text-white text-[10px] sm:text-xs">
+                @tempestdigital
+              </span>
+              <svg
+                className="w-3 h-3 sm:w-4 sm:h-4 ml-1 text-yellow-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+
+            {/* Description - only 1 line on mobile, more on larger screens */}
+            <p className="text-white/90 text-[10px] sm:text-xs md:text-sm line-clamp-1 sm:line-clamp-2 md:line-clamp-3 font-rajdhani my-0.5 sm:my-1 md:my-2">
+              {project.description}
+            </p>
+
+            {/* Button - tiny on mobile, normal on desktop */}
+            <button
+              className="self-start px-2 sm:px-3 md:px-4 py-0.5 sm:py-1 md:py-2 bg-gradient-to-r from-yellow-600 to-yellow-400 text-blue-900 text-[10px] sm:text-xs md:text-sm font-bold rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 font-orbitron"
+              onClick={() => onClick(project)}
+            >
+              Watch Now
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -348,7 +489,7 @@ const CarouselModal = ({ isOpen, onClose }) => {
         onClick={onClose}
       ></div>
       <div
-        className="relative z-10 w-full max-w-[1280px] h-full md:h-auto max-h-[90vh] backdrop-blur-xl p-4 md:p-8 rounded-lg overflow-auto flex flex-col items-center"
+        className="relative z-10 w-full max-w-[1280px] h-full md:h-auto max-h-[90vh] backdrop-blur-xl p-3 md:p-6 rounded-lg overflow-auto flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -371,9 +512,24 @@ const CarouselModal = ({ isOpen, onClose }) => {
           </svg>
         </button>
 
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8 font-orbitron pt-6 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 font-orbitron pt-6 text-center">
           Video Editing Projects
         </h2>
+
+        {/* Featured Project */}
+        <FeaturedProject
+          project={kickstarterProject}
+          onClick={handleProjectClick}
+        />
+
+        {/* Divider - more compact */}
+        <div className="w-full flex items-center my-3 md:my-4">
+          <div className="flex-grow h-px bg-white/20"></div>
+          <h3 className="px-3 text-sm md:text-lg font-orbitron text-white/70">
+            MORE PROJECTS
+          </h3>
+          <div className="flex-grow h-px bg-white/20"></div>
+        </div>
 
         {/* Carousel Section with Arrows Outside */}
         <div className="relative w-full flex items-center justify-center">

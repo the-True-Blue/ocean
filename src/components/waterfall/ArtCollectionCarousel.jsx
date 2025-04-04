@@ -273,7 +273,7 @@ const ArtCollectionCarousel = () => {
         {cards.map((card) => (
           <div
             key={card.id}
-            className="bg-blue-900/50 rounded-lg overflow-hidden w-full max-w-sm"
+            className="bg-blue-900/50 border-gray-300/30  overflow-hidden w-full max-w-sm border-2  hover:border-blue-400/40 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg hover:shadow-blue-500/20"
             style={{ width: "390px", height: "490px" }}
           >
             <div className="p-4 h-full flex flex-col">
@@ -288,7 +288,7 @@ const ArtCollectionCarousel = () => {
                         : element3
                     }
                     alt={card.title}
-                    className="w-full h-full object-contain transition-all duration-300 hover:brightness-125 hover:filter hover:drop-shadow-[0_0_15px_rgba(70,130,245,0.8)] hover:scale-105"
+                    className="w-full h-full object-contain art-image-pulse"
                   />
                 </div>
               </div>
@@ -307,7 +307,7 @@ const ArtCollectionCarousel = () => {
                 </div>
                 <button
                   onClick={() => openModal(card.id)}
-                  className="w-full py-2 px-4 rounded text-white font-medium transition-all duration-200 transform hover:brightness-110 hover:scale-[1.02] active:brightness-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                  className="w-full py-2 px-4 rounded text-white font-medium transition-all duration-200 transform btn-pulse focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                   style={{
                     maxWidth: "209px",
                     height: "44px",
@@ -335,7 +335,7 @@ const ArtCollectionCarousel = () => {
             {cards.map((card) => (
               <div key={card.id} className="w-full flex-shrink-0 px-4">
                 <div
-                  className="bg-blue-900/50 rounded-lg overflow-hidden mx-auto"
+                  className="bg-blue-900/50 rounded-lg overflow-hidden mx-auto border border-transparent hover:border-blue-400/40 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg hover:shadow-blue-500/20"
                   style={{ width: "247px", height: "415px" }}
                 >
                   <div className="p-4 h-full flex flex-col">
@@ -350,7 +350,7 @@ const ArtCollectionCarousel = () => {
                               : element3
                           }
                           alt={card.title}
-                          className="w-full h-full object-contain transition-all duration-300 hover:brightness-125 hover:filter hover:drop-shadow-[0_0_15px_rgba(70,130,245,0.8)] hover:scale-105"
+                          className="w-full h-full object-contain art-image-pulse"
                         />
                       </div>
                     </div>
@@ -373,7 +373,7 @@ const ArtCollectionCarousel = () => {
                       </div>
                       <button
                         onClick={() => openModal(card.id)}
-                        className="py-2 cursor-pointer px-4 rounded text-white text-sm font-medium transition-all duration-200 transform hover:brightness-110 hover:scale-[1.02] active:brightness-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                        className="py-2 cursor-pointer px-4 rounded text-white text-sm font-medium transition-all duration-200 transform btn-pulse focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                         style={{
                           width: "133px",
                           height: "38px",

@@ -156,7 +156,7 @@ const VideoEditing = () => {
         </div>
 
         {/* Contenedor de órbitas con posicionamiento corregido */}
-        <div className="absolute top-[350px] md:top-25 right-1/2 md:right-0 transform translate-x-1/2 md:translate-x-0 rocket-container">
+        <div className="absolute top-[350px] md:top-25 right-1/2 md:right-5 transform translate-x-1/2 md:translate-x-0 rocket-container">
           <div
             ref={orbitRef}
             className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]"
@@ -223,7 +223,7 @@ const VideoEditing = () => {
         </div>
 
         <div
-          className="top-125 right-38 absolute hidden md:block z-50"
+          className="top-125 md:top-135 right-38 absolute hidden md:block z-50"
           style={{
             opacity: showButtons ? 1 : 0,
             transition: "opacity 500ms ease",
