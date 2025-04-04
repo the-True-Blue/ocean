@@ -8,14 +8,6 @@ import background from "../assets/footer/background.png";
 import backgroundMobile from "../assets/footer/background_mobile.png";
 
 const Footer = () => {
-  // Función para navegar al Hero (inicio)
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <div className="w-full h-[620px] md:h-[750px] relative">
       {/* Fondo para móvil (visible en pantallas pequeñas) */}
@@ -31,64 +23,68 @@ const Footer = () => {
       ></div>
 
       <div className="absolute pt-[15px] ps-[17px] md:pt-20">
-        <div className="md:ps-[66px] mt-15 flex flex-col items-start gap-3 font-orbitron text-white font-[700] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl">
+        <div className="md:ps-[66px] mt-15 flex flex-col items-start gap-3 font-orbitron text-white font-[700] [text-shadow:_5px_5px_4px_rgba(255,255,255,0.51)] drop-shadow-xl">
           <h1 className="text-[24px] md:text-[32px]">Cool down</h1>
           <h1 className="text-[16px] md:text-[20px]">
             with <span className="text-[36px]  md:text-[40px]">TEMPEST</span>
           </h1>
-          <div className="flex md:flex-col  items-center gap-3 ms-5">
+          <div className="flex md:flex-col items-center gap-3 ms-5">
             <div className="flex gap-2 md:gap-8">
-              <div className="bg-white/15 h-full rounded-full p-3">
+              <div className="bg-white/15 hover:bg-white/25 h-full rounded-full p-3 transition-all duration-300 hover:shadow-glow transform hover:scale-110 cursor-pointer">
                 <a
                   href="https://www.linkedin.com/in/dominique-mccormack-4213791b7/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="block"
                 >
                   <img
                     src={linkedinIcon}
                     alt="linkedin-icon"
-                    className="md:w-[33px] w-[15px]"
+                    className="md:w-[33px] w-[15px] transition-transform duration-300"
                   />
                 </a>
               </div>
-              <div className="bg-white/15 h-full rounded-full p-3">
+              <div className="bg-white/15 hover:bg-white/25 h-full rounded-full p-3 transition-all duration-300 hover:shadow-glow transform hover:scale-110 cursor-pointer">
                 <a
                   href="https://www.instagram.com/tempestdigital_/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="block"
                 >
                   <img
                     src={instagramIcon}
                     alt="instagram-icon"
-                    className="invert md:w-[33px] w-[15px]"
+                    className="invert md:w-[33px] w-[15px] transition-transform duration-300"
                   />
                 </a>
               </div>
-              <div className="bg-white/15 h-full rounded-full p-3">
+              <div className="bg-white/15 hover:bg-white/25 h-full rounded-full p-3 transition-all duration-300 hover:shadow-glow transform hover:scale-110 cursor-pointer">
                 <a
                   href="https://www.tiktok.com/@tempestdigital_?is_from_webapp=1&sender_device=pc"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="block"
                 >
                   <img
                     src={tiktokIcon}
                     alt="tiktok-icon"
-                    className="md:w-[33px] w-[15px]"
+                    className="md:w-[33px] w-[15px] transition-transform duration-300"
                   />
                 </a>
               </div>
             </div>
 
-            <div className="bg-white/15 h-full rounded-full p-3">
+            <div className="bg-white/15 hover:bg-white/25 h-full rounded-full p-3 transition-all duration-300 hover:shadow-glow transform hover:scale-110 cursor-pointer">
               <a
                 href="https://www.fiverr.com/lexyblue3456"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="block"
               >
                 <img
                   src={fiverIcon}
                   alt="tiktok-icon"
-                  className="md:w-[33px] w-[15px]"
+                  className="md:w-[33px] w-[15px] transition-transform duration-300"
                 />
               </a>
             </div>

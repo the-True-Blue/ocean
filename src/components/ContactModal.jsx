@@ -97,35 +97,76 @@ const ContactModal = ({ isOpen, onClose }) => {
             onSubmit={handleSubmit}
             className="space-y-4 font-poppins text-[12px]"
           >
-            <input
-              type="text"
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="underline w-full md:w-[430px] h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white placeholder-white focus:outline-none"
-              required
-            />
+            <div className="relative w-full md:w-[430px]">
+              <input
+                type="text"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
+                required
+                id="name"
+              />
+              <label
+                htmlFor="name"
+                className="absolute left-4 top-4 text-white transition-all duration-200 underline pointer-events-none"
+                style={{
+                  opacity: name ? "0" : "1",
+                  transform: name ? "translateY(-2rem)" : "translateY(0)",
+                }}
+              >
+                Enter your name
+              </label>
+            </div>
 
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="underline w-full md:w-[430px] h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white placeholder-white focus:outline-none"
-              required
-            />
+            <div className="relative w-full md:w-[430px]">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
+                required
+                id="email"
+              />
+              <label
+                htmlFor="email"
+                className="absolute left-4 top-4 text-white transition-all duration-200 underline pointer-events-none"
+                style={{
+                  opacity: email ? "0" : "1",
+                  transform: email ? "translateY(-2rem)" : "translateY(0)",
+                }}
+              >
+                Enter your email address
+              </label>
+            </div>
 
-            <textarea
-              placeholder="Go ahead. We are listening..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="underline w-full md:w-[430px] h-[150px] bg-[#AAEBFB]/30 p-4 rounded text-white placeholder-white focus:outline-none resize-none"
-              required
-            />
+            <div className="relative w-full md:w-[430px]">
+              <textarea
+                placeholder="Go ahead. We are listening..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="w-full h-[150px] bg-[#AAEBFB]/30 p-4 rounded text-white focus:outline-none resize-none placeholder-transparent"
+                required
+                id="message"
+              />
+              <label
+                htmlFor="message"
+                className="absolute left-4 top-4 text-white transition-all duration-200 underline pointer-events-none"
+                style={{
+                  opacity: message ? "0" : "1",
+                  transform: message ? "translateY(-2rem)" : "translateY(0)",
+                }}
+              >
+                Go ahead. We are listening...
+              </label>
+            </div>
 
             <button
               type="submit"
-              className="w-full underline md:w-[430px] h-[50px] text-[20px] bg-[#AAEBFB] text-white font-[700] tracking-[8%] py-2 px-4 rounded hover:bg-opacity-90 transition duration-300"
+              className="w-full underline md:w-[430px] h-[50px] text-[20px] bg-[#AAEBFB] text-white font-[700] tracking-[8%] py-2 px-4 rounded 
+              hover:bg-[#76b3c2] active:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-[#AAEBFB] focus:ring-opacity-50 
+              transform active:scale-95 active:translate-y-1 transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Submit
             </button>

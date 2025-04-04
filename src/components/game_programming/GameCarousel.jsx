@@ -14,7 +14,7 @@ const GameCarousel = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [showVideosModal, setShowVideosModal] = useState(false);
-  const [isTouching, setIsTouching] = useState(false); // Nuevo estado para rastrear toques
+  const [isTouching, setIsTouching] = useState(false);
 
   const projects = [
     {
@@ -86,28 +86,20 @@ const GameCarousel = () => {
     setActiveIndex(index);
   };
 
-  // Función modificada para manejar el clic en el botón "View"
   const handleViewClick = (e) => {
-    // Detener la propagación del evento para evitar conflictos con eventos táctiles
     e.stopPropagation();
-
-    // Prevenir el comportamiento por defecto
     e.preventDefault();
 
     const currentProject = projects[activeIndex];
 
     if (currentProject.id === 6) {
-      // Si es el proyecto con ID 6 (Sonic), abre el modal de videos
       setShowVideosModal(true);
     } else if (currentProject.link) {
-      // Para el resto, abre el enlace externo
       window.open(currentProject.link);
     }
   };
 
-  // Touch handlers for mobile swipe - modificados
   const handleTouchStart = (e) => {
-    // Si el toque se origina en el botón View o sus elementos hijos, no iniciamos el swipe
     if (e.target.closest('button[data-view-button="true"]')) {
       return;
     }
@@ -124,20 +116,16 @@ const GameCarousel = () => {
   const handleTouchEnd = (e) => {
     if (!isTouching) return;
 
-    // Solo procesamos el swipe si la diferencia es significativa
     if (touchStart - touchEnd > 50) {
-      // Swipe left
       nextSlide();
     }
     if (touchStart - touchEnd < -50) {
-      // Swipe right
       prevSlide();
     }
 
     setIsTouching(false);
   };
 
-  // Calcular los índices de elementos visibles
   const getPrevIndex = () =>
     (activeIndex - 1 + projects.length) % projects.length;
   const getNextIndex = () => (activeIndex + 1) % projects.length;
@@ -147,7 +135,7 @@ const GameCarousel = () => {
       <div className="w-full relative overflow-hidden py-8 h-[300px] md:h-[400px] mx-auto max-w-7xl">
         {/* Navigation Arrows */}
         <button
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-40  text-white rounded-full w-10 h-10 flex items-center justify-center  transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-40 text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
           onClick={prevSlide}
         >
           <img
@@ -158,7 +146,7 @@ const GameCarousel = () => {
         </button>
 
         <button
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-40  text-white rounded-full w-10 h-10 flex items-center justify-center  transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-40 text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 active:shadow-inner"
           onClick={nextSlide}
         >
           <img
@@ -178,13 +166,13 @@ const GameCarousel = () => {
           {/* Three-element carousel layout */}
           <div className="relative h-full w-full flex items-center justify-center">
             {/* Previous Item - Left Side */}
-            <div className="absolute left-33  hidden md:block z-10 opacity-60 scale-75 hover:opacity-80 hover:scale-80 transition-all duration-200">
+            <div className="absolute left-33 hidden md:block z-10 opacity-60 scale-75 hover:opacity-80 hover:scale-80 transition-all duration-200">
               <div className="flex items-center justify-center w-[179px] h-[120px]">
                 <div className="flex items-center justify-center backdrop-blur-3xl w-[179px] h-[120px] bg-[#FFFFFF2D] border-4 border-[#FFFFFF47] rounded-4xl hover:border-[#FFFFFF60] transition-all duration-200">
                   <img
                     src={projects[getPrevIndex()].image}
                     alt={projects[getPrevIndex()].title}
-                    className="w-[100px] h-[100px] object-contain"
+                    className="md:w-[177px] md:h-[167px] w-[127px] h-[107px] object-contain"
                   />
                 </div>
               </div>
@@ -198,7 +186,7 @@ const GameCarousel = () => {
                   <img
                     src={projects[activeIndex].image}
                     alt={projects[activeIndex].title}
-                    className="md:w-[149px] md:h-[149px] w-[127px] h-[107px] object-contain transition-all duration-300 hover:brightness-125 hover:filter hover:drop-shadow-[0_0_15px_rgba(70,130,245,0.8)] hover:scale-105"
+                    className="md:w-[207px] md:h-[179px] w-[127px] h-[107px] object-contain image-pulse"
                   />
                 </div>
                 {/* Info container */}
@@ -265,7 +253,7 @@ const GameCarousel = () => {
                   <img
                     src={projects[getNextIndex()].image}
                     alt={projects[getNextIndex()].title}
-                    className="w-[100px] h-[100px] object-contain"
+                    className="md:w-[177px] md:h-[167px] w-[127px] h-[107px] object-contain"
                   />
                 </div>
               </div>
