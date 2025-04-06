@@ -33,7 +33,7 @@ const Waterfall = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen relative">
+    <div className="w-full h-screen relative flex flex-col justify-end overflow-hidden">
       {/* Fondo de imagen que cubre todo el componente */}
       <div
         className="absolute w-full h-full bg-cover bg-no-repeat bg-center md:bg-cover xl:!bg-[length:100%_100%]"
@@ -42,7 +42,7 @@ const Waterfall = () => {
 
       <div
         ref={textRef}
-        className="relative md:top-190 bottom-0 w-full max-w-[1359px] hidden md:block mx-auto opacity-0 transition-opacity duration-1000 ease-in-out fade-in"
+        className="relative w-full max-w-[1359px] mb-38 hidden md:block mx-auto opacity-0 transition-opacity duration-1000 ease-in-out fade-in"
       >
         <div className="text-white flex flex-col gap-0 md:gap-0 md:flex-row justify-between font-poppins font-[900]">
           <div className="flex flex-col items-center lg:pl-25 md:pl-5">

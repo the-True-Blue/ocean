@@ -29,6 +29,8 @@ const AnimationStyles = () => (
     }
     .speech-bubble {
       animation: floatBubble 5s ease-in-out infinite;
+      animation-play-state: running;
+      will-change: transform;
     }
     .speech-bubble:hover {
       animation: floatBubble 2s ease-in-out infinite;
@@ -51,8 +53,10 @@ const VideoEditing = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isRocketHovered, setIsRocketHovered] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
+  const rocketRef = useRef(null);
+  const bubbleRef = useRef(null);
 
-  // Función para mostrar los botones permanentemente
+  // Función para mostrar los botones permanentemente con detección de eventos específicos para cada elemento
   const handleRocketHover = () => {
     setIsRocketHovered(true);
     setShowButtons(true); // Una vez que se establece en true, no se volverá a ocultar
@@ -116,6 +120,26 @@ const VideoEditing = () => {
     }
   };
 
+  // Función para evitar propagación de eventos entre elementos superpuestos
+  useEffect(() => {
+    // Asegurar que el evento hover de la burbuja no afecte al cohete
+    const bubbleElement = bubbleRef.current;
+    const rocketElement = rocketRef.current;
+
+    if (bubbleElement && rocketElement) {
+      const handleBubbleMouseEnter = (e) => {
+        // Prevenir que el evento se propague al cohete si están superpuestos
+        e.stopPropagation();
+      };
+
+      bubbleElement.addEventListener("mouseenter", handleBubbleMouseEnter);
+
+      return () => {
+        bubbleElement.removeEventListener("mouseenter", handleBubbleMouseEnter);
+      };
+    }
+  }, []);
+
   // Medir el tamaño del contenedor para ser responsive
   useEffect(() => {
     updateSizeAndDevice();
@@ -145,6 +169,7 @@ const VideoEditing = () => {
 
         <div className="relative">
           <div
+            ref={bubbleRef}
             className="absolute right-10 md:right-105 flex items-center justify-center mt-[43px] bg-cover md:w-[262.53px] md:h-[230.53px] w-[135px] h-[130px] bg-no-repeat speech-bubble cursor-pointer"
             style={{ backgroundImage: `url(${bubble})` }}
           >
@@ -163,14 +188,18 @@ const VideoEditing = () => {
           >
             {/* Cohete central con posición ajustada y tamaño actualizado */}
             <div
+              ref={rocketRef}
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
               onMouseEnter={handleRocketHover}
               onMouseLeave={handleRocketLeave}
             >
               {/* Glow effect - more subtle */}
               <div
-                className="absolute inset-0 opacity-0 bg-blue-400 blur-md rounded-full scale-110 -z-10 transition-opacity duration-500"
-                style={{ opacity: isRocketHovered ? 0.7 : 0 }}
+                className="absolute inset-0 bg-blue-400 blur-md rounded-full scale-110 -z-10 transition-opacity duration-500"
+                style={{
+                  opacity: isRocketHovered ? 0.7 : 0,
+                  pointerEvents: "none", // Evitar que capture eventos de mouse
+                }}
               ></div>
 
               {/* Engine thrust - behind the rocket */}
@@ -179,6 +208,7 @@ const VideoEditing = () => {
                 style={{
                   opacity: isRocketHovered ? 1 : 0,
                   transition: "opacity 300ms ease",
+                  pointerEvents: "none", // Evitar que capture eventos de mouse
                 }}
               >
                 <div className="h-16 md:h-24 animate-pulse bg-gradient-to-t from-orange-500 via-yellow-400 to-transparent rounded-b-full"></div>
@@ -191,6 +221,8 @@ const VideoEditing = () => {
                 className="h-[209px] md:h-[366.67px] w-auto object-cover relative z-10 transition-transform ease-in-out duration-500"
                 style={{
                   transform: isRocketHovered ? "rotate(0deg)" : "rotate(25deg)",
+                  transformOrigin: "center center",
+                  willChange: "transform",
                 }}
               />
 
@@ -227,6 +259,7 @@ const VideoEditing = () => {
           style={{
             opacity: showButtons ? 1 : 0,
             transition: "opacity 500ms ease",
+            pointerEvents: showButtons ? "auto" : "none",
           }}
         >
           <button
@@ -242,6 +275,7 @@ const VideoEditing = () => {
         style={{
           opacity: showButtons ? 1 : 0,
           transition: "opacity 500ms ease",
+          pointerEvents: showButtons ? "auto" : "none",
         }}
       >
         <button
@@ -260,15 +294,19 @@ const VideoEditing = () => {
 
 // Componente para cada elemento orbital con posicionamiento mejorado
 const OrbitalElement = ({ item, containerSize, isMobile }) => {
-  const controls = useAnimation();
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
+  const elementRef = useRef(null);
 
   // Efecto para animar en círculo
   useEffect(() => {
     let startTime = null;
     let animationFrameId = null;
 
-    const animate = async () => {
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const elapsedSeconds = elapsed / 1000;
+
       const centerX = containerSize.width / 2.5;
       const centerY = containerSize.height / 2;
 
@@ -279,56 +317,49 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
       const radiusX = radius * (containerSize.width / (isMobile ? 250 : 350));
       const radiusY = radius * (containerSize.height / (isMobile ? 700 : 700));
 
-      // Función de animación
-      const frame = (timestamp) => {
-        if (!startTime) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const elapsedSeconds = elapsed / 1000;
+      // Calcula el ángulo basado en el tiempo y duración
+      const angleOffset = (elapsedSeconds / item.duration) * 2 * Math.PI;
+      const angle = (item.initialAngle * Math.PI) / 180 + angleOffset;
 
-        // Calcula el ángulo basado en el tiempo y duración
-        const angleOffset = (elapsedSeconds / item.duration) * 2 * Math.PI;
-        const angle = (item.initialAngle * Math.PI) / 180 + angleOffset;
+      // Calcula posición orbital
+      const x = centerX + radiusX * Math.cos(angle);
+      const y = centerY + radiusY * Math.sin(angle);
 
-        // Calcula posición orbital
-        const x = centerX + radiusX * Math.cos(angle);
-        const y = centerY + radiusY * Math.sin(angle);
+      // Aplica un valor Z para simular profundidad
+      const z = Math.sin(angle) * 40; // Un poco más pronunciado para mejor efecto
 
-        // Aplica un valor Z para simular profundidad
-        const z = Math.sin(angle) * 40; // Un poco más pronunciado para mejor efecto
-
-        setPosition({ x, y, z });
-        animationFrameId = requestAnimationFrame(frame);
-      };
-
-      animationFrameId = requestAnimationFrame(frame);
+      setPosition({ x, y, z });
+      animationFrameId = requestAnimationFrame(animate);
     };
 
+    // Solo inicia la animación si el contenedor tiene dimensiones
     if (containerSize.width > 0 && containerSize.height > 0) {
-      animate();
+      animationFrameId = requestAnimationFrame(animate);
     }
 
     return () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
-      controls.stop();
     };
-  }, [controls, item, containerSize, isMobile]);
+  }, [item, containerSize, isMobile]);
 
   // Calcula el z-index dinámicamente
   const dynamicZIndex = Math.round(position.z + 50);
 
   return (
     <motion.div
-      className={`absolute ${item.size}`}
+      ref={elementRef}
+      className={`absolute ${item.size} pointer-events-none`}
       style={{
         left: position.x,
         top: position.y,
         zIndex: dynamicZIndex,
         transform: "translate(-50%, -50%)",
-        transition: "left 0.05s linear, top 0.05s linear",
+        transition: "none", // Removido para evitar conflictos con la animación por frame
         filter: position.z < 0 ? "brightness(0.7)" : "brightness(1)", // Oscurece cuando está "detrás"
         scale: 1 + position.z / 400, // Escala mínima para un efecto sutil
+        willChange: "transform, filter", // Optimización de rendimiento
       }}
     >
       <img
