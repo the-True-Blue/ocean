@@ -14,9 +14,42 @@ const VideosModal = ({ onClose }) => {
 
     document.addEventListener("keydown", handleEscKey);
 
-    // Prevent body scrolling while modal is open
+    // Save current scroll position
+    const scrollY = window.scrollY;
+
+    // Prevent body scrolling while modal is open but maintain scroll position
     document.body.style.overflow = "hidden";
-    document.body.style.position = "relative";
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.height = "100%";
+
+    // Temporarily hide the navbar and other fixed elements
+    const fixedElements = document.querySelectorAll(
+      'nav, [class*="navbar"], [class*="header"], [class*="fixed"]'
+    );
+    const originalDisplayValues = new Map();
+
+    fixedElements.forEach((element) => {
+      if (
+        element !== modalRef.current &&
+        !modalRef.current?.contains(element) &&
+        // Avoid hiding elements that are part of this modal
+        !element.closest(".modal-overlay") &&
+        element.tagName.toLowerCase() !== "body" &&
+        element.tagName.toLowerCase() !== "html"
+      ) {
+        originalDisplayValues.set(element, {
+          display: element.style.display,
+          visibility: element.style.visibility,
+          zIndex: element.style.zIndex,
+        });
+
+        // Instead of hiding completely, set a very low z-index
+        element.style.zIndex = "-1";
+        element.style.visibility = "hidden";
+      }
+    });
 
     // Handle z-index conflicts by temporarily adjusting other elements
     const highZElements = document.querySelectorAll('[style*="z-index"]');
@@ -38,8 +71,29 @@ const VideosModal = ({ onClose }) => {
     return () => {
       // Cleanup on modal close
       document.removeEventListener("keydown", handleEscKey);
-      document.body.style.overflow = "auto";
+      // Get the body's top position
+      const scrollY =
+        parseInt((document.body.style.top || "0").replace("px", "")) * -1;
+
+      // Restore original body styles
+      document.body.style.overflow = "";
       document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.height = "";
+      document.body.style.top = "";
+
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
+
+      // Restore original display values
+      fixedElements.forEach((element) => {
+        if (originalDisplayValues.has(element)) {
+          const originalValues = originalDisplayValues.get(element);
+          element.style.display = originalValues.display;
+          element.style.visibility = originalValues.visibility;
+          element.style.zIndex = originalValues.zIndex;
+        }
+      });
 
       // Restore original z-index values
       highZElements.forEach((element) => {
@@ -59,7 +113,7 @@ const VideosModal = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[99999] flex items-center justify-center backdrop-blur-sm md:pt-10"
+      className="fixed inset-0 z-[99999] flex items-center justify-center backdrop-blur-sm md:pt-10 modal-overlay"
       onClick={handleOutsideClick}
       style={{
         position: "fixed",

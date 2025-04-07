@@ -99,9 +99,11 @@ const projectsData = [
 ];
 
 // Updated VideoModal component for proper video containment
+// Solo la parte del VideoModal actualizada
 const VideoModal = ({ project, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const modalRef = useRef(null);
 
   // Reference to the container for YouTube videos
   const youtubeContainerRef = useRef(null);
@@ -148,6 +150,40 @@ const VideoModal = ({ project, onClose }) => {
 
         return () => clearTimeout(timer);
       }
+    }
+  }, [project]);
+
+  // Manejar el z-index y la visibilidad para el modal de video anidado
+  useEffect(() => {
+    if (project) {
+      // No necesitamos fijar el body de nuevo porque el modal padre ya lo hizo
+      // Pero podemos manejar elementos adicionales que podrían estar sobre este modal
+
+      const highZElements = document.querySelectorAll('[style*="z-index"]');
+      const originalZValues = new Map();
+
+      highZElements.forEach((element) => {
+        if (
+          element !== modalRef.current &&
+          !modalRef.current?.contains(element) &&
+          !element.closest(".carousel-modal-overlay") // No afectar elementos del carousel modal padre
+        ) {
+          const zValue = window.getComputedStyle(element).zIndex;
+          if (zValue !== "auto" && parseInt(zValue) > 100) {
+            originalZValues.set(element, element.style.zIndex);
+            element.style.zIndex = "0";
+          }
+        }
+      });
+
+      return () => {
+        // Restaurar valores de z-index
+        highZElements.forEach((element) => {
+          if (originalZValues.has(element)) {
+            element.style.zIndex = originalZValues.get(element);
+          }
+        });
+      };
     }
   }, [project]);
 
@@ -349,14 +385,24 @@ const VideoModal = ({ project, onClose }) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-[999999] flex items-center justify-center p-4 video-modal-overlay"
       onClick={onClose}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        touchAction: "none",
+        isolation: "isolate",
+      }}
     >
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-md"
         onClick={onClose}
       ></div>
       <div
+        ref={modalRef}
         className={`relative z-10 w-full max-w-4xl bg-transparent rounded-lg overflow-hidden ${
           isVerticalVideo() ? "max-h-[90vh]" : ""
         }`}
@@ -599,6 +645,7 @@ const CarouselModal = ({ isOpen, onClose }) => {
   const [cardWidth, setCardWidth] = useState(0);
   const [cardGap, setCardGap] = useState(27);
   const [containerWidth, setContainerWidth] = useState(0);
+  const modalRef = useRef(null);
 
   // Update layout based on screen size
   useEffect(() => {
@@ -673,6 +720,98 @@ const CarouselModal = ({ isOpen, onClose }) => {
     }
   }, [isOpen, currentIndex]);
 
+  // Efecto para manejar el HTML cuando el modal está abierto
+  useEffect(() => {
+    if (isOpen) {
+      // Guardar la posición actual del scroll
+      const scrollY = window.scrollY;
+
+      // Prevenir el scroll del body y mantener la posición
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.height = "100%";
+
+      // Ocultar temporalmente elementos fijos como el navbar
+      const fixedElements = document.querySelectorAll(
+        'nav, [class*="navbar"], [class*="header"], [class*="fixed"]'
+      );
+      const originalDisplayValues = new Map();
+
+      fixedElements.forEach((element) => {
+        if (
+          element !== modalRef.current &&
+          !modalRef.current?.contains(element) &&
+          // Evitar ocultar elementos que son parte de este modal
+          !element.closest(".carousel-modal-overlay") &&
+          element.tagName.toLowerCase() !== "body" &&
+          element.tagName.toLowerCase() !== "html"
+        ) {
+          originalDisplayValues.set(element, {
+            display: element.style.display,
+            visibility: element.style.visibility,
+            zIndex: element.style.zIndex,
+          });
+
+          // En lugar de ocultar completamente, establecer un z-index muy bajo
+          element.style.zIndex = "-1";
+          element.style.visibility = "hidden";
+        }
+      });
+
+      // Manejar conflictos de z-index
+      const highZElements = document.querySelectorAll('[style*="z-index"]');
+      const originalZValues = new Map();
+
+      highZElements.forEach((element) => {
+        if (
+          element !== modalRef.current &&
+          !modalRef.current?.contains(element)
+        ) {
+          const zValue = window.getComputedStyle(element).zIndex;
+          if (zValue !== "auto" && parseInt(zValue) > 100) {
+            originalZValues.set(element, element.style.zIndex);
+            element.style.zIndex = "0";
+          }
+        }
+      });
+
+      return () => {
+        // Obtener la posición de desplazamiento guardada
+        const scrollY =
+          parseInt((document.body.style.top || "0").replace("px", "")) * -1;
+
+        // Restaurar los estilos originales del body
+        document.body.style.overflow = "";
+        document.body.style.position = "";
+        document.body.style.width = "";
+        document.body.style.height = "";
+        document.body.style.top = "";
+
+        // Restaurar la posición de desplazamiento
+        window.scrollTo(0, scrollY);
+
+        // Restaurar los valores de visualización originales
+        fixedElements.forEach((element) => {
+          if (originalDisplayValues.has(element)) {
+            const originalValues = originalDisplayValues.get(element);
+            element.style.display = originalValues.display;
+            element.style.visibility = originalValues.visibility;
+            element.style.zIndex = originalValues.zIndex;
+          }
+        });
+
+        // Restaurar los valores originales de z-index
+        highZElements.forEach((element) => {
+          if (originalZValues.has(element)) {
+            element.style.zIndex = originalZValues.get(element);
+          }
+        });
+      };
+    }
+  }, [isOpen]);
+
   const nextSlide = () => {
     const maxIndex = projectsData.length - visibleCount;
     setCurrentIndex((prevIndex) => (prevIndex >= maxIndex ? 0 : prevIndex + 1));
@@ -694,12 +833,24 @@ const CarouselModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-40 flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-[99999] flex items-center justify-center carousel-modal-overlay"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        touchAction: "none",
+        isolation: "isolate",
+      }}
+    >
       <div
         className="absolute inset-0 backdrop-blur-md"
         onClick={onClose}
       ></div>
       <div
+        ref={modalRef}
         className="relative z-10 w-full max-w-[1280px] h-full md:h-auto max-h-[90vh] backdrop-blur-xl p-3 md:p-6 rounded-lg overflow-auto flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
