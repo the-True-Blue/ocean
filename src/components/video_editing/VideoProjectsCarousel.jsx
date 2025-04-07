@@ -91,7 +91,7 @@ const projectsData = [
 // Video Modal Component
 const VideoModal = ({ project, onClose }) => {
   const [embedUrl, setEmbedUrl] = useState(null);
-  const [embedType, setEmbedType] = useState(null); // "youtube", "tiktok-embed", "tiktok-blockquote", "instagram-embed", "instagram-link"
+  const [embedType, setEmbedType] = useState("iframe"); // "iframe" for YouTube, "widget" for TikTok/Instagram
 
   useEffect(() => {
     if (project) {
@@ -111,41 +111,29 @@ const VideoModal = ({ project, onClose }) => {
         const videoId = getYoutubeVideoId(project.videoUrl);
         if (videoId) {
           setEmbedUrl(`https://www.youtube.com/embed/${videoId}`);
-          setEmbedType("youtube");
+          setEmbedType("iframe");
         }
       }
       // Handle TikTok URLs
       else if (project.videoUrl.includes("tiktok.com")) {
-        // Extract the TikTok username and video ID for embedding
-        const tiktokRegex = /tiktok\.com\/@?([^\/]+)\/(?:video|t)\/(\d+)/;
-        const tiktokMatch = project.videoUrl.match(tiktokRegex);
-
-        if (tiktokMatch) {
-          // If we can extract the video ID, use the embed code
-          const [_, username, videoId] = tiktokMatch;
-          setEmbedUrl(`https://www.tiktok.com/embed/v2/${videoId}`);
-          setEmbedType("tiktok-embed");
-        } else {
-          // For TikTok links that don't match the pattern, try to use the direct URL
-          // TikTok's shortlinks like t/ZP8jYCgnJ can still be embedded by transforming to blockquote
-          setEmbedUrl(project.videoUrl);
-          setEmbedType("tiktok-blockquote");
-        }
+        // For TikTok, we'll use their embed code
+        // The URL remains the same, but we'll use a different approach to display
+        setEmbedUrl(project.videoUrl);
+        setEmbedType("tiktok");
       }
       // Handle Instagram URLs
       else if (project.videoUrl.includes("instagram.com")) {
-        // For Instagram, extract the post ID
-        const match = project.videoUrl.match(/\/(?:reel|p)\/([^\/\?]+)/);
+        // For Instagram, extract the post ID if possible
+        const match = project.videoUrl.match(/\/reel\/([^\/\?]+)/);
         const postId = match ? match[1] : null;
 
         if (postId) {
-          // Use the proper embed URL for Instagram
-          setEmbedUrl(`https://www.instagram.com/p/${postId}/embed/`);
-          setEmbedType("instagram-embed");
+          setEmbedUrl(`https://www.instagram.com/reel/${postId}/embed/`);
+          setEmbedType("iframe");
         } else {
           // Fallback to the original URL
           setEmbedUrl(project.videoUrl);
-          setEmbedType("instagram-link");
+          setEmbedType("instagram");
         }
       }
     }
@@ -164,7 +152,7 @@ const VideoModal = ({ project, onClose }) => {
     }
 
     switch (embedType) {
-      case "youtube":
+      case "iframe":
         return (
           <iframe
             src={embedUrl}
@@ -175,102 +163,44 @@ const VideoModal = ({ project, onClose }) => {
             title={project.title}
           ></iframe>
         );
-
-      case "tiktok-embed":
+      case "tiktok":
         return (
-          <iframe
-            src={embedUrl}
-            className="w-full h-full"
-            allowFullScreen
-            scrolling="no"
-            allow="encrypted-media;"
-            title={project.title}
-            style={{ border: "none" }}
-          ></iframe>
-        );
-
-      case "tiktok-blockquote":
-        // For TikTok links we can use their script-based embed approach
-        return (
-          <div className="w-full h-full flex items-center justify-center bg-black text-white">
-            <div className="max-w-md p-4 text-center">
-              <p className="mb-4">Cargando contenido de TikTok...</p>
-
-              {/* Loading animation */}
-              <div className="inline-block w-12 h-12 rounded-full border-4 border-t-transparent border-white animate-spin mb-6"></div>
-
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    <blockquote 
-                      class="tiktok-embed" 
-                      cite="${embedUrl}" 
-                      data-video-id="TikTok" 
-                      style="max-width: 100%; min-width: 280px;">
-                    </blockquote>
-                    <script async src="https://www.tiktok.com/embed.js"></script>
-                  `,
-                }}
-              />
-
-              {/* Fallback button in case embed doesn't load */}
+          <div className="w-full h-full flex items-center justify-center bg-black">
+            <div className="text-center text-white max-w-md p-4">
+              <h3 className="text-lg font-bold mb-2">TikTok Video</h3>
+              <p className="mb-4">This content is hosted on TikTok.</p>
               <a
                 href={embedUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
               >
-                Abrir en TikTok
+                Watch on TikTok
               </a>
             </div>
           </div>
         );
-
-      case "instagram-embed":
-        return (
-          <iframe
-            src={embedUrl}
-            className="w-full h-full"
-            style={{ border: "none", overflow: "hidden", minHeight: "500px" }}
-            scrolling="no"
-            allowTransparency="true"
-            allowFullScreen
-            title={project.title}
-          ></iframe>
-        );
-
-      case "instagram-link":
+      case "instagram":
         return (
           <div className="w-full h-full flex items-center justify-center bg-black">
             <div className="text-center text-white max-w-md p-4">
-              <h3 className="text-lg font-bold mb-2">Video de Instagram</h3>
-              <p className="mb-4">Este contenido está alojado en Instagram.</p>
+              <h3 className="text-lg font-bold mb-2">Instagram Reel</h3>
+              <p className="mb-4">This content is hosted on Instagram.</p>
               <a
                 href={embedUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all"
               >
-                Ver en Instagram
+                Watch on Instagram
               </a>
             </div>
           </div>
         );
-
       default:
         return (
           <div className="w-full h-full flex items-center justify-center bg-black text-white">
-            <div className="text-center max-w-md p-4">
-              <p className="mb-4">No se puede mostrar este video.</p>
-              <a
-                href={project.videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
-              >
-                Abrir enlace
-              </a>
-            </div>
+            Unable to display video.
           </div>
         );
     }
