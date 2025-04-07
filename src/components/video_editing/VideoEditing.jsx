@@ -1,5 +1,6 @@
 import { motion, useAnimation } from "framer-motion";
 import React, { useState, useRef, useEffect } from "react";
+import Rive from "@rive-app/react-canvas";
 
 // Custom CSS for animation delays - add this to your CSS or use a style tag
 const AnimationStyles = () => (
@@ -251,6 +252,13 @@ const VideoEditing = () => {
                 isMobile={isMobile}
               />
             ))}
+          </div>
+          <div className="absolute bottom-25 left-0  w-[300px] h-[300px] z-20">
+            <Rive
+              src="src/assets/animations/untitled.riv"
+              animations="Timeline 1"
+              autoPlay={true}
+            />
           </div>
         </div>
 
