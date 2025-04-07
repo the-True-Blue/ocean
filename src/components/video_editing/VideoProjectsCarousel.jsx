@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import projectImg from "../../assets/video_editing/proyects_img.png";
 import avatarImg from "../../assets/hero/avatar.png";
 import arrow from "../../assets/video_editing/Arrow.png";
+import { InstagramEmbed, YouTubeEmbed } from "react-social-media-embed";
+import ManualTikTokEmbed from "./ManualTikTokEmbed";
 
 // Projects data - move Kickstarter project to a separate variable
 const kickstarterProject = {
@@ -20,190 +22,329 @@ const projectsData = [
     title: "Miraculous Ladybug Opening Intro",
     description:
       "My take on the animated intro of the Miraculous Ladybug series when we cosplayed as them for New York Comic Con 2023.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYCgnJ/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342483870014606638",
   },
   {
     id: 2,
     title: "Miraculous Ladybug Transformation",
     description:
       "Made VFX and animated transitions in After Effects with my New York Comic Con 2023 costume to mimic Ladybug's transformation in the TV show.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYSnad/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342496338812194094",
   },
   {
     id: 3,
     title: "Ladybug Purify",
     description:
       "My animated take of a magical sequence in the Miraculous Ladybug series in my New York Comic Con 2023 costume.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYU7pG/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342588420113354027",
   },
   {
     id: 4,
     title: "Ladybug Lucky Charm",
     description:
       "My own version of Ladybug's Lucky Charm sequence in the Miraculous Ladybug series in my New York Comic Con 2023 costume.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYHupV/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342584804065496362",
   },
   {
     id: 5,
     title: "Chat Noir Transformation",
     description:
       "Did my own animated take of Chat Noir's transformation in the Miraculous Ladybug series using costumes worn during New York Comic Con 2023.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYbapg/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342578762116074795",
   },
   {
     id: 6,
     title: "Chat Noir Cataclysm",
     description:
       "Did my own animated take of Chat Noir's cataclysm move in the Miraculous Ladybug series using costumes worn during New York Comic Con 2023.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jY9vEv/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342587057698557226",
   },
   {
     id: 7,
     title: "Ariel Under The Sea",
     description:
       "Dressed up as the Disney Princess, Ariel and Prince Eric, for New York Comic Con 2023 and did a short music video of our first day at the convention.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYuVJD/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342470279085493547",
   },
   {
     id: 8,
     title: "Ariel Part of Your World",
     description:
       "Dressed up as the Disney Princess, Ariel and Prince Eric, for New York Comic Con 2023 and did a short music video of our first day at the convention.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYHHwb/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342473270106557742",
   },
   {
     id: 9,
     title: "Across the Spiderverse TikTok Edit",
     description:
       "Made a TikTok Edit of us dressed up as Miles Morales and Gwen Stacy during New York Comic Con 2023 from the famous Across the Spiderverse movie. Using trendy text animations and VFX transitions, I made short-form video edit.",
-    videoUrl:
-      "https://www.instagram.com/reel/C6uDVeHJG0b/?igsh=bXJyNm4xczlodHNz",
+    videoUrl: "https://www.instagram.com/reel/C6uDVeHJG0b/",
   },
   {
     id: 10,
     title: "Character Animation",
     description:
       "Drew a fictional avatar of myself and animated its facial features with each frame in Photoshop. Then added animations and VFX with After Effects.",
-    videoUrl: "https://www.tiktok.com/t/ZP8jYU3w2/",
+    videoUrl:
+      "https://www.tiktok.com/@tempestdigital_/video/7342469276441365802",
   },
 ];
 
-// Video Modal Component
+// Updated VideoModal component for proper video containment
 const VideoModal = ({ project, onClose }) => {
-  const [embedUrl, setEmbedUrl] = useState(null);
-  const [embedType, setEmbedType] = useState("iframe"); // "iframe" for YouTube, "widget" for TikTok/Instagram
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  // Reference to the container for YouTube videos
+  const youtubeContainerRef = useRef(null);
 
   useEffect(() => {
     if (project) {
-      // Handle YouTube URLs
-      if (
-        project.videoUrl.includes("youtu.be") ||
-        project.videoUrl.includes("youtube.com")
-      ) {
-        // Extract YouTube video ID
-        const getYoutubeVideoId = (url) => {
-          const regExp =
-            /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
-          const match = url.match(regExp);
-          return match && match[2].length === 11 ? match[2] : null;
+      setLoading(true);
+      setError(false);
+
+      // Log for debugging
+      console.log("Content type:", getVideoType(project.videoUrl));
+      console.log("URL:", project.videoUrl);
+
+      // For Instagram, ensure the embed script is loaded
+      if (project.videoUrl.includes("instagram.com")) {
+        const loadInstagramScript = () => {
+          if (!window.instgrm) {
+            const script = document.createElement("script");
+            script.src = "//www.instagram.com/embed.js";
+            script.async = true;
+            script.defer = true;
+            document.body.appendChild(script);
+
+            script.onload = () => {
+              // Process embeds when script loads
+              if (window.instgrm) {
+                window.instgrm.Embeds.process();
+              }
+            };
+          } else if (window.instgrm) {
+            // If already loaded, process embeds
+            window.instgrm.Embeds.process();
+          }
         };
 
-        const videoId = getYoutubeVideoId(project.videoUrl);
-        if (videoId) {
-          setEmbedUrl(`https://www.youtube.com/embed/${videoId}`);
-          setEmbedType("iframe");
-        }
-      }
-      // Handle TikTok URLs
-      else if (project.videoUrl.includes("tiktok.com")) {
-        // For TikTok, we'll use their embed code
-        // The URL remains the same, but we'll use a different approach to display
-        setEmbedUrl(project.videoUrl);
-        setEmbedType("tiktok");
-      }
-      // Handle Instagram URLs
-      else if (project.videoUrl.includes("instagram.com")) {
-        // For Instagram, extract the post ID if possible
-        const match = project.videoUrl.match(/\/reel\/([^\/\?]+)/);
-        const postId = match ? match[1] : null;
+        loadInstagramScript();
 
-        if (postId) {
-          setEmbedUrl(`https://www.instagram.com/reel/${postId}/embed/`);
-          setEmbedType("iframe");
-        } else {
-          // Fallback to the original URL
-          setEmbedUrl(project.videoUrl);
-          setEmbedType("instagram");
-        }
+        // Try processing again after a short delay
+        const timer = setTimeout(() => {
+          if (window.instgrm) {
+            window.instgrm.Embeds.process();
+          }
+        }, 1000);
+
+        return () => clearTimeout(timer);
       }
     }
   }, [project]);
 
+  // Helper function to determine video type
+  const getVideoType = (url) => {
+    if (url.includes("youtube.com") || url.includes("youtu.be"))
+      return "YouTube";
+    if (url.includes("tiktok.com")) return "TikTok";
+    if (url.includes("instagram.com")) return "Instagram";
+    return "external";
+  };
+
+  // Function to clean and validate Instagram URL
+  const getCleanInstagramUrl = (url) => {
+    // Ensure URL has the correct format for Instagram
+    if (url.includes("instagram.com")) {
+      // Try to extract the ID
+      const regexPost = /instagram\.com\/p\/([^\/\?]+)/;
+      const regexReel = /instagram\.com\/reel\/([^\/\?]+)/;
+
+      let match = url.match(regexPost);
+      if (!match) {
+        match = url.match(regexReel);
+      }
+
+      if (match && match[1]) {
+        const id = match[1];
+        // Determine if it's a post or a reel
+        if (url.includes("/reel/")) {
+          return `https://www.instagram.com/reel/${id}/`;
+        } else {
+          return `https://www.instagram.com/p/${id}/`;
+        }
+      }
+    }
+
+    // If unable to clean, return original URL
+    return url;
+  };
+
   if (!project) return null;
 
-  // Function to render different embed types
+  // Function to determine what type of embed to show
   const renderEmbed = () => {
-    if (!embedUrl) {
+    if (error) {
       return (
         <div className="w-full h-full flex items-center justify-center bg-black text-white">
-          Loading video...
+          <div className="text-center">
+            <p className="mb-4">Error loading video.</p>
+            <a
+              href={project.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              View on original site
+            </a>
+          </div>
         </div>
       );
     }
 
-    switch (embedType) {
-      case "iframe":
-        return (
-          <iframe
-            src={embedUrl}
-            className="w-full h-full"
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-            allowFullScreen
-            loading="lazy"
-            title={project.title}
-          ></iframe>
-        );
-      case "tiktok":
-        return (
-          <div className="w-full h-full flex items-center justify-center bg-black">
-            <div className="text-center text-white max-w-md p-4">
-              <h3 className="text-lg font-bold mb-2">TikTok Video</h3>
-              <p className="mb-4">This content is hosted on TikTok.</p>
-              <a
-                href={embedUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
-              >
-                Watch on TikTok
-              </a>
-            </div>
+    // YouTube videos
+    if (
+      project.videoUrl.includes("youtu.be") ||
+      project.videoUrl.includes("youtube.com")
+    ) {
+      return (
+        <div
+          className="w-full h-full relative"
+          ref={youtubeContainerRef}
+          style={{
+            position: "relative",
+            paddingTop: "56.25%", // 16:9 aspect ratio
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+            }}
+          >
+            <YouTubeEmbed
+              url={project.videoUrl}
+              width="100%"
+              height="100%"
+              onLoad={() => setLoading(false)}
+              onError={() => {
+                setLoading(false);
+                setError(true);
+              }}
+            />
           </div>
-        );
-      case "instagram":
-        return (
-          <div className="w-full h-full flex items-center justify-center bg-black">
-            <div className="text-center text-white max-w-md p-4">
-              <h3 className="text-lg font-bold mb-2">Instagram Reel</h3>
-              <p className="mb-4">This content is hosted on Instagram.</p>
-              <a
-                href={embedUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all"
-              >
-                Watch on Instagram
-              </a>
-            </div>
-          </div>
-        );
-      default:
-        return (
-          <div className="w-full h-full flex items-center justify-center bg-black text-white">
-            Unable to display video.
-          </div>
-        );
+        </div>
+      );
     }
+
+    // TikTok videos - Using our manual implementation
+    if (project.videoUrl.includes("tiktok.com")) {
+      return (
+        <div
+          className="tiktok-container w-full"
+          style={{ height: "calc(80vh - 40px)" }}
+        >
+          <ManualTikTokEmbed url={project.videoUrl} />
+        </div>
+      );
+    }
+
+    // Instagram videos
+    if (project.videoUrl.includes("instagram.com")) {
+      const cleanUrl = getCleanInstagramUrl(project.videoUrl);
+      return (
+        <div
+          className="w-full h-full flex items-center justify-center overflow-auto instagram-embed-container"
+          style={{ maxHeight: "calc(80vh - 40px)" }}
+        >
+          {/* Fallback in case the embed doesn't load */}
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10 pointer-events-none opacity-0">
+            <div className="bg-white p-4 rounded-lg text-center">
+              <p className="font-medium mb-2">Content not loading?</p>
+              <a
+                href={cleanUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(cleanUrl, "_blank");
+                }}
+              >
+                View on Instagram
+              </a>
+            </div>
+          </div>
+
+          {/* Using original component with clean URL */}
+          <InstagramEmbed
+            url={cleanUrl}
+            captioned={true}
+            onLoad={() => {
+              console.log("Instagram embed loaded");
+              setLoading(false);
+              // Try processing again
+              if (window.instgrm) {
+                setTimeout(() => {
+                  window.instgrm.Embeds.process();
+                }, 500);
+              }
+            }}
+            onError={() => {
+              console.error("Error loading Instagram embed");
+              setLoading(false);
+              setError(true);
+            }}
+          />
+        </div>
+      );
+    }
+
+    // Default fallback
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-black">
+        <div className="text-center text-white max-w-md p-4">
+          <h3 className="text-lg font-bold mb-2">External video</h3>
+          <p className="mb-4">This content is hosted on an external site.</p>
+          <a
+            href={project.videoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+          >
+            Watch video
+          </a>
+        </div>
+      </div>
+    );
+  };
+
+  // Determine if this is a vertical video (TikTok or Instagram Reel)
+  const isVerticalVideo = () => {
+    return (
+      project.videoUrl.includes("tiktok.com") ||
+      (project.videoUrl.includes("instagram.com") &&
+        project.videoUrl.includes("/reel/"))
+    );
+  };
+
+  // Check if this is a YouTube video
+  const isYouTubeVideo = () => {
+    return (
+      project.videoUrl.includes("youtu.be") ||
+      project.videoUrl.includes("youtube.com")
+    );
   };
 
   return createPortal(
@@ -216,7 +357,9 @@ const VideoModal = ({ project, onClose }) => {
         onClick={onClose}
       ></div>
       <div
-        className="relative z-10 w-full max-w-4xl bg-transparent rounded-lg overflow-hidden"
+        className={`relative z-10 w-full max-w-4xl bg-transparent rounded-lg overflow-hidden ${
+          isVerticalVideo() ? "max-h-[90vh]" : ""
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -239,7 +382,22 @@ const VideoModal = ({ project, onClose }) => {
           </svg>
         </button>
 
-        <div className="aspect-video bg-black">{renderEmbed()}</div>
+        {/* Different container based on video type */}
+        {isYouTubeVideo() ? (
+          <div className="video-modal-content aspect-video bg-black w-full">
+            {renderEmbed()}
+          </div>
+        ) : (
+          <div
+            className="video-modal-content bg-black"
+            style={{
+              maxHeight: isVerticalVideo() ? "90vh" : "auto",
+              overflow: "hidden",
+            }}
+          >
+            {renderEmbed()}
+          </div>
+        )}
       </div>
     </div>,
     document.body
@@ -338,7 +496,6 @@ const ProjectCard = ({ project, onClick, featured = false }) => {
   );
 };
 
-// Featured Project Component
 const FeaturedProject = ({ project, onClick }) => {
   return (
     <div className="w-full mb-4 md:mb-8 relative">
