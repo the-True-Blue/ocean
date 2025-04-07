@@ -131,25 +131,25 @@ const ArtCollectionCarousel = () => {
       modalContent: [
         {
           type: "video",
-          src: "https://drive.google.com/file/d/1zDJmaHilNZaOB2lEcmflQE48CdU4RhTX/preview",
+          src: "https://www.youtube.com/embed/16ZYPKoESB4",
           alt: "Environment Video 1",
-          title: "Forest Environment Walkthrough",
+          title: "Rendered Cinematic of VFX Waterfall in Unreal",
           description:
             "A dynamic walkthrough of a forest environment created in Unreal Engine with custom assets and lighting.",
         },
         {
           type: "video",
-          src: "https://drive.google.com/file/d/1nnITe7gkHjyo3Q2odsUBde0-ZDF2IRTG/preview",
+          src: "https://www.youtube.com/embed/kIfVKO1nyY4",
           alt: "Environment Video 2",
-          title: "Urban Scene Showcase",
+          title: "Rendered Cinematic of Town at Night",
           description:
             "A showcase of an urban environment with dynamic elements and atmospheric effects.",
         },
         {
           type: "video",
-          src: "https://drive.google.com/file/d/1AAkqrG9VvMC0At0Sdhcszfx4wnNxqAwG/preview",
+          src: "https://www.youtube.com/embed/5E64m1ZHsUM",
           alt: "Environment Video 3",
-          title: "Fantasy Landscape Flythrough",
+          title: "Rendered Cinematic of Stylized Beach",
           description:
             "A flythrough of a fantasy landscape environment featuring custom terrain, vegetation, and water effects.",
         },
@@ -462,17 +462,16 @@ const ArtCollectionCarousel = () => {
                         <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
                       </div>
                     )}
-                    {/* Video iframe with modified source for better playback */}
+                    {/* Video iframe updated for YouTube */}
                     <iframe
-                      src={`${
-                        getCurrentModalContent()?.src
-                      }?autoplay=0&controls=1`}
+                      src={`${getCurrentModalContent()?.src}?autoplay=0&rel=0`}
                       title={getCurrentModalContent()?.alt}
                       className="w-full h-full"
                       frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
                       onLoad={handleVideoLoaded}
+                      referrerPolicy="strict-origin-when-cross-origin"
                     ></iframe>
                   </div>
                 )}
