@@ -180,3 +180,87 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* TikTok container styles */
+.tiktok-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  max-height: 80vh;
+  width: 100%;
+}
+
+/* Fix for TikTok embeds */
+.tiktok-embed-fix {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tiktok-embed-fix iframe {
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Custom scrollbar for TikTok container */
+.tiktok-container::-webkit-scrollbar,
+.tiktok-embed-fix::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tiktok-container::-webkit-scrollbar-track,
+.tiktok-embed-fix::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tiktok-container::-webkit-scrollbar-thumb,
+.tiktok-embed-fix::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 6px;
+}
+
+/* Instagram container styles */
+.instagram-embed-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  max-height: 80vh;
+}
+
+/* Ensure Instagram embeds fit properly */
+.instagram-embed-container iframe {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* YouTube specific styles */
+.video-modal-content.aspect-video {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* Fix for YouTube embed positioning */
+.video-modal-content.aspect-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Ensure YouTube embeds are responsive */
+.video-modal-content iframe {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Universal video modal styles */
+.video-modal-content {
+  width: 100%;
+  background-color: #000;
+}
