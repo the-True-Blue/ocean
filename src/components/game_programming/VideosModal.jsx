@@ -5,6 +5,7 @@ const VideosModal = ({ onClose }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
+    // Handle escape key to close modal
     const handleEscKey = (event) => {
       if (event.key === "Escape") {
         onClose();
@@ -13,11 +14,11 @@ const VideosModal = ({ onClose }) => {
 
     document.addEventListener("keydown", handleEscKey);
 
-    // Modificaciones para asegurar que el modal esté por encima de todo
+    // Prevent body scrolling while modal is open
     document.body.style.overflow = "hidden";
     document.body.style.position = "relative";
 
-    // Ocultar temporalmente todos los elementos con z-index alto
+    // Handle z-index conflicts by temporarily adjusting other elements
     const highZElements = document.querySelectorAll('[style*="z-index"]');
     const originalZValues = new Map();
 
@@ -35,11 +36,12 @@ const VideosModal = ({ onClose }) => {
     });
 
     return () => {
+      // Cleanup on modal close
       document.removeEventListener("keydown", handleEscKey);
       document.body.style.overflow = "auto";
       document.body.style.position = "";
 
-      // Restaurar los z-index originales
+      // Restore original z-index values
       highZElements.forEach((element) => {
         if (originalZValues.has(element)) {
           element.style.zIndex = originalZValues.get(element);
@@ -57,7 +59,7 @@ const VideosModal = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[99999] flex items-center justify-center backdrop-blur-sm"
+      className="fixed inset-0 z-[99999] flex items-center justify-center backdrop-blur-sm md:pt-10"
       onClick={handleOutsideClick}
       style={{
         position: "fixed",
@@ -66,25 +68,29 @@ const VideosModal = ({ onClose }) => {
         right: 0,
         bottom: 0,
         touchAction: "none",
-        isolation: "isolate" /* Crea un nuevo contexto de apilamiento */,
+        isolation: "isolate",
       }}
     >
       <div
         ref={modalRef}
-        className="relative w-full h-full max-h-[90dvh] bg-gradient-to-b from-blue-900/40 to-indigo-900/40 rounded-lg overflow-hidden border border-blue-500/30"
+        className="relative w-full bg-gradient-to-b from-blue-900/40 to-indigo-900/40 rounded-lg overflow-hidden border border-blue-500/30"
         onClick={(e) => e.stopPropagation()}
         style={{
-          contain: "layout" /* Mejora el rendimiento */,
+          contain: "layout",
           maxWidth: "95vw",
+          maxHeight: "90vh",
+          height: "auto",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        {/* Close button */}
+        {/* Close button - adjusted position */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             onClose();
           }}
-          className="absolute top-4 right-4 z-50 text-white p-2 rounded-full bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-md hover:shadow-blue-500/30 active:shadow-inner"
+          className="absolute top-2 right-2 z-50 text-white p-1.5 rounded-full bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-md hover:shadow-blue-500/30 active:shadow-inner"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +98,7 @@ const VideosModal = ({ onClose }) => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 transition-transform duration-150 hover:rotate-90"
+            className="w-5 h-5 transition-transform duration-150 hover:rotate-90"
           >
             <path
               strokeLinecap="round"
@@ -102,15 +108,18 @@ const VideosModal = ({ onClose }) => {
           </svg>
         </button>
 
-        {/* Modal title */}
-        <div className="pt-6 pb-2 px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white font-rajdhani">
+        {/* Modal title - reduced spacing */}
+        <div className="pt-3 pb-0 px-4 text-center">
+          <h2 className="text-xl sm:text-2xl font-bold text-white font-rajdhani truncate">
             Sonic The Hedgehog Fan Game Videos
           </h2>
         </div>
 
-        {/* Enhanced VideosCarousel */}
-        <div className="p-4 h-[calc(100%-80px)]">
+        {/* VideosCarousel container - more flexible sizing */}
+        <div
+          className="flex-1 overflow-auto pb-5"
+          style={{ minHeight: "200px" }}
+        >
           <VideosCarousel />
         </div>
       </div>

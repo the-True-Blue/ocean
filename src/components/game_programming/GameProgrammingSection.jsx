@@ -1,6 +1,7 @@
 import React from "react";
 import GameCarousel from "./GameCarousel";
 import background from "../../assets/game_programming/background.png";
+import Rive from "@rive-app/react-canvas";
 
 const GameProgrammingSection = () => {
   return (
@@ -8,9 +9,9 @@ const GameProgrammingSection = () => {
       id="game-programming-section"
       className="w-full md:h-[1260px] min-h-[822px] relative"
     >
-      {/* Imagen para Desktop (oculta en pantallas pequeñas xl:!bg-[length:100%_100%]) */}
+      {/* Imagen para Desktop */}
       <div
-        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat "
+        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat"
         style={{
           backgroundImage: `url(${background})`,
         }}
@@ -34,15 +35,24 @@ const GameProgrammingSection = () => {
           </div>
         </div>
 
-        {/* Reemplazando el contenido estático con el carrusel */}
+        {/* Carrusel */}
         <div className="relative top-[350px] md:top-[180px] w-full flex justify-center">
           <div className="w-full max-w-[1200px]">
             <GameCarousel />
           </div>
         </div>
+
+        {/* Animación de burbujas de Rive (en la esquina inferior derecha) */}
+        <div className="absolute -bottom-80 left-0 md:left-50 w-[300px] h-[300px] z-20">
+          <Rive
+            src="src/assets/animations/untitled.riv"
+            animations="Timeline 1"
+            autoPlay={true}
+          />
+        </div>
       </div>
 
-      {/* Este div es para asegurar que el contenedor tiene suficiente espacio en móvil */}
+      {/* Espacio adicional para móvil */}
       <div className="h-[200px] md:h-0 w-full"></div>
     </div>
   );
