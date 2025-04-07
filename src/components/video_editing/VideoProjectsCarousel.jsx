@@ -20,64 +20,56 @@ const projectsData = [
     title: "Miraculous Ladybug Opening Intro",
     description:
       "My take on the animated intro of the Miraculous Ladybug series when we cosplayed as them for New York Comic Con 2023.",
-    videoUrl:
-      "https://drive.google.com/file/d/1lsWv6qgEL3U81iQzSTt-vzf8b4k6hkA9/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYCgnJ/",
   },
   {
     id: 2,
     title: "Miraculous Ladybug Transformation",
     description:
       "Made VFX and animated transitions in After Effects with my New York Comic Con 2023 costume to mimic Ladybug's transformation in the TV show.",
-    videoUrl:
-      "https://drive.google.com/file/d/1JSmsnsGpx_xcaXiFezd6OqeRpYBEduSC/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYSnad/",
   },
   {
     id: 3,
     title: "Ladybug Purify",
     description:
       "My animated take of a magical sequence in the Miraculous Ladybug series in my New York Comic Con 2023 costume.",
-    videoUrl:
-      "https://drive.google.com/file/d/1hPKKaXv1qGkpRtDXmw1Hvn-AkvDGGn6m/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYU7pG/",
   },
   {
     id: 4,
     title: "Ladybug Lucky Charm",
     description:
       "My own version of Ladybug's Lucky Charm sequence in the Miraculous Ladybug series in my New York Comic Con 2023 costume.",
-    videoUrl:
-      "https://drive.google.com/file/d/11b-ARwQapHNX1F_RXhOtULcpPOjC6mmi/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYHupV/",
   },
   {
     id: 5,
     title: "Chat Noir Transformation",
     description:
       "Did my own animated take of Chat Noir's transformation in the Miraculous Ladybug series using costumes worn during New York Comic Con 2023.",
-    videoUrl:
-      "https://drive.google.com/file/d/15El-MpKZYPfUUnCImdbfT-Q1sHEnnBYK/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYbapg/",
   },
   {
     id: 6,
     title: "Chat Noir Cataclysm",
     description:
       "Did my own animated take of Chat Noir's cataclysm move in the Miraculous Ladybug series using costumes worn during New York Comic Con 2023.",
-    videoUrl:
-      "https://drive.google.com/file/d/15El-MpKZYPfUUnCImdbfT-Q1sHEnnBYK/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jY9vEv/",
   },
   {
     id: 7,
     title: "Ariel Under The Sea",
     description:
       "Dressed up as the Disney Princess, Ariel and Prince Eric, for New York Comic Con 2023 and did a short music video of our first day at the convention.",
-    videoUrl:
-      "https://drive.google.com/file/d/15El-MpKZYPfUUnCImdbfT-Q1sHEnnBYK/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYuVJD/",
   },
   {
     id: 8,
     title: "Ariel Part of Your World",
     description:
       "Dressed up as the Disney Princess, Ariel and Prince Eric, for New York Comic Con 2023 and did a short music video of our first day at the convention.",
-    videoUrl:
-      "https://drive.google.com/file/d/1EDy07qw6jzekcQCAY3CI-bwHJKT1-mEb/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYHHwb/",
   },
   {
     id: 9,
@@ -85,25 +77,25 @@ const projectsData = [
     description:
       "Made a TikTok Edit of us dressed up as Miles Morales and Gwen Stacy during New York Comic Con 2023 from the famous Across the Spiderverse movie. Using trendy text animations and VFX transitions, I made short-form video edit.",
     videoUrl:
-      "https://drive.google.com/file/d/1EDy07qw6jzekcQCAY3CI-bwHJKT1-mEb/view?usp=share_link",
+      "https://www.instagram.com/reel/C6uDVeHJG0b/?igsh=bXJyNm4xczlodHNz",
   },
   {
     id: 10,
     title: "Character Animation",
     description:
       "Drew a fictional avatar of myself and animated its facial features with each frame in Photoshop. Then added animations and VFX with After Effects.",
-    videoUrl:
-      "https://drive.google.com/file/d/1oiiQnH6DxgMOhsLTuOQRENhuXeQPWf-S/view?usp=share_link",
+    videoUrl: "https://www.tiktok.com/t/ZP8jYU3w2/",
   },
 ];
 
 // Video Modal Component
 const VideoModal = ({ project, onClose }) => {
   const [embedUrl, setEmbedUrl] = useState(null);
+  const [embedType, setEmbedType] = useState(null); // "youtube", "tiktok-embed", "tiktok-blockquote", "instagram-embed", "instagram-link"
 
   useEffect(() => {
     if (project) {
-      // Check if it's a YouTube URL
+      // Handle YouTube URLs
       if (
         project.videoUrl.includes("youtu.be") ||
         project.videoUrl.includes("youtube.com")
@@ -119,23 +111,164 @@ const VideoModal = ({ project, onClose }) => {
         const videoId = getYoutubeVideoId(project.videoUrl);
         if (videoId) {
           setEmbedUrl(`https://www.youtube.com/embed/${videoId}`);
+          setEmbedType("youtube");
         }
-      } else {
-        // Handle Google Drive files
-        const getGoogleDriveFileId = (url) => {
-          const match = url.match(/[-\w]{25,}/);
-          return match ? match[0] : null;
-        };
-
-        const fileId = getGoogleDriveFileId(project.videoUrl);
-        if (fileId) {
-          setEmbedUrl(`https://drive.google.com/file/d/${fileId}/preview`);
-        }
+      }
+      // Handle TikTok URLs
+      else if (project.videoUrl.includes("tiktok.com")) {
+        // For TikTok, we'll use their public facing URL
+        // This will still have CORS issues in development, but will work in production
+        setEmbedUrl(project.videoUrl);
+        setEmbedType("external-link");
+      }
+      // Handle Instagram URLs
+      else if (project.videoUrl.includes("instagram.com")) {
+        // For Instagram, direct link is safest during development
+        setEmbedUrl(project.videoUrl);
+        setEmbedType("external-link");
       }
     }
   }, [project]);
 
   if (!project) return null;
+
+  // Function to render different embed types
+  const renderEmbed = () => {
+    if (!embedUrl) {
+      return (
+        <div className="w-full h-full flex items-center justify-center bg-black text-white">
+          Cargando video...
+        </div>
+      );
+    }
+
+    switch (embedType) {
+      case "youtube":
+        return (
+          <iframe
+            src={embedUrl}
+            className="w-full h-full"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+            title={project.title}
+          ></iframe>
+        );
+
+      case "external-link": {
+        // Determine platform (TikTok or Instagram) for UI customization
+        const isTikTok = embedUrl.includes("tiktok.com");
+        const platformName = isTikTok ? "TikTok" : "Instagram";
+        const bgColor = isTikTok
+          ? "bg-black"
+          : "bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400";
+        const btnClasses = isTikTok
+          ? "bg-[#00f2ea] hover:bg-[#00d2c3] text-black"
+          : "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600";
+
+        const thumbnailBg = isTikTok
+          ? "bg-[#111111]"
+          : "bg-gradient-to-br from-purple-900 via-pink-900 to-orange-900";
+
+        return (
+          <div className="w-full h-full flex items-center justify-center bg-black">
+            <div
+              className={`text-center text-white max-w-md p-6 rounded-lg ${thumbnailBg} shadow-lg`}
+            >
+              {/* Platform Icon */}
+              <div className="flex justify-center mb-4">
+                {isTikTok ? (
+                  // TikTok Logo
+                  <svg
+                    width="50"
+                    height="50"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M34.1451 0H26.0556V32.6956C26.0556 36.5913 22.9069 39.7913 19.0764 39.7913C15.2458 39.7913 12.0972 36.5913 12.0972 32.6956C12.0972 28.8696 15.1764 25.7391 18.9375 25.6v-8.3044C10.7778 25.8087 4.0625 32.6956 4.0625 41.0435C4.0625 49.3913 10.8125 56.3478 19.0417 56.3478C27.2708 56.3478 34.0208 49.3913 34.0208 41.0435V18.9565C37.5694 21.6087 41.9792 23.0435 46.5625 23.0435V14.7391C39.4514 14.7391 34.1451 8.06087 34.1451 0Z"
+                      fill="white"
+                    />
+                  </svg>
+                ) : (
+                  // Instagram Logo
+                  <svg
+                    width="50"
+                    height="50"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M24 4.32187C30.4125 4.32187 31.1719 4.35 33.6938 4.4625C36.0375 4.56562 37.3031 4.9875 38.1469 5.3625C39.2625 5.85937 40.0688 6.45937 40.9031 7.29375C41.7469 8.12812 42.3375 8.94375 42.8344 10.05C43.2094 10.8938 43.6313 12.1594 43.7344 14.5031C43.8469 17.025 43.875 17.7844 43.875 24.1969C43.875 30.6094 43.8469 31.3688 43.7344 33.8906C43.6313 36.2344 43.2094 37.5 42.8344 38.3438C42.3375 39.4594 41.7375 40.2656 40.9031 41.1C40.0688 41.9438 39.2531 42.5344 38.1469 43.0313C37.3031 43.4063 36.0375 43.8281 33.6938 43.9313C31.1719 44.0438 30.4125 44.0719 24 44.0719C17.5875 44.0719 16.8281 44.0438 14.3062 43.9313C11.9625 43.8281 10.6969 43.4063 9.85313 43.0313C8.7375 42.5344 7.93125 41.9344 7.09688 41.1C6.25313 40.2656 5.6625 39.45 5.16563 38.3438C4.79063 37.5 4.36875 36.2344 4.26563 33.8906C4.15313 31.3688 4.125 30.6094 4.125 24.1969C4.125 17.7844 4.15313 17.025 4.26563 14.5031C4.36875 12.1594 4.79063 10.8938 5.16563 10.05C5.6625 8.93437 6.2625 8.12812 7.09688 7.29375C7.93125 6.45 8.74688 5.85937 9.85313 5.3625C10.6969 4.9875 11.9625 4.56562 14.3062 4.4625C16.8281 4.35 17.5875 4.32187 24 4.32187ZM24 0C17.4844 0 16.6688 0.028125 14.1094 0.140625C11.5594 0.253125 9.80625 0.6875 8.28125 1.30313C6.70312 1.94062 5.3625 2.77502 4.03125 4.10625C2.7 5.4375 1.86563 6.77812 1.22813 8.35625C0.6125 9.88125 0.178125 11.6344 0.065625 14.1844C0.0.140625 24 0.028125 17.4844 0Z"
+                      fill="url(#paint0_radial)"
+                    />
+                    <defs>
+                      <radialGradient
+                        id="paint0_radial"
+                        cx="0"
+                        cy="0"
+                        r="1"
+                        gradientUnits="userSpaceOnUse"
+                        gradientTransform="translate(6.375 51.5) rotate(-90) scale(47.5687 44.2031)"
+                      >
+                        <stop stopColor="#FFDD55" />
+                        <stop offset="0.1" stopColor="#FFDD55" />
+                        <stop offset="0.5" stopColor="#FF543E" />
+                        <stop offset="1" stopColor="#C837AB" />
+                      </radialGradient>
+                    </defs>
+                  </svg>
+                )}
+              </div>
+
+              <h3 className="text-xl font-bold mb-3">
+                Video de {platformName}
+              </h3>
+              <p className="mb-6 opacity-90">
+                Este contenido está disponible en {platformName}.
+              </p>
+
+              {/* Stylized button */}
+              <a
+                href={embedUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-block px-6 py-3 rounded-full font-bold transition-all transform hover:scale-105 ${btnClasses}`}
+              >
+                Ver en {platformName}
+              </a>
+
+              {/* Development note */}
+              <p className="mt-4 text-xs opacity-70">
+                Nota: Durante el desarrollo local (localhost), no es posible
+                embeber directamente contenido de {platformName} debido a
+                restricciones de seguridad.
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      default:
+        return (
+          <div className="w-full h-full flex items-center justify-center bg-black text-white">
+            <div className="text-center max-w-md p-4">
+              <p className="mb-4">No se puede mostrar este video.</p>
+              <a
+                href={project.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+              >
+                Abrir enlace
+              </a>
+            </div>
+          </div>
+        );
+    }
+  };
 
   return createPortal(
     <div
@@ -170,22 +303,7 @@ const VideoModal = ({ project, onClose }) => {
           </svg>
         </button>
 
-        <div className="aspect-video bg-black">
-          {embedUrl ? (
-            <iframe
-              src={embedUrl}
-              className="w-full h-full"
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-              title={project.title}
-            ></iframe>
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-black text-white">
-              Loading video...
-            </div>
-          )}
-        </div>
+        <div className="aspect-video bg-black">{renderEmbed()}</div>
       </div>
     </div>,
     document.body
