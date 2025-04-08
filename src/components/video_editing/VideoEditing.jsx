@@ -255,7 +255,7 @@ const VideoEditing = () => {
           </div>
           <div className="absolute bottom-25 left-0  w-[300px] h-[300px] z-20">
             <Rive
-              src="src/assets/animations/untitled.riv"
+              src="/animations/untitled.riv"
               animations="Timeline 1"
               autoPlay={true}
             />
