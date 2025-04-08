@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Logo from "../assets/Logo1.svg";
+import emailjs from "@emailjs/browser";
 
 const ContactModal = ({ isOpen, onClose }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const modalRef = useRef(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
     // Block scrolling when modal is open
@@ -56,18 +60,49 @@ const ContactModal = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
+  // Initialize EmailJS
+  useEffect(() => {
+    // Initialize EmailJS with your public key
+    emailjs.init("DM5-yHQq83juMFDrz");
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
 
-    console.log({ name, email, message });
+    // Prepare template parameters
+    const templateParams = {
+      from_name: name,
+      reply_to: email,
+      message: message,
+    };
 
-    // Optional: reset form after submission
-    setName("");
-    setEmail("");
-    setMessage("");
+    // Send email using EmailJS
+    emailjs
+      .send("service_yi4m10d", "template_c0oqlza", templateParams)
+      .then((response) => {
+        console.log("Email sent successfully!", response);
+        setSubmitStatus("success");
 
-    // Close the modal
-    onClose();
+        // Reset form after submission
+        setName("");
+        setEmail("");
+        setMessage("");
+
+        // Close the modal after a short delay
+        setTimeout(() => {
+          onClose();
+          setSubmitStatus(null);
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Failed to send email:", error);
+        setSubmitStatus("error");
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   if (!isOpen) return null;
@@ -94,6 +129,7 @@ const ContactModal = ({ isOpen, onClose }) => {
           <p className="text-lg mb-6 text-[12px] ">Let's ride, Gamers!</p>
 
           <form
+            ref={formRef}
             onSubmit={handleSubmit}
             className="space-y-4 font-poppins text-[12px]"
           >
@@ -106,6 +142,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 className="w-full h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
                 required
                 id="name"
+                name="user_name"
               />
               <label
                 htmlFor="name"
@@ -128,6 +165,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 className="w-full h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
                 required
                 id="email"
+                name="user_email"
               />
               <label
                 htmlFor="email"
@@ -149,6 +187,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 className="w-full h-[150px] bg-[#AAEBFB]/30 p-4 rounded text-white focus:outline-none resize-none placeholder-transparent"
                 required
                 id="message"
+                name="message"
               />
               <label
                 htmlFor="message"
@@ -162,13 +201,30 @@ const ContactModal = ({ isOpen, onClose }) => {
               </label>
             </div>
 
+            {submitStatus === "success" && (
+              <div className="text-green-400 text-sm">
+                Message sent successfully!
+              </div>
+            )}
+
+            {submitStatus === "error" && (
+              <div className="text-red-400 text-sm">
+                Failed to send message. Please try again later.
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full underline md:w-[430px] h-[50px] text-[20px] bg-[#AAEBFB] text-white font-[700] tracking-[8%] py-2 px-4 rounded 
-              hover:bg-[#76b3c2] active:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-[#AAEBFB] focus:ring-opacity-50 
-              transform active:scale-95 active:translate-y-1 transition-all duration-200 shadow-md hover:shadow-lg"
+              disabled={isSubmitting}
+              className={`w-full underline md:w-[430px] h-[50px] text-[20px] ${
+                isSubmitting
+                  ? "bg-[#76b3c2] cursor-not-allowed"
+                  : "bg-[#AAEBFB] hover:bg-[#76b3c2]"
+              } text-white font-[700] tracking-[8%] py-2 px-4 rounded 
+              active:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-[#AAEBFB] focus:ring-opacity-50 
+              transform active:scale-95 active:translate-y-1 transition-all duration-200 shadow-md hover:shadow-lg`}
             >
-              Submit
+              {isSubmitting ? "Sending..." : "Submit"}
             </button>
           </form>
         </div>
