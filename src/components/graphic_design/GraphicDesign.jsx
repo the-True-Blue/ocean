@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import rectangle from "../../assets/graphic_design/Rectangle.png";
 import centerImg from "../../assets/graphic_design/center_img.png";
 import leftImg from "../../assets/graphic_design/left_img.png";
 import rightImg from "../../assets/graphic_design/right_img.png";
+import check from "../../assets/hero/check.png";
+import avatar from "../../assets/hero/avatar.png";
 
 const GraphicDesign = () => {
   const [hoverCenter, setHoverCenter] = useState(false);
   const [hoverLeft, setHoverLeft] = useState(false);
   const [hoverRight, setHoverRight] = useState(false);
+  const [hoverButton, setHoverButton] = useState(false);
 
-  // Controles para las animaciones
+  // Controls for animations
   const controls = useAnimation();
   const titleControls = useAnimation();
+  const userInfoControls = useAnimation();
 
-  // Referencias para detectar cuando los elementos están en el viewport
+  // References to detect when elements are in viewport
   const [ref, inView] = useInView({
     triggerOnce: false,
     threshold: 0.2,
@@ -26,7 +30,12 @@ const GraphicDesign = () => {
     threshold: 0.1,
   });
 
-  // Iniciar animaciones cuando los elementos entran en el viewport
+  const [userInfoRef, userInfoInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
+  // Start animations when elements enter viewport
   useEffect(() => {
     if (titleInView) {
       titleControls.start("visible");
@@ -39,7 +48,13 @@ const GraphicDesign = () => {
     }
   }, [inView, controls]);
 
-  // Variantes para las animaciones
+  useEffect(() => {
+    if (userInfoInView) {
+      userInfoControls.start("visible");
+    }
+  }, [userInfoInView, userInfoControls]);
+
+  // Animation variants
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: (i) => ({
@@ -65,20 +80,41 @@ const GraphicDesign = () => {
     },
   };
 
+  const userInfoVariant = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: 1.2,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  // Function to scroll to footer
+  const scrollToFooter = () => {
+    const footer = document.getElementById("footer");
+    if (footer) {
+      footer.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="relative md:min-h-fit flex flex-col items-center pb-35 -mb-2">
-      {/* Background con gradiente mejorado */}
+      {/* Background with gradient */}
       <div className="absolute inset-0 w-full h-full">
         <div className="absolute inset-0 w-full h-full bg-[#060757]"></div>
 
-        {/* Gradientes para las esquinas */}
+        {/* Gradients for corners */}
         <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-b from-[#083395] to-[#060757]"></div>
         <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-[#060757] from-65% via-[#070862] via-68% to-[#212eb4] to-100%"></div>
         <div className="absolute top-0 left-1/3 w-1/3 h-1/2 bg-gradient-to-b from-[#083395] to-[#060757]"></div>
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-b from-[#083395] to-[#060757]"></div>
         <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#060757] from-65% via-[#070862] via-30% to-[#212eb4] to-100%"></div>
 
-        {/* Capa para estrellas/puntos */}
+        {/* Layer for stars/points */}
         <motion.div
           className="absolute inset-0 w-full h-full opacity-40 stars-background"
           animate={{
@@ -132,12 +168,12 @@ const GraphicDesign = () => {
         </motion.h1>
       </div>
 
-      {/* Contenedor de tarjetas con efecto overlay */}
+      {/* Card container with overlay effect */}
       <div
         className="relative flex items-center justify-center mt-8 w-full z-30"
         ref={ref}
       >
-        {/* Tarjeta central */}
+        {/* Center card */}
         <motion.div
           className="relative z-30 mx-auto scale-[0.65] xs:scale-75 sm:scale-80 lg:scale-100 origin-center"
           initial="hidden"
@@ -162,7 +198,7 @@ const GraphicDesign = () => {
             <img src={centerImg} alt="center image" className="w-[469px]" />
           </motion.div>
 
-          {/* Tarjeta derecha */}
+          {/* Right card */}
           <motion.div
             className="absolute md:-right-20 right-10 md:top-15 top-52 -z-10 transform translate-x-1/2"
             initial="hidden"
@@ -196,7 +232,7 @@ const GraphicDesign = () => {
             </motion.div>
           </motion.div>
 
-          {/* Tarjeta izquierda */}
+          {/* Left card */}
           <motion.div
             className="absolute md:-left-20 left-10 md:top-15 top-52 -z-10 transform -translate-x-1/2"
             initial="hidden"
@@ -232,7 +268,56 @@ const GraphicDesign = () => {
         </motion.div>
       </div>
 
-      {/* CSS para estrellas */}
+      {/* User Info Container */}
+      <motion.div
+        ref={userInfoRef}
+        initial="hidden"
+        animate={userInfoControls}
+        variants={userInfoVariant}
+        className="relative z-20 mt-32 md:mt-4  w-full max-w-md mx-auto bg-[#0a0e5e]/80 rounded-xl p-4 backdrop-blur-sm border border-[#242bcf]/30"
+        style={{
+          boxShadow: "0 8px 32px rgba(31, 38, 135, 0.37)",
+        }}
+      >
+        <div className="flex items-start">
+          <img
+            src={avatar}
+            alt="Avatar"
+            className="w-[31px] h-[27px] rounded-full"
+          />
+          <div className="ml-3 flex-1">
+            <div className="flex items-center">
+              <span className="text-white font-medium">@tempestdigital_</span>
+              <img src={check} alt="Verified" className="w-4 h-4 ml-1" />
+            </div>
+            <p className="text-blue-100 md:text-sm text-xs mt-1">
+              Come check out my graphic designs of logos, ads, banners, flyers
+              and more on my social media!
+            </p>
+          </div>
+        </div>
+
+        {/* Social Media Button */}
+        <div className="mt-4 flex justify-center">
+          <motion.button
+            onClick={scrollToFooter}
+            className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium text-sm flex items-center justify-center"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onMouseEnter={() => setHoverButton(true)}
+            onMouseLeave={() => setHoverButton(false)}
+            style={{
+              boxShadow: hoverButton
+                ? "0 0 15px 2px rgba(147, 51, 234, 0.5)"
+                : "0 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            View Social Media
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* CSS for stars */}
       <style jsx>{`
         .stars-background {
           background-image: radial-gradient(
