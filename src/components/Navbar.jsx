@@ -2,36 +2,33 @@ import React, { useState, useEffect } from "react";
 import Logo1 from "../assets/Logo1.svg";
 import formIcon from "../assets/formIcon.png";
 import hambBtn from "../assets/hambBtn.png";
-import ContactModal from "./ContactModal"; // Importamos el nuevo componente
+import ContactModal from "./ContactModal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Toggle mobile menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Función para abrir/cerrar el modal
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  // Función para navegar suavemente a las secciones
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
       window.scrollTo({
-        top: section.offsetTop - 75, // Ajuste para el navbar fijo
+        top: section.offsetTop - 75,
         behavior: "smooth",
       });
-      setIsOpen(false); // Cierra el menú móvil después de hacer clic
+      setIsOpen(false);
     }
   };
 
-  // Función para navegar al Hero (inicio)
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -68,7 +65,6 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           {/* Desktop Navbar */}
           <div className="hidden md:flex items-center justify-between h-full py-10">
-            {/* Logo con navegación al Hero */}
             <div className="flex-shrink-0 cursor-pointer" onClick={scrollToTop}>
               <img
                 src={Logo1}
@@ -126,7 +122,6 @@ const Navbar = () => {
 
           {/* Mobile Navbar */}
           <div className="flex md:hidden items-center justify-between h-full">
-            {/* Logo (Left) con navegación al Hero */}
             <div
               className="flex-shrink-0 cursor-pointer"
               onClick={scrollToTop}
@@ -140,7 +135,7 @@ const Navbar = () => {
               />
             </div>
 
-            {/* Form Icon (Center) - Ahora abre el modal */}
+            {/* Form Icon (Center)  */}
             <div
               className="flex-shrink-0 cursor-pointer"
               onClick={toggleModal}
@@ -216,7 +211,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Integramos el Modal de Contacto */}
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

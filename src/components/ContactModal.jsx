@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import Logo from "../assets/Logo1.svg"; // Asumiendo que está en la misma ubicación que el navbar
+import Logo from "../assets/Logo1.svg";
 
 const ContactModal = ({ isOpen, onClose }) => {
   const [name, setName] = useState("");
@@ -9,20 +9,20 @@ const ContactModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    // Bloquear el scroll cuando el modal está abierto
+    // Block scrolling when modal is open
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
 
-    // Limpiar al desmontar
+    // Cleanup on unmount
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
-  // Cerrar modal al hacer clic fuera del contenido
+  // Close modal when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -39,7 +39,7 @@ const ContactModal = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  // Cerrar con la tecla Escape
+  // Close with the Escape key
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === "Escape") {
@@ -58,15 +58,15 @@ const ContactModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar el formulario
+
     console.log({ name, email, message });
 
-    // Opcional: resetear el formulario después de enviar
+    // Optional: reset form after submission
     setName("");
     setEmail("");
     setMessage("");
 
-    // Cerrar el modal
+    // Close the modal
     onClose();
   };
 
@@ -78,7 +78,7 @@ const ContactModal = ({ isOpen, onClose }) => {
         ref={modalRef}
         className="relative max-w-[946px] w-full mx-4 md:mx-auto max-h-[524px] bg-[#253e85]/40 rounded-lg text-white p-8 flex flex-col md:flex-row"
       >
-        {/* Botón de cerrar */}
+        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute hover:text-gray-400 right-4 top-4 text-white text-2xl font-normal focus:outline-none"
@@ -86,7 +86,7 @@ const ContactModal = ({ isOpen, onClose }) => {
           X
         </button>
 
-        {/* Contenido del formulario */}
+        {/* Form content */}
         <div className="w-full md:w-1/2 pr-0 md:pr-8 tracking-[8%] font-poppins">
           <h2 className="text-2xl mb-2 text-[#AAEBFB]  font-[600]">
             Contact Form
@@ -173,7 +173,7 @@ const ContactModal = ({ isOpen, onClose }) => {
           </form>
         </div>
 
-        {/* Información de contacto y logo */}
+        {/* Contact information and logo */}
         <div className="w-full md:w-1/2 mt-8 md:mt-0 md:flex flex-col items-center justify-center hidden">
           <img
             src={Logo}

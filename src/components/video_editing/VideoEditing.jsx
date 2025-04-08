@@ -1,6 +1,6 @@
-import { motion, useAnimation } from "framer-motion";
 import React, { useState, useRef, useEffect } from "react";
 import Rive from "@rive-app/react-canvas";
+import { motion } from "framer-motion";
 
 // Custom CSS for animation delays - add this to your CSS or use a style tag
 const AnimationStyles = () => (
@@ -57,61 +57,61 @@ const VideoEditing = () => {
   const rocketRef = useRef(null);
   const bubbleRef = useRef(null);
 
-  // Función para mostrar los botones permanentemente con detección de eventos específicos para cada elemento
+  // Function to permanently show buttons with specific event detection for each element
   const handleRocketHover = () => {
     setIsRocketHovered(true);
-    setShowButtons(true); // Una vez que se establece en true, no se volverá a ocultar
+    setShowButtons(true); // Once set to true, it won't hide again
   };
 
-  // Función para quitar solo el efecto hover del cohete
+  // Function to remove only the rocket hover effect
   const handleRocketLeave = () => {
     setIsRocketHovered(false);
-    // No cambiamos showButtons, por lo que permanecerá visible
+    // We don't change showButtons, so it will remain visible
   };
 
-  // Configuración de los elementos orbitales con diferentes ajustes para móvil y desktop
-  // Los elementos tienen el mismo duration para moverse a la misma velocidad
-  // Los ángulos iniciales están espaciados uniformemente (90 grados entre cada uno)
+  // Orbital elements configuration with different settings for mobile and desktop
+  // Elements have the same duration to move at the same speed
+  // Initial angles are evenly spaced (90 degrees between each)
   const orbitalElements = [
     {
       id: "ps",
       image: ps,
-      duration: 20, // Mismo duration para todos
+      duration: 20, // Same duration for all
       radius: { mobile: 80, desktop: 120 },
-      initialAngle: 0, // Ángulos espaciados uniformemente
+      initialAngle: 0, // Evenly spaced angles
       size: "w-20 md:w-24",
       zIndex: "z-20",
     },
     {
       id: "ae",
       image: ae,
-      duration: 20, // Mismo duration para todos
+      duration: 20, // Same duration for all
       radius: { mobile: 85, desktop: 130 },
-      initialAngle: 90, // Ángulos espaciados uniformemente
+      initialAngle: 90, // Evenly spaced angles
       size: "w-20 md:w-24",
       zIndex: "z-10",
     },
     {
       id: "pr",
       image: pr,
-      duration: 20, // Mismo duration para todos
+      duration: 20, // Same duration for all
       radius: { mobile: 90, desktop: 140 },
-      initialAngle: 180, // Ángulos espaciados uniformemente
+      initialAngle: 180, // Evenly spaced angles
       size: "w-20 md:w-24",
       zIndex: "z-30",
     },
     {
       id: "ai",
       image: ai,
-      duration: 20, // Mismo duration para todos
+      duration: 20, // Same duration for all
       radius: { mobile: 95, desktop: 150 },
-      initialAngle: 270, // Ángulos espaciados uniformemente
+      initialAngle: 270, // Evenly spaced angles
       size: "w-20 md:w-24",
       zIndex: "z-0",
     },
   ];
 
-  // Función para actualizar el tamaño y detectar si es móvil
+  // Function to update size and detect if mobile
   const updateSizeAndDevice = () => {
     if (orbitRef.current) {
       const width = orbitRef.current.offsetWidth;
@@ -121,15 +121,15 @@ const VideoEditing = () => {
     }
   };
 
-  // Función para evitar propagación de eventos entre elementos superpuestos
+  // Function to prevent event propagation between overlapping elements
   useEffect(() => {
-    // Asegurar que el evento hover de la burbuja no afecte al cohete
+    // Ensure bubble hover event doesn't affect rocket
     const bubbleElement = bubbleRef.current;
     const rocketElement = rocketRef.current;
 
     if (bubbleElement && rocketElement) {
       const handleBubbleMouseEnter = (e) => {
-        // Prevenir que el evento se propague al cohete si están superpuestos
+        // Prevent event from propagating to rocket if overlapped
         e.stopPropagation();
       };
 
@@ -141,7 +141,7 @@ const VideoEditing = () => {
     }
   }, []);
 
-  // Medir el tamaño del contenedor para ser responsive
+  // Measure container size to be responsive
   useEffect(() => {
     updateSizeAndDevice();
     window.addEventListener("resize", updateSizeAndDevice);
@@ -159,7 +159,7 @@ const VideoEditing = () => {
         style={{ backgroundImage: `url(${background})` }}
       ></div>
 
-      {/* Contenido */}
+      {/* Content */}
       <div className="relative z-10 w-full">
         <h1
           className="font-orbitron flex items-center justify-center md:justify-end md:me-8 font-black text-white text-[26.53px] md:text-[40px] text-start 
@@ -181,13 +181,13 @@ const VideoEditing = () => {
           </div>
         </div>
 
-        {/* Contenedor de órbitas con posicionamiento corregido */}
+        {/* Orbit container with corrected positioning */}
         <div className="absolute top-[350px] md:top-25 right-1/2 md:right-5 transform translate-x-1/2 md:translate-x-0 rocket-container">
           <div
             ref={orbitRef}
             className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]"
           >
-            {/* Cohete central con posición ajustada y tamaño actualizado */}
+            {/* Central rocket with adjusted position and updated size */}
             <div
               ref={rocketRef}
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
@@ -199,7 +199,7 @@ const VideoEditing = () => {
                 className="absolute inset-0 bg-blue-400 blur-md rounded-full scale-110 -z-10 transition-opacity duration-500"
                 style={{
                   opacity: isRocketHovered ? 0.7 : 0,
-                  pointerEvents: "none", // Evitar que capture eventos de mouse
+                  pointerEvents: "none", // Prevent mouse events capture
                 }}
               ></div>
 
@@ -209,7 +209,7 @@ const VideoEditing = () => {
                 style={{
                   opacity: isRocketHovered ? 1 : 0,
                   transition: "opacity 300ms ease",
-                  pointerEvents: "none", // Evitar que capture eventos de mouse
+                  pointerEvents: "none", // Prevent mouse events capture
                 }}
               >
                 <div className="h-16 md:h-24 animate-pulse bg-gradient-to-t from-orange-500 via-yellow-400 to-transparent rounded-b-full"></div>
@@ -243,7 +243,7 @@ const VideoEditing = () => {
               </div>
             </div>
 
-            {/* Elementos orbitales */}
+            {/* Orbital elements */}
             {orbitalElements.map((item) => (
               <OrbitalElement
                 key={item.id}
@@ -300,12 +300,12 @@ const VideoEditing = () => {
   );
 };
 
-// Componente para cada elemento orbital con posicionamiento mejorado
+// Orbital element component with improved positioning
 const OrbitalElement = ({ item, containerSize, isMobile }) => {
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
   const elementRef = useRef(null);
 
-  // Efecto para animar en círculo
+  // Effect for circular animation
   useEffect(() => {
     let startTime = null;
     let animationFrameId = null;
@@ -318,29 +318,29 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
       const centerX = containerSize.width / 2.5;
       const centerY = containerSize.height / 2;
 
-      // Selecciona el radio basado en si es móvil o desktop
+      // Select radius based on mobile or desktop
       const radius = isMobile ? item.radius.mobile : item.radius.desktop;
 
-      // Ajusta los radios para que se ajusten al contenedor
+      // Adjust radius to fit container
       const radiusX = radius * (containerSize.width / (isMobile ? 250 : 350));
       const radiusY = radius * (containerSize.height / (isMobile ? 700 : 700));
 
-      // Calcula el ángulo basado en el tiempo y duración
+      // Calculate angle based on time and duration
       const angleOffset = (elapsedSeconds / item.duration) * 2 * Math.PI;
       const angle = (item.initialAngle * Math.PI) / 180 + angleOffset;
 
-      // Calcula posición orbital
+      // Calculate orbital position
       const x = centerX + radiusX * Math.cos(angle);
       const y = centerY + radiusY * Math.sin(angle);
 
-      // Aplica un valor Z para simular profundidad
-      const z = Math.sin(angle) * 40; // Un poco más pronunciado para mejor efecto
+      // Apply Z value to simulate depth
+      const z = Math.sin(angle) * 40; // More pronounced for better effect
 
       setPosition({ x, y, z });
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    // Solo inicia la animación si el contenedor tiene dimensiones
+    // Only start animation if container has dimensions
     if (containerSize.width > 0 && containerSize.height > 0) {
       animationFrameId = requestAnimationFrame(animate);
     }
@@ -352,7 +352,7 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
     };
   }, [item, containerSize, isMobile]);
 
-  // Calcula el z-index dinámicamente
+  // Calculate z-index dynamically
   const dynamicZIndex = Math.round(position.z + 50);
 
   return (
@@ -364,10 +364,10 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
         top: position.y,
         zIndex: dynamicZIndex,
         transform: "translate(-50%, -50%)",
-        transition: "none", // Removido para evitar conflictos con la animación por frame
-        filter: position.z < 0 ? "brightness(0.7)" : "brightness(1)", // Oscurece cuando está "detrás"
-        scale: 1 + position.z / 400, // Escala mínima para un efecto sutil
-        willChange: "transform, filter", // Optimización de rendimiento
+        transition: "none", // Removed to avoid conflicts with frame animation
+        filter: position.z < 0 ? "brightness(0.7)" : "brightness(1)", // Darken when "behind"
+        scale: 1 + position.z / 400, // Minimal scale for subtle effect
+        willChange: "transform, filter", // Performance optimization
       }}
     >
       <img

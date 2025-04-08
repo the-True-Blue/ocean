@@ -1,5 +1,4 @@
 import React from "react";
-import Logo1 from "../assets/Logo1.svg";
 import instagramIcon from "../assets/footer/instagram.svg";
 import linkedinIcon from "../assets/footer/linkedin.svg";
 import tiktokIcon from "../assets/footer/tiktok.svg";
@@ -10,13 +9,13 @@ import backgroundMobile from "../assets/footer/background_mobile.png";
 const Footer = () => {
   return (
     <div id="footer" className="w-full h-[620px] md:h-[750px] relative">
-      {/* Fondo para móvil (visible en pantallas pequeñas) */}
+      {/*  mobile Background */}
       <div
         className="absolute w-full h-full bg-no-repeat bg-cover bg-center md:hidden"
         style={{ backgroundImage: `url(${backgroundMobile})` }}
       ></div>
 
-      {/* Fondo para desktop (oculto en pantallas pequeñas) */}
+      {/* Desktop Background */}
       <div
         className="absolute w-full h-full bg-no-repeat bg-center md:bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}
