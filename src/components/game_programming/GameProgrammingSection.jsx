@@ -45,7 +45,7 @@ const GameProgrammingSection = () => {
         {/* Animación de burbujas de Rive (en la esquina inferior derecha) */}
         <div className="absolute -bottom-80 left-0 md:left-50 w-[300px] h-[300px] z-20">
           <Rive
-            src="src/assets/animations/untitled.riv"
+            src="/animations/untitled.riv"
             animations="Timeline 1"
             autoPlay={true}
           />
