@@ -13,7 +13,10 @@ const kickstarterProject = {
   description:
     "Video editing for 'Jungles of Kuauhtla'. The trailer was featured on Kickstarter.",
   videoUrl: "https://youtu.be/Cj-ykheti-Q?si=ipNRcNC0uqkOFC3D",
+  kickstarterUrl:
+    "https://www.kickstarter.com/projects/kuauhtla/jungles-of-kuauhtla-the-campaign-guide",
   featured: true,
+  isKickstarter: true,
 };
 
 const projectsData = [
@@ -86,7 +89,7 @@ const projectsData = [
     title: "Across the Spiderverse TikTok Edit",
     description:
       "Made a TikTok Edit of us dressed up as Miles Morales and Gwen Stacy during New York Comic Con 2023 from the famous Across the Spiderverse movie. Using trendy text animations and VFX transitions, I made short-form video edit.",
-    videoUrl: "https://www.instagram.com/reel/C6uDVeHJG0b/",
+    videoUrl: "https://www.instagram.com/p/C6uDVeHJG0b/?igsh=bXJyNm4xczlodHNz",
   },
   {
     id: 10,
@@ -99,7 +102,7 @@ const projectsData = [
 ];
 
 // Updated VideoModal component for proper video containment
-// Solo la parte del VideoModal actualizada
+
 const VideoModal = ({ project, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -246,6 +249,71 @@ const VideoModal = ({ project, onClose }) => {
       );
     }
 
+    // Handle Kickstarter videos
+    if (project.isKickstarter && project.kickstarterUrl) {
+      const embedUrl = `${project.kickstarterUrl.replace(
+        /\/$/,
+        ""
+      )}/widget/video.html`;
+
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-black">
+          <div className="w-full" style={{ aspectRatio: "16/9" }}>
+            <iframe
+              src={embedUrl}
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              scrolling="no"
+              title="Kickstarter Project Video"
+              allowFullScreen
+              onLoad={() => setLoading(false)}
+              onError={() => {
+                setLoading(false);
+                setError(true);
+              }}
+            />
+          </div>
+          <div className="mt-4 flex flex-col sm:flex-row items-center gap-3">
+            <span className="text-white text-sm">Video from Kickstarter:</span>
+            <a
+              href={project.kickstarterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm flex items-center transition-colors"
+            >
+              <svg
+                className="w-4 h-4 mr-2"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M5.6,18.6C5.6,18.6 6.55,20 8.4,20C10.7,20 11.44,18.6 13.6,18.6C15.1,18.6 15.85,19.4 17,19.4C18,19.4 18.8,18.6 18.8,18.6L19.25,17.5C19.25,17.5 18.1,18.05 17,18.05C16,18.05 14.85,17.3 13.6,17.3C12.3,17.3 10.65,18.65 8.4,18.65C6.75,18.65 5.6,17.5 5.6,17.5V18.6M19.2,16.5C19.2,16.5 18,17.5 17,17.5C16,17.5 15.1,16.7 13.6,16.7C12.1,16.7 10.45,18.25 8.2,18.25C6,18.25 4.8,16.55 4.8,16.55V18C4.8,18 6.1,19.5 8.2,19.5C10.7,19.5 11.3,18 13.6,18C15.4,18 16,18.5 17,18.5C18.1,18.5 19.2,17.5 19.2,17.5M19.2,15.5C19.2,15.5 18,16.5 17,16.5C16,16.5 15.1,15.7 13.6,15.7C12.1,15.7 10.45,17.25 8.2,17.25C6,17.25 4.8,15.55 4.8,15.55V17C4.8,17 6.1,18.5 8.2,18.5C10.7,18.5 11.3,17 13.6,17C15.4,17 16,17.5 17,17.5C18.1,17.5 19.2,16.5 19.2,16.5M19.2,14.5C19.2,14.5 18,15.5 17,15.5C16,15.5 15.1,14.7 13.6,14.7C12.1,14.7 10.45,16.25 8.2,16.25C6,16.25 4.8,14.55 4.8,14.55V16C4.8,16 6.1,17.5 8.2,17.5C10.7,17.5 11.3,16 13.6,16C15.4,16 16,16.5 17,16.5C18.1,16.5 19.2,15.5 19.2,15.5M19.2,13.5C19.2,13.5 18,14.5 17,14.5C16,14.5 15.1,13.7 13.6,13.7C12.1,13.7 10.45,15.25 8.2,15.25C6,15.25 4.8,13.55 4.8,13.55V15C4.8,15 6.1,16.5 8.2,16.5C10.7,16.5 11.3,15 13.6,15C15.4,15 16,15.5 17,15.5C18.1,15.5 19.2,14.5 19.2,14.5M8.2,13.9C6,13.9 4.8,12.2 4.8,12.2V13.65C4.8,13.65 6.1,15.15 8.2,15.15C10.7,15.15 11.3,13.65 13.6,13.65C15.4,13.65 16,14.15 17,14.15C18.1,14.15 19.2,13.15 19.2,13.15V12.15C19.2,12.15 18,13.15 17,13.15C16,13.15 15.1,12.35 13.6,12.35C12.1,12.35 10.45,13.9 8.2,13.9Z" />
+              </svg>
+              View on Kickstarter
+            </a>
+            <button
+              onClick={() => {
+                // Fallback to YouTube if Kickstarter embed fails
+                if (error && project.videoUrl) {
+                  window.open(project.videoUrl, "_blank");
+                }
+              }}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm flex items-center transition-colors"
+            >
+              <svg
+                className="w-4 h-4 mr-2"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+              </svg>
+              Watch on YouTube
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     // YouTube videos
     if (
       project.videoUrl.includes("youtu.be") ||
@@ -280,6 +348,27 @@ const VideoModal = ({ project, onClose }) => {
               }}
             />
           </div>
+
+          {/* Show Kickstarter link if applicable but using YouTube embed */}
+          {project.kickstarterUrl && (
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+              <a
+                href={project.kickstarterUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500/90 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm flex items-center transition-colors"
+              >
+                <svg
+                  className="w-4 h-4 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M5.6,18.6C5.6,18.6 6.55,20 8.4,20C10.7,20 11.44,18.6 13.6,18.6C15.1,18.6 15.85,19.4 17,19.4C18,19.4 18.8,18.6 18.8,18.6L19.25,17.5C19.25,17.5 18.1,18.05 17,18.05C16,18.05 14.85,17.3 13.6,17.3C12.3,17.3 10.65,18.65 8.4,18.65C6.75,18.65 5.6,17.5 5.6,17.5V18.6M19.2,16.5C19.2,16.5 18,17.5 17,17.5C16,17.5 15.1,16.7 13.6,16.7C12.1,16.7 10.45,18.25 8.2,18.25C6,18.25 4.8,16.55 4.8,16.55V18C4.8,18 6.1,19.5 8.2,19.5C10.7,19.5 11.3,18 13.6,18C15.4,18 16,18.5 17,18.5C18.1,18.5 19.2,17.5 19.2,17.5M19.2,15.5C19.2,15.5 18,16.5 17,16.5C16,16.5 15.1,15.7 13.6,15.7C12.1,15.7 10.45,17.25 8.2,17.25C6,17.25 4.8,15.55 4.8,15.55V17C4.8,17 6.1,18.5 8.2,18.5C10.7,18.5 11.3,17 13.6,17C15.4,17 16,17.5 17,17.5C18.1,17.5 19.2,16.5 19.2,16.5M19.2,14.5C19.2,14.5 18,15.5 17,15.5C16,15.5 15.1,14.7 13.6,14.7C12.1,14.7 10.45,16.25 8.2,16.25C6,16.25 4.8,14.55 4.8,14.55V16C4.8,16 6.1,17.5 8.2,17.5C10.7,17.5 11.3,16 13.6,16C15.4,16 16,16.5 17,16.5C18.1,16.5 19.2,15.5 19.2,15.5M19.2,13.5C19.2,13.5 18,14.5 17,14.5C16,14.5 15.1,13.7 13.6,13.7C12.1,13.7 10.45,15.25 8.2,15.25C6,15.25 4.8,13.55 4.8,13.55V15C4.8,15 6.1,16.5 8.2,16.5C10.7,16.5 11.3,15 13.6,15C15.4,15 16,15.5 17,15.5C18.1,15.5 19.2,14.5 19.2,14.5M8.2,13.9C6,13.9 4.8,12.2 4.8,12.2V13.65C4.8,13.65 6.1,15.15 8.2,15.15C10.7,15.15 11.3,13.65 13.6,13.65C15.4,13.65 16,14.15 17,14.15C18.1,14.15 19.2,13.15 19.2,13.15V12.15C19.2,12.15 18,13.15 17,13.15C16,13.15 15.1,12.35 13.6,12.35C12.1,12.35 10.45,13.9 8.2,13.9Z" />
+                </svg>
+                View on Kickstarter
+              </a>
+            </div>
+          )}
         </div>
       );
     }
