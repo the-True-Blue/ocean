@@ -37,7 +37,7 @@
   right: -2px;
   bottom: -2px;
   left: -2px;
-  background: #729a9f; /* Color del borde */
+  background: #729a9f; /* Border color */
   clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px);
   z-index: -1;
 }
@@ -56,7 +56,7 @@
   }
 }
 
-/* Animación de escala pulsante */
+/* Pulse scale animation */
 @keyframes pulse-scale {
   0% {
     transform: scale(1);
@@ -69,24 +69,23 @@
   }
 }
 
-/* Clase para aplicar ambas animaciones */
+/* Class to apply both animations */
 .image-pulse {
   transition: all 0.3s ease;
 }
 
-/* Estado normal - sin animaciones */
+/* Normal state - no animations */
 .image-pulse {
   filter: none;
   transform: scale(1);
 }
 
-/* Al hacer hover, aplicar ambas animaciones */
+/* On hover, apply both animations */
 .image-pulse:hover {
   animation: pulse-glow 2s infinite ease-in-out,
     pulse-scale 2.5s infinite ease-in-out;
 }
 
-/* También podemos añadir una sutil rotación */
 @keyframes slight-rotate {
   0% {
     transform: rotate(-1deg) scale(1);
@@ -106,7 +105,6 @@
 
 /* 3d ART COLLECTION ANIMATIONS */
 
-/* Animación de brillo pulsante */
 @keyframes pulse-glow {
   0% {
     filter: drop-shadow(0 0 5px rgba(70, 130, 245, 0.5)) brightness(100%);
@@ -119,7 +117,7 @@
   }
 }
 
-/* Animación de escala pulsante */
+/* Pulse animation */
 @keyframes pulse-scale {
   0% {
     transform: scale(1);
@@ -132,18 +130,18 @@
   }
 }
 
-/* Clase para aplicar ambas animaciones */
+/* Class to apply both animations */
 .art-image-pulse {
   transition: all 0.3s ease;
 }
 
-/* Estado normal - sin animaciones */
+/* Normal state - no animations */
 .art-image-pulse {
   filter: none;
   transform: scale(1);
 }
 
-/* Al hacer hover, aplicar ambas animaciones */
+/* On hover, apply both animations */
 .art-image-pulse:hover {
   animation: pulse-glow 2s infinite ease-in-out,
     pulse-scale 2.5s infinite ease-in-out;

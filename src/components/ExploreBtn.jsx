@@ -2,7 +2,6 @@ import React from "react";
 import arrow from "../assets/hero/arrow.png";
 
 const ExploreBtn = ({ text, onClick, className }) => {
-  // SVG con forma personalizada y bordes curvos (mantenemos esto para el diseño)
   const svgCode = `
     <svg xmlns="http://www.w3.org/2000/svg" width="143" height="63" viewBox="0 0 143 63">
       <defs>
@@ -51,7 +50,6 @@ const ExploreBtn = ({ text, onClick, className }) => {
     </svg>
   `;
 
-  // Convertir SVG a URL de datos
   const svgDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
     svgCode
   )}`;
@@ -73,7 +71,6 @@ const ExploreBtn = ({ text, onClick, className }) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Contenido: Texto y flecha */}
       <div className="relative z-10 flex items-center justify-center space-x-2">
         <span className="font-medium text-white select-none">{text}</span>
         <img

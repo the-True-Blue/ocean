@@ -156,12 +156,8 @@ const VideoModal = ({ project, onClose }) => {
     }
   }, [project]);
 
-  // Manejar el z-index y la visibilidad para el modal de video anidado
   useEffect(() => {
     if (project) {
-      // No necesitamos fijar el body de nuevo porque el modal padre ya lo hizo
-      // Pero podemos manejar elementos adicionales que podrían estar sobre este modal
-
       const highZElements = document.querySelectorAll('[style*="z-index"]');
       const originalZValues = new Map();
 
@@ -169,7 +165,7 @@ const VideoModal = ({ project, onClose }) => {
         if (
           element !== modalRef.current &&
           !modalRef.current?.contains(element) &&
-          !element.closest(".carousel-modal-overlay") // No afectar elementos del carousel modal padre
+          !element.closest(".carousel-modal-overlay")
         ) {
           const zValue = window.getComputedStyle(element).zIndex;
           if (zValue !== "auto" && parseInt(zValue) > 100) {
@@ -180,7 +176,6 @@ const VideoModal = ({ project, onClose }) => {
       });
 
       return () => {
-        // Restaurar valores de z-index
         highZElements.forEach((element) => {
           if (originalZValues.has(element)) {
             element.style.zIndex = originalZValues.get(element);
@@ -373,12 +368,15 @@ const VideoModal = ({ project, onClose }) => {
       );
     }
 
-    // TikTok videos - Using our manual implementation
+    // TikTok videos - Using scaled implementation
     if (project.videoUrl.includes("tiktok.com")) {
       return (
         <div
-          className="tiktok-container w-full"
-          style={{ height: "calc(80vh - 40px)" }}
+          className="tiktok-container w-full flex items-center justify-center"
+          style={{
+            height: "calc(75vh - 40px)",
+            maxHeight: "600px",
+          }}
         >
           <ManualTikTokEmbed url={project.videoUrl} />
         </div>
@@ -455,7 +453,6 @@ const VideoModal = ({ project, onClose }) => {
     );
   };
 
-  // Determine if this is a vertical video (TikTok or Instagram Reel)
   const isVerticalVideo = () => {
     return (
       project.videoUrl.includes("tiktok.com") ||
@@ -517,16 +514,23 @@ const VideoModal = ({ project, onClose }) => {
           </svg>
         </button>
 
-        {/* Different container based on video type */}
+        {/* Diferentes contenedores según el tipo de video */}
         {isYouTubeVideo() ? (
           <div className="video-modal-content aspect-video bg-black w-full">
             {renderEmbed()}
           </div>
         ) : (
           <div
-            className="video-modal-content bg-black"
+            className="video-modal-content bg-black flex items-center justify-center"
             style={{
-              maxHeight: isVerticalVideo() ? "90vh" : "auto",
+              height: project.videoUrl.includes("tiktok.com")
+                ? "calc(75vh - 40px)"
+                : isVerticalVideo()
+                ? "90vh"
+                : "auto",
+              maxHeight: project.videoUrl.includes("tiktok.com")
+                ? "600px"
+                : "auto",
               overflow: "hidden",
             }}
           >
@@ -739,13 +743,12 @@ const CarouselModal = ({ isOpen, onClose }) => {
   // Update layout based on screen size
   useEffect(() => {
     const updateLayout = () => {
-      // Get arrow width for calculations
-      const arrowWidth = window.innerWidth < 640 ? 24 : 32; // Estimated arrow width including padding
-      const arrowSpacing = window.innerWidth < 640 ? 16 : 24; // Space between arrow and content
-      const totalArrowSpace = (arrowWidth + arrowSpacing) * 2; // Space for both arrows
+      const arrowWidth = window.innerWidth < 640 ? 24 : 32;
+      const arrowSpacing = window.innerWidth < 640 ? 16 : 24;
+      const totalArrowSpace = (arrowWidth + arrowSpacing) * 2;
 
       // Determine gap between cards
-      const newCardGap = window.innerWidth < 640 ? 12 : 20; // Reduced gap size
+      const newCardGap = window.innerWidth < 640 ? 12 : 20;
       setCardGap(newCardGap);
 
       // Calculate container width based on available space
@@ -809,20 +812,16 @@ const CarouselModal = ({ isOpen, onClose }) => {
     }
   }, [isOpen, currentIndex]);
 
-  // Efecto para manejar el HTML cuando el modal está abierto
   useEffect(() => {
     if (isOpen) {
-      // Guardar la posición actual del scroll
       const scrollY = window.scrollY;
 
-      // Prevenir el scroll del body y mantener la posición
       document.body.style.overflow = "hidden";
       document.body.style.position = "fixed";
       document.body.style.width = "100%";
       document.body.style.top = `-${scrollY}px`;
       document.body.style.height = "100%";
 
-      // Ocultar temporalmente elementos fijos como el navbar
       const fixedElements = document.querySelectorAll(
         'nav, [class*="navbar"], [class*="header"], [class*="fixed"]'
       );
@@ -832,7 +831,6 @@ const CarouselModal = ({ isOpen, onClose }) => {
         if (
           element !== modalRef.current &&
           !modalRef.current?.contains(element) &&
-          // Evitar ocultar elementos que son parte de este modal
           !element.closest(".carousel-modal-overlay") &&
           element.tagName.toLowerCase() !== "body" &&
           element.tagName.toLowerCase() !== "html"
@@ -843,13 +841,11 @@ const CarouselModal = ({ isOpen, onClose }) => {
             zIndex: element.style.zIndex,
           });
 
-          // En lugar de ocultar completamente, establecer un z-index muy bajo
           element.style.zIndex = "-1";
           element.style.visibility = "hidden";
         }
       });
 
-      // Manejar conflictos de z-index
       const highZElements = document.querySelectorAll('[style*="z-index"]');
       const originalZValues = new Map();
 
@@ -867,21 +863,17 @@ const CarouselModal = ({ isOpen, onClose }) => {
       });
 
       return () => {
-        // Obtener la posición de desplazamiento guardada
         const scrollY =
           parseInt((document.body.style.top || "0").replace("px", "")) * -1;
 
-        // Restaurar los estilos originales del body
         document.body.style.overflow = "";
         document.body.style.position = "";
         document.body.style.width = "";
         document.body.style.height = "";
         document.body.style.top = "";
 
-        // Restaurar la posición de desplazamiento
         window.scrollTo(0, scrollY);
 
-        // Restaurar los valores de visualización originales
         fixedElements.forEach((element) => {
           if (originalDisplayValues.has(element)) {
             const originalValues = originalDisplayValues.get(element);
@@ -891,7 +883,6 @@ const CarouselModal = ({ isOpen, onClose }) => {
           }
         });
 
-        // Restaurar los valores originales de z-index
         highZElements.forEach((element) => {
           if (originalZValues.has(element)) {
             element.style.zIndex = originalZValues.get(element);

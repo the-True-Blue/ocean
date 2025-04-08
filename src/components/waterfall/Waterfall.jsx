@@ -9,22 +9,19 @@ const Waterfall = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Cuando el elemento es visible, añadimos la clase para el fade in
             entry.target.classList.add("fade-in-visible");
           }
         });
       },
       {
-        threshold: 0.2, // El efecto se activa cuando al menos 20% del elemento es visible
+        threshold: 0.2,
       }
     );
 
-    // Observamos el elemento que contiene el texto
     if (textRef.current) {
       observer.observe(textRef.current);
     }
 
-    // Limpiamos el observer cuando el componente se desmonta
     return () => {
       if (textRef.current) {
         observer.unobserve(textRef.current);
@@ -34,7 +31,6 @@ const Waterfall = () => {
 
   return (
     <div className="w-full h-screen relative flex flex-col justify-end overflow-hidden">
-      {/* Fondo de imagen que cubre todo el componente */}
       <div
         className="absolute w-full h-full bg-cover bg-no-repeat bg-center md:bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}

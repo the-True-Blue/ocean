@@ -9,7 +9,7 @@ const GameProgrammingSection = () => {
       id="game-programming-section"
       className="w-full md:h-[1260px] min-h-[822px] relative"
     >
-      {/* Imagen para Desktop */}
+      {/* Desktop Image */}
       <div
         className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat"
         style={{
@@ -17,7 +17,7 @@ const GameProgrammingSection = () => {
         }}
       ></div>
 
-      {/* Contenido */}
+      {/* Content */}
       <div className="relative z-10 w-full">
         <h1
           className="font-orbitron font-black text-white text-[26.53px] text-center md:text-start md:ms-[48px]
@@ -35,14 +35,14 @@ const GameProgrammingSection = () => {
           </div>
         </div>
 
-        {/* Carrusel */}
+        {/* Carousel */}
         <div className="relative top-[350px] md:top-[180px] w-full flex justify-center">
           <div className="w-full max-w-[1200px]">
             <GameCarousel />
           </div>
         </div>
 
-        {/* Animación de burbujas de Rive (en la esquina inferior derecha) */}
+        {/* Rive bubble animation (bottom right corner) */}
         <div className="absolute -bottom-80 left-0 md:left-50 w-[300px] h-[300px] z-20">
           <Rive
             src="/animations/untitled.riv"
@@ -52,7 +52,7 @@ const GameProgrammingSection = () => {
         </div>
       </div>
 
-      {/* Espacio adicional para móvil */}
+      {/* Additional space for mobile */}
       <div className="h-[200px] md:h-0 w-full"></div>
     </div>
   );

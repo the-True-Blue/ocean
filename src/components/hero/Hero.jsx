@@ -6,15 +6,15 @@ import AboutModal from "./AboutModal";
 import VideoModal from "./VideoModal";
 
 const Hero = () => {
-  // Estados separados para cada modal
+  // Separate states for each modal
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const videoSrc = "https://www.youtube.com/embed/your-video-id";
 
-  // Funciones para manejar el modal About
+  // Functions to handle About modal
   const openAboutModal = () => {
     setIsAboutModalOpen(true);
-    // Asegúrate de que el modal de video esté cerrado cuando se abre el About
+    // Make sure video modal is closed when About opens
     setIsVideoModalOpen(false);
   };
 
@@ -22,7 +22,7 @@ const Hero = () => {
     setIsAboutModalOpen(false);
   };
 
-  // Funciones para manejar el modal Video
+  // Functions to handle Video modal
   const openVideoModal = () => {
     setIsVideoModalOpen(true);
   };
@@ -33,13 +33,13 @@ const Hero = () => {
 
   return (
     <div className="h-[1285px] relative w-full">
-      {/* Imagen para Desktop */}
+      {/* Desktop Image */}
       <div
         className="absolute inset-0 h-full bg-center bg-no-repeat bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${heroImage})` }}
       ></div>
 
-      {/* Contenido superior */}
+      {/* Top Content */}
       <div className="relative z-10 flex flex-col items-center gap-[19px] text-white">
         <h1
           className="text-[36px] md:text-[55px] font-spartan font-600 mb-0 mt-[257px] md:mt-[230px]"
@@ -60,7 +60,7 @@ const Hero = () => {
         />
       </div>
 
-      {/* Contenido de experiencia
+      {/* Experience Content
       <div className="relative z-10 flex flex-col items-center mb-0 pt-[480px]">
         <h1 className="text-[32px] font-poppins tracking-[15px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] md:text-[55px] text-[#094058] font-[800] drop-shadow-lg">
           5 + YEARS
@@ -78,14 +78,14 @@ const Hero = () => {
         </h1>
       </div> */}
 
-      {/* Modal About Me */}
+      {/* About Me Modal */}
       <AboutModal
         isOpen={isAboutModalOpen}
         onClose={closeAboutModal}
         onOpenVideo={openVideoModal}
       />
 
-      {/* Modal Video (independiente del About) */}
+      {/* Video Modal (independent from About) */}
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={closeVideoModal}
