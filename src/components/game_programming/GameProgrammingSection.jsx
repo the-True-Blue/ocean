@@ -60,25 +60,25 @@ const GameProgrammingSection = () => {
 
   // Animation variants
   const titleVariant = {
-    hidden: { opacity: 0, x: -50 },
+    hidden: { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.6,
+        duration: 1.2,
         ease: "easeOut",
       },
     },
   };
 
   const descriptionVariant = {
-    hidden: { opacity: 0, x: 50 },
+    hidden: { opacity: 0, x: 20 },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.6,
-        delay: 0.3,
+        duration: 1.2,
+        delay: 0.1,
         ease: "easeOut",
       },
     },
@@ -90,8 +90,8 @@ const GameProgrammingSection = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
-        delay: 0.6,
+        duration: 1.4,
+        delay: 0.8,
         ease: "easeOut",
       },
     },
@@ -123,7 +123,7 @@ const GameProgrammingSection = () => {
         }}
       ></div>
 
-      {/* Stars background overlay - similar to GraphicDesign */}
+      {/* Stars background overlay */}
       <motion.div
         className="absolute inset-0 w-full h-full opacity-40 stars-background"
         animate={{

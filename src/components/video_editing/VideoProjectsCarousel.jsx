@@ -6,7 +6,6 @@ import arrow from "../../assets/video_editing/Arrow.png";
 import { InstagramEmbed, YouTubeEmbed } from "react-social-media-embed";
 import ManualTikTokEmbed from "./ManualTikTokEmbed";
 
-// Projects data - move Kickstarter project to a separate variable
 const kickstarterProject = {
   id: 11,
   title: "Jungles of Kuauhtla Trailer",
@@ -101,8 +100,6 @@ const projectsData = [
   },
 ];
 
-// Updated VideoModal component for proper video containment
-
 const VideoModal = ({ project, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -116,11 +113,9 @@ const VideoModal = ({ project, onClose }) => {
       setLoading(true);
       setError(false);
 
-      // Log for debugging
       console.log("Content type:", getVideoType(project.videoUrl));
       console.log("URL:", project.videoUrl);
 
-      // For Instagram, ensure the embed script is loaded
       if (project.videoUrl.includes("instagram.com")) {
         const loadInstagramScript = () => {
           if (!window.instgrm) {
@@ -144,7 +139,6 @@ const VideoModal = ({ project, onClose }) => {
 
         loadInstagramScript();
 
-        // Try processing again after a short delay
         const timer = setTimeout(() => {
           if (window.instgrm) {
             window.instgrm.Embeds.process();
@@ -196,9 +190,7 @@ const VideoModal = ({ project, onClose }) => {
 
   // Function to clean and validate Instagram URL
   const getCleanInstagramUrl = (url) => {
-    // Ensure URL has the correct format for Instagram
     if (url.includes("instagram.com")) {
-      // Try to extract the ID
       const regexPost = /instagram\.com\/p\/([^\/\?]+)/;
       const regexReel = /instagram\.com\/reel\/([^\/\?]+)/;
 
@@ -209,7 +201,7 @@ const VideoModal = ({ project, onClose }) => {
 
       if (match && match[1]) {
         const id = match[1];
-        // Determine if it's a post or a reel
+
         if (url.includes("/reel/")) {
           return `https://www.instagram.com/reel/${id}/`;
         } else {
@@ -218,13 +210,11 @@ const VideoModal = ({ project, onClose }) => {
       }
     }
 
-    // If unable to clean, return original URL
     return url;
   };
 
   if (!project) return null;
 
-  // Function to determine what type of embed to show
   const renderEmbed = () => {
     if (error) {
       return (
@@ -288,7 +278,6 @@ const VideoModal = ({ project, onClose }) => {
             </a>
             <button
               onClick={() => {
-                // Fallback to YouTube if Kickstarter embed fails
                 if (error && project.videoUrl) {
                   window.open(project.videoUrl, "_blank");
                 }
@@ -344,7 +333,6 @@ const VideoModal = ({ project, onClose }) => {
             />
           </div>
 
-          {/* Show Kickstarter link if applicable but using YouTube embed */}
           {project.kickstarterUrl && (
             <div className="absolute bottom-4 left-0 right-0 flex justify-center">
               <a
@@ -368,7 +356,6 @@ const VideoModal = ({ project, onClose }) => {
       );
     }
 
-    /// TikTok videos - Using improved responsive implementation
     if (project.videoUrl.includes("tiktok.com")) {
       return (
         <ManualTikTokEmbed
@@ -405,14 +392,13 @@ const VideoModal = ({ project, onClose }) => {
             </div>
           </div>
 
-          {/* Using original component with clean URL */}
           <InstagramEmbed
             url={cleanUrl}
             captioned={true}
             onLoad={() => {
               console.log("Instagram embed loaded");
               setLoading(false);
-              // Try processing again
+
               if (window.instgrm) {
                 setTimeout(() => {
                   window.instgrm.Embeds.process();
@@ -509,7 +495,6 @@ const VideoModal = ({ project, onClose }) => {
           </svg>
         </button>
 
-        {/* Diferentes contenedores según el tipo de video */}
         {isYouTubeVideo() ? (
           <div className="video-modal-content aspect-video bg-black w-full">
             {renderEmbed()}
@@ -528,7 +513,7 @@ const VideoModal = ({ project, onClose }) => {
                 ? "90vh"
                 : "auto",
               maxHeight: project.videoUrl.includes("tiktok.com")
-                ? "none" // Eliminamos la restricción para TikTok
+                ? "none"
                 : "auto",
             }}
           >
@@ -563,7 +548,6 @@ const ProjectCard = ({ project, onClick, featured = false }) => {
         </div>
       )}
 
-      {/* Image container - exact height as specified */}
       <div
         className="w-full overflow-hidden"
         style={{ aspectRatio: "369.38/378.03" }}
@@ -575,7 +559,6 @@ const ProjectCard = ({ project, onClick, featured = false }) => {
         />
       </div>
 
-      {/* Content container - positioned for slight overlap */}
       <div
         className="absolute w-full"
         style={{
@@ -584,14 +567,12 @@ const ProjectCard = ({ project, onClick, featured = false }) => {
           top: "auto",
         }}
       >
-        {/* Border layer with clip-path */}
         <div
           className={`absolute inset-0 -m-0.5 rounded-b-lg [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] ${
             featured ? "bg-yellow-500" : "bg-[#729a9f]"
           }`}
         ></div>
 
-        {/* Content layer with gradient and clip-path */}
         <div
           className={`p-4 flex flex-col relative rounded-b-lg [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] ${
             featured

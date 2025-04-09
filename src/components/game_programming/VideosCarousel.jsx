@@ -78,7 +78,6 @@ const VideosCarousel = () => {
     },
   ];
 
-  // Función para evitar múltiples clics rápidos
   const debounce = (func, delay) => {
     let timeoutId;
     return (...args) => {
@@ -91,7 +90,6 @@ const VideosCarousel = () => {
     };
   };
 
-  // Handler para el botón de siguiente con debounce
   const handleNextSlide = debounce((e) => {
     if (e) {
       e.stopPropagation();
@@ -101,13 +99,11 @@ const VideosCarousel = () => {
     setShowVideo(false);
     setActiveIndex((prevIndex) => (prevIndex + 1) % videos.length);
 
-    // Resetear el estado después de un corto tiempo
     setTimeout(() => {
       setIsButtonClicked(false);
     }, 300);
   }, 100);
 
-  // Handler para el botón de anterior con debounce
   const handlePrevSlide = debounce((e) => {
     if (e) {
       e.stopPropagation();
@@ -119,7 +115,6 @@ const VideosCarousel = () => {
       (prevIndex) => (prevIndex - 1 + videos.length) % videos.length
     );
 
-    // Resetear el estado después de un corto tiempo
     setTimeout(() => {
       setIsButtonClicked(false);
     }, 300);
@@ -144,7 +139,6 @@ const VideosCarousel = () => {
 
   // Touch handlers for mobile swipe
   const handleTouchStart = (e) => {
-    // No capturar eventos touch si un botón fue clickeado o si el evento viene de un botón
     if (
       isButtonClicked ||
       e.target.closest("button") ||
@@ -157,8 +151,6 @@ const VideosCarousel = () => {
   };
 
   const handleTouchMove = (e) => {
-    // No procesar el movimiento si no hay touchStart válido,
-    // si un botón fue clickeado o si el evento proviene de un botón
     if (
       touchStart === 0 ||
       isButtonClicked ||
@@ -172,8 +164,6 @@ const VideosCarousel = () => {
   };
 
   const handleTouchEnd = (e) => {
-    // No procesar el fin del toque si no hay touchStart/touchEnd válidos,
-    // si un botón fue clickeado o si el evento proviene de un botón
     if (
       touchStart === 0 ||
       touchEnd === 0 ||
@@ -312,7 +302,7 @@ const VideosCarousel = () => {
         className="flex items-center gap-5 justify-between py-1 px-2 sm:py-2 sm:px-4 md:px-6"
         style={{ maxWidth: "min(100%, 90vh)", margin: "0 auto" }}
       >
-        {/* Prev button - AUMENTADO PARA MÓVILES */}
+        {/* Prev button  */}
         <button
           ref={prevButtonRef}
           className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 touch-manipulation"
@@ -375,7 +365,7 @@ const VideosCarousel = () => {
           ))}
         </div>
 
-        {/* Next button - AUMENTADO PARA MÓVILES */}
+        {/* Next button  */}
         <button
           ref={nextButtonRef}
           className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 touch-manipulation"

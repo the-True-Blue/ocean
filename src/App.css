@@ -224,7 +224,7 @@
   background-color: #000;
 }
 
-/* Estilos para el contenedor de TikTok */
+/* TikTok container styles */
 .tiktok-container {
   scrollbar-width: thin;
   scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
@@ -244,12 +244,12 @@
   border: transparent;
 }
 
-/* Estilos para centrar el embed de TikTok */
+/* Styles to center TikTok embed */
 .tiktok-embed-container .tiktok-embed {
   margin: 0 auto !important;
 }
 
-/* Si necesitas un margen superior */
+/* If you need a top margin */
 .transform-container {
   margin-top: 10px;
 }

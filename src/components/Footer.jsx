@@ -56,7 +56,7 @@ const Footer = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 1,
         ease: "easeOut",
       },
     },
@@ -67,8 +67,8 @@ const Footer = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        duration: 0.3,
+        staggerChildren: 0.4,
+        duration: 0.5,
       },
     },
   };
@@ -79,7 +79,7 @@ const Footer = () => {
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.7,
         ease: "easeOut",
       },
     },

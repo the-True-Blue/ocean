@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Logo1 from "../assets/Logo1.svg";
 import formIcon from "../assets/formIcon.png";
 import hambBtn from "../assets/hambBtn.png";
@@ -8,6 +9,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [animationsReady, setAnimationsReady] = useState(false);
 
   // Toggle mobile menu
   const toggleMenu = () => {
@@ -53,6 +55,55 @@ const Navbar = () => {
     };
   }, []);
 
+  // Initialize animations after component mounts
+  useEffect(() => {
+    // Slight delay to ensure DOM is fully ready
+    const timer = setTimeout(() => {
+      setAnimationsReady(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Animation variants - using only opacity with slower transitions
+  const logoVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.8, delay: 0.2 },
+    },
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const linkVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.7 },
+    },
+  };
+
+  const iconVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 2,
+        delay: 1.0,
+      },
+    },
+  };
+
   return (
     <>
       <nav
@@ -65,67 +116,96 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           {/* Desktop Navbar */}
           <div className="hidden md:flex items-center justify-between h-full py-10">
-            <div className="flex-shrink-0 cursor-pointer" onClick={scrollToTop}>
+            <motion.div
+              className="flex-shrink-0 cursor-pointer"
+              onClick={scrollToTop}
+              initial="hidden"
+              animate={animationsReady ? "visible" : "hidden"}
+              variants={logoVariants}
+            >
               <img
                 src={Logo1}
                 alt="logo"
                 className="w-[63px] h-[63px] object-contain"
               />
-            </div>
+            </motion.div>
 
             {/* Center Navigation Links */}
-            <div className="flex items-center w-full lg:mx-[112px] mx-5 justify-between font-orbitron font-[700] text-[0.25rem]  lg:text-[14px] lg:space-x-8 space-x-2">
-              <div
+            <motion.div
+              className="flex items-center w-full lg:mx-[112px] mx-5 justify-between font-orbitron font-[700] text-[0.25rem] lg:text-[14px] lg:space-x-8 space-x-2"
+              initial="hidden"
+              animate={animationsReady ? "visible" : "hidden"}
+              variants={staggerContainer}
+            >
+              <motion.div
                 className="text-white hover:text-blue-200 cursor-pointer"
                 onClick={() => scrollToSection("game-programming")}
+                variants={linkVariants}
+                whileHover={{ scale: 1.05 }}
               >
                 Game Programming
-              </div>
-              <div
+              </motion.div>
+              <motion.div
                 className="text-white hover:text-blue-200 cursor-pointer"
                 onClick={() => scrollToSection("3d-art")}
+                variants={linkVariants}
+                whileHover={{ scale: 1.05 }}
               >
                 3D ART
-              </div>
-              <div
+              </motion.div>
+              <motion.div
                 className="text-white hover:text-blue-200 cursor-pointer"
                 onClick={() => scrollToSection("graphic-design")}
+                variants={linkVariants}
+                whileHover={{ scale: 1.05 }}
               >
                 Graphic Design
-              </div>
-              <div
+              </motion.div>
+              <motion.div
                 className="text-white hover:text-blue-200 cursor-pointer"
                 onClick={() => scrollToSection("video-editing")}
+                variants={linkVariants}
+                whileHover={{ scale: 1.05 }}
               >
                 Video Editing
-              </div>
-              <div
+              </motion.div>
+              <motion.div
                 className="text-white hover:text-blue-200 cursor-pointer"
                 onClick={() => scrollToSection("web-design")}
+                variants={linkVariants}
+                whileHover={{ scale: 1.05 }}
               >
                 Web Design
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            {/* Form Icon on Right - Ahora abre el modal */}
-            <div
+            {/* Form Icon on Right */}
+            <motion.div
               className="flex-shrink-0 w-[22.11px] h-[22.11px] border-1 border-white rounded-full flex items-center justify-center cursor-pointer"
               onClick={toggleModal}
+              initial="hidden"
+              animate={animationsReady ? "visible" : "hidden"}
+              variants={iconVariants}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <img
                 src={formIcon}
                 alt="Contact Form"
                 className="w-[12px] h-[12px] object-contain"
               />
-            </div>
+            </motion.div>
           </div>
 
           {/* Mobile Navbar */}
           <div className="flex md:hidden items-center justify-between h-full">
-            <div
+            <motion.div
               className="flex-shrink-0 cursor-pointer"
               onClick={scrollToTop}
               style={{ display: "flex", alignItems: "center" }}
+              initial={{ opacity: 0 }}
+              animate={animationsReady ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
               <img
                 src={Logo1}
@@ -133,13 +213,17 @@ const Navbar = () => {
                 className="w-[36px] h-[36px] object-contain"
                 style={{ display: "block" }}
               />
-            </div>
+            </motion.div>
 
-            {/* Form Icon (Center)  */}
-            <div
+            {/* Form Icon (Center) */}
+            <motion.div
               className="flex-shrink-0 cursor-pointer"
               onClick={toggleModal}
               style={{ display: "flex", alignItems: "center" }}
+              initial={{ opacity: 0 }}
+              animate={animationsReady ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              whileTap={{ scale: 0.95 }}
             >
               <img
                 src={formIcon}
@@ -147,12 +231,16 @@ const Navbar = () => {
                 className="w-[24px] h-[24px] object-contain"
                 style={{ display: "block" }}
               />
-            </div>
+            </motion.div>
 
             {/* Hamburger Button (Right) */}
-            <div
+            <motion.div
               className="flex-shrink-0"
               style={{ display: "flex", alignItems: "center" }}
+              initial={{ opacity: 0 }}
+              animate={animationsReady ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+              whileTap={{ scale: 0.95 }}
             >
               <button
                 onClick={toggleMenu}
@@ -166,49 +254,77 @@ const Navbar = () => {
                   style={{ display: "block" }}
                 />
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* Mobile menu dropdown */}
-        <div
+        {/* Mobile menu dropdown with subtle animation */}
+        <motion.div
           className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
             isOpen ? "max-h-64" : "max-h-0"
           }`}
+          animate={{
+            opacity: isOpen ? 1 : 0,
+            height: isOpen ? "auto" : 0,
+          }}
+          transition={{ duration: 0.3 }}
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/[0.15] backdrop-blur-sm">
-            <div
-              className="text-white hover:text-blue-200 cursor-pointer p-2"
-              onClick={() => scrollToSection("game-programming")}
-            >
-              Game Programming
-            </div>
-            <div
-              className="text-white hover:text-blue-200 cursor-pointer p-2"
-              onClick={() => scrollToSection("3d-art")}
-            >
-              3D ART
-            </div>
-            <div
-              className="text-white hover:text-blue-200 cursor-pointer p-2"
-              onClick={() => scrollToSection("graphic-design")}
-            >
-              Graphic Design
-            </div>
-            <div
-              className="text-white hover:text-blue-200 cursor-pointer p-2"
-              onClick={() => scrollToSection("video-editing")}
-            >
-              Video Editing
-            </div>
-            <div
-              className="text-white hover:text-blue-200 cursor-pointer p-2"
-              onClick={() => scrollToSection("web-design")}
-            >
-              Web Design
-            </div>
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ staggerChildren: 0.15, delayChildren: 0.1 }}
+              >
+                <motion.div
+                  className="text-white hover:text-blue-200 cursor-pointer p-2"
+                  onClick={() => scrollToSection("game-programming")}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  Game Programming
+                </motion.div>
+                <motion.div
+                  className="text-white hover:text-blue-200 cursor-pointer p-2"
+                  onClick={() => scrollToSection("3d-art")}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.35 }}
+                >
+                  3D ART
+                </motion.div>
+                <motion.div
+                  className="text-white hover:text-blue-200 cursor-pointer p-2"
+                  onClick={() => scrollToSection("graphic-design")}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                  Graphic Design
+                </motion.div>
+                <motion.div
+                  className="text-white hover:text-blue-200 cursor-pointer p-2"
+                  onClick={() => scrollToSection("video-editing")}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.65 }}
+                >
+                  Video Editing
+                </motion.div>
+                <motion.div
+                  className="text-white hover:text-blue-200 cursor-pointer p-2"
+                  onClick={() => scrollToSection("web-design")}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                >
+                  Web Design
+                </motion.div>
+              </motion.div>
+            )}
           </div>
-        </div>
+        </motion.div>
       </nav>
 
       <ContactModal

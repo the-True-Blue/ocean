@@ -43,7 +43,7 @@ const Waterfall2 = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 1,
         ease: "easeOut",
       },
     },
@@ -54,8 +54,8 @@ const Waterfall2 = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        duration: 0.3,
+        staggerChildren: 0.6,
+        duration: 0.8,
       },
     },
   };
@@ -66,13 +66,12 @@ const Waterfall2 = () => {
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.6,
+        duration: 1.5,
         ease: "easeOut",
       },
     },
   };
 
-  // Background stars animation variant
   const starsVariant = {
     hidden: { opacity: 0 },
     visible: {
@@ -111,13 +110,13 @@ const Waterfall2 = () => {
           initial="hidden"
           animate={titleControls}
           variants={titleVariant}
-          className="font-orbitron text-[40px] font-bold text-white absolute top-[100px] right-[40px] z-20 md:block hidden [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl"
+          className="font-orbitron md:text-[40px] text-3xl text-nowrap text-center right-1/2 translate-x-1/2 md:translate-x-0 font-bold text-white absolute top-10 md:top-[100px] md:right-[40px] z-20 [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl"
         >
-          Web Design Projects
+          Web Design <br className="md:hidden" /> Projects
         </motion.h2>
 
         <div className="flex flex-col items-center md:block h-full">
-          {/* Cards Container - Centrado en mobile, alineado a la derecha en desktop */}
+          {/* Cards Container  */}
           <motion.div
             ref={cardsRef}
             initial="hidden"
