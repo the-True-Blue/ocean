@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import avatar from "../../assets/mid_waterfall/avatar.png";
 import check from "../../assets/hero/check.png";
 import element1 from "../../assets/mid_waterfall/element1.png";
@@ -21,6 +23,133 @@ const ArtCollectionCarousel = () => {
   const [currentModalSlide, setCurrentModalSlide] = useState(0);
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const videoContainerRef = useRef(null);
+
+  // Animation controls
+  const titleControls = useAnimation();
+  const subtitleControls = useAnimation();
+  const cardsControls = useAnimation();
+  const mobileCarouselControls = useAnimation();
+
+  // References to detect when elements are in viewport
+  const [titleRef, titleInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
+
+  const [subtitleRef, subtitleInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
+
+  const [cardsRef, cardsInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
+  const [mobileCarouselRef, mobileCarouselInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
+  // Start animations when elements enter viewport
+  useEffect(() => {
+    if (titleInView) {
+      titleControls.start("visible");
+    }
+  }, [titleInView, titleControls]);
+
+  useEffect(() => {
+    if (subtitleInView) {
+      subtitleControls.start("visible");
+    }
+  }, [subtitleInView, subtitleControls]);
+
+  useEffect(() => {
+    if (cardsInView) {
+      cardsControls.start("visible");
+    }
+  }, [cardsInView, cardsControls]);
+
+  useEffect(() => {
+    if (mobileCarouselInView) {
+      mobileCarouselControls.start("visible");
+    }
+  }, [mobileCarouselInView, mobileCarouselControls]);
+
+  // Animation variants
+  const titleVariant = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const subtitleVariant = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        delay: 0.2,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const cardsContainerVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+        duration: 0.5,
+      },
+    },
+  };
+
+  const cardVariant = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const mobileCarouselVariant = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.7,
+        delay: 0.3,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const modalVariant = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+  };
 
   // Mock data for the three cards with added titles and descriptions for each modal content item
   const cards = [
@@ -259,21 +388,40 @@ const ArtCollectionCarousel = () => {
     <div className="relative">
       {/* Section Title */}
       <div className="mb-8 px-6 flex flex-col md:flex-row items-center mx-auto max-w-7xl justify-between gap-10 md:gap-0">
-        <h2 className="order-2 md:order-0 text-2xl lg:text-[40px]  font-orbitron font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl">
+        <motion.h2
+          ref={titleRef}
+          initial="hidden"
+          animate={titleControls}
+          variants={titleVariant}
+          className="order-2 md:order-0 text-2xl lg:text-[40px] font-orbitron font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl"
+        >
           3D ART Collection
-        </h2>
-        <p className="md:max-w-[671px] font-orbitron lg:text-[20px] text-[13px] tracking-[9%] leading-[162%] font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl">
+        </motion.h2>
+        <motion.p
+          ref={subtitleRef}
+          initial="hidden"
+          animate={subtitleControls}
+          variants={subtitleVariant}
+          className="md:max-w-[671px] font-orbitron lg:text-[20px] text-[13px] tracking-[9%] leading-[162%] font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl"
+        >
           Here is work I did as a 3D artist, modeling characters and interior
           spaces in Maya, while designing environments in Unreal.{" "}
-        </p>
+        </motion.p>
       </div>
 
       {/* Desktop View - All Cards */}
-      <div className="hidden md:flex justify-center gap-6 px-4">
+      <motion.div
+        ref={cardsRef}
+        initial="hidden"
+        animate={cardsControls}
+        variants={cardsContainerVariant}
+        className="hidden md:flex justify-center gap-6 px-4"
+      >
         {cards.map((card) => (
-          <div
+          <motion.div
             key={card.id}
-            className="bg-blue-900/50 border-gray-300/30  overflow-hidden w-full max-w-sm border-2  hover:border-blue-400/40 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg hover:shadow-blue-500/20"
+            variants={cardVariant}
+            className="bg-blue-900/50 border-gray-300/30 overflow-hidden w-full max-w-sm border-2 hover:border-blue-400/40 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg hover:shadow-blue-500/20"
             style={{ width: "390px", height: "490px" }}
           >
             <div className="p-4 h-full flex flex-col">
@@ -321,12 +469,18 @@ const ArtCollectionCarousel = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Mobile View - Carousel */}
-      <div className="md:hidden relative">
+      <motion.div
+        ref={mobileCarouselRef}
+        initial="hidden"
+        animate={mobileCarouselControls}
+        variants={mobileCarouselVariant}
+        className="md:hidden relative"
+      >
         <div className="overflow-hidden">
           <div
             className="flex transition-transform duration-300 ease-in-out"
@@ -421,11 +575,16 @@ const ArtCollectionCarousel = () => {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Modal with Carousel */}
       {activeModal && (
-        <div className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={modalVariant}
+          className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50"
+        >
           <div className="bg-black/40 p-6 rounded-lg md:max-w-[1036px] md:max-h-[722px] max-w-lg w-full max-h-[90vh] overflow-hidden">
             <div className="flex justify-end mb-2">
               <button onClick={closeModal} className="text-white text-2xl">
@@ -513,7 +672,7 @@ const ArtCollectionCarousel = () => {
                 ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );
