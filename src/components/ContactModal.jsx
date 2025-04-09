@@ -139,14 +139,14 @@ const ContactModal = ({ isOpen, onClose }) => {
                 placeholder="Enter your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
+                className="w-full h-8 md:h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
                 required
                 id="name"
                 name="user_name"
               />
               <label
                 htmlFor="name"
-                className="absolute left-4 top-4 text-white transition-all duration-200 underline pointer-events-none"
+                className="absolute left-4 md:top-4 top-2 text-white transition-all duration-200 underline pointer-events-none"
                 style={{
                   opacity: name ? "0" : "1",
                   transform: name ? "translateY(-2rem)" : "translateY(0)",
@@ -162,14 +162,14 @@ const ContactModal = ({ isOpen, onClose }) => {
                 placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
+                className="w-full h-8 md:h-[50px] bg-[#AAEBFB]/30 px-4 py-2 rounded text-white focus:outline-none placeholder-transparent"
                 required
                 id="email"
                 name="user_email"
               />
               <label
                 htmlFor="email"
-                className="absolute left-4 top-4 text-white transition-all duration-200 underline pointer-events-none"
+                className="absolute left-4 md:top-4 top-2 text-white transition-all duration-200 underline pointer-events-none"
                 style={{
                   opacity: email ? "0" : "1",
                   transform: email ? "translateY(-2rem)" : "translateY(0)",
@@ -184,7 +184,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 placeholder="Go ahead. We are listening..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full h-[150px] bg-[#AAEBFB]/30 p-4 rounded text-white focus:outline-none resize-none placeholder-transparent"
+                className="w-full h-25 md:h-[150px] bg-[#AAEBFB]/30 p-4 rounded text-white focus:outline-none resize-none placeholder-transparent"
                 required
                 id="message"
                 name="message"
@@ -216,11 +216,11 @@ const ContactModal = ({ isOpen, onClose }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full underline md:w-[430px] h-[50px] text-[20px] ${
+              className={`w-full underline md:w-[430px] h-10 md:h-[50px] text-[20px] ${
                 isSubmitting
                   ? "bg-[#76b3c2] cursor-not-allowed"
                   : "bg-[#AAEBFB] hover:bg-[#76b3c2]"
-              } text-white font-[700] tracking-[8%] py-2 px-4 rounded 
+              } text-white font-[700] tracking-[8%] py-0 md:py-2 px-4 rounded 
               active:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-[#AAEBFB] focus:ring-opacity-50 
               transform active:scale-95 active:translate-y-1 transition-all duration-200 shadow-md hover:shadow-lg`}
             >
@@ -230,11 +230,11 @@ const ContactModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Contact information and logo */}
-        <div className="w-full md:w-1/2 mt-8 md:mt-0 flex flex-col items-center justify-center ">
+        <div className="w-full md:w-1/2 mt-4 md:mt-0 flex flex-col items-center justify-center ">
           <img
             src={Logo}
             alt="Logo"
-            className="w-32 h-32 md:w-[263px] md:h-[248px] mb-4 object-contain"
+            className="w-20 h-20 md:w-[263px] md:h-[248px] mb-4 object-contain"
           />
 
           <div className="space-y-8 text-[14px] font-poppins tracking-[8%]">
