@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Rive from "@rive-app/react-canvas";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 // Custom CSS for animation delays - add this to your CSS or use a style tag
 const AnimationStyles = () => (
@@ -56,6 +57,58 @@ const VideoEditing = () => {
   const [showButtons, setShowButtons] = useState(false);
   const rocketRef = useRef(null);
   const bubbleRef = useRef(null);
+
+  // Animation controls - very simple
+  const titleControls = useAnimation();
+  const bubbleControls = useAnimation();
+
+  // References to detect when elements are in viewport
+  const [titleRef, titleInView] = useInView({
+    triggerOnce: true, // Only trigger once to avoid conflicts
+    threshold: 0.1,
+  });
+
+  const [bubbleViewRef, bubbleInView] = useInView({
+    triggerOnce: true, // Only trigger once to avoid conflicts
+    threshold: 0.1,
+  });
+
+  // Start animations when elements enter viewport
+  useEffect(() => {
+    if (titleInView) {
+      titleControls.start("visible");
+    }
+  }, [titleInView, titleControls]);
+
+  useEffect(() => {
+    if (bubbleInView) {
+      bubbleControls.start("visible");
+    }
+  }, [bubbleInView, bubbleControls]);
+
+  // Simple animation variants that won't interfere with existing functionality
+  const titleVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const bubbleVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 1,
+        delay: 0.2,
+        ease: "easeOut",
+      },
+    },
+  };
 
   // Function to permanently show buttons with specific event detection for each element
   const handleRocketHover = () => {
@@ -161,16 +214,26 @@ const VideoEditing = () => {
 
       {/* Content */}
       <div className="relative z-10 w-full">
-        <h1
+        <motion.h1
+          ref={titleRef}
+          initial="hidden"
+          animate={titleControls}
+          variants={titleVariant}
           className="font-orbitron flex items-center justify-center md:justify-end md:me-8 font-black text-white text-[26.53px] md:text-[40px] text-start 
           [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl pt-[46px]"
         >
           Video Editing & <br className="md:hidden" /> Post-production
-        </h1>
+        </motion.h1>
 
         <div className="relative">
-          <div
-            ref={bubbleRef}
+          <motion.div
+            ref={(el) => {
+              bubbleRef.current = el; // Mantiene la referencia original
+              bubbleViewRef(el); // Añade la referencia para la animación
+            }}
+            initial="hidden"
+            animate={bubbleControls}
+            variants={bubbleVariant}
             className="absolute right-10 md:right-105 flex items-center justify-center mt-[43px] bg-cover md:w-[262.53px] md:h-[230.53px] w-[135px] h-[130px] bg-no-repeat speech-bubble cursor-pointer"
             style={{ backgroundImage: `url(${bubble})` }}
           >
@@ -178,10 +241,10 @@ const VideoEditing = () => {
               Explore my video editing and post-production portfolio using Adobe
               Creative Suite, with experience in animation and VFX.
             </h2>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Orbit container with corrected positioning */}
+        {/* Orbit container with corrected positioning - NO animation wrapper here to preserve functionality */}
         <div className="absolute top-[350px] md:top-25 right-1/2 md:right-5 transform translate-x-1/2 md:translate-x-0 rocket-container">
           <div
             ref={orbitRef}
@@ -253,7 +316,7 @@ const VideoEditing = () => {
               />
             ))}
           </div>
-          <div className="absolute bottom-25 left-0  w-[300px] h-[300px] z-20">
+          <div className="absolute bottom-25 left-0 w-[300px] h-[300px] z-20">
             <Rive
               src="/animations/untitled.riv"
               animations="Timeline 1"

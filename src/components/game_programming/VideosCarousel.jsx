@@ -227,7 +227,7 @@ const VideosCarousel = () => {
 
       {/* Navigation Controls */}
       <div
-        className="flex items-center justify-between py-1 px-2 sm:py-2 sm:px-4 md:px-6"
+        className="flex items-center gap-5 justify-between py-1 px-2 sm:py-2 sm:px-4 md:px-6"
         style={{ maxWidth: "min(100%, 90vh)", margin: "0 auto" }}
       >
         {/* Prev button */}
@@ -252,7 +252,7 @@ const VideosCarousel = () => {
         </button>
 
         {/* Video indicators/thumbnails */}
-        <div className="flex space-x-1 sm:space-x-2 items-center">
+        <div className="flex space-x-2 sm:space-x-4 items-center">
           {videos.map((video, index) => (
             <button
               key={video.id}

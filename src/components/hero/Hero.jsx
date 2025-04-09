@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import heroImage from "../../assets/hero/hero.png";
 import ExploreBtn from "../ExploreBtn";
 import AboutModal from "./AboutModal";
@@ -10,6 +12,73 @@ const Hero = () => {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const videoSrc = "https://www.youtube.com/embed/your-video-id";
+
+  // Animation controls
+  const titleControls = useAnimation();
+  const buttonControls = useAnimation();
+
+  // References to detect when elements are in viewport
+  const [titleRef, titleInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
+
+  const [buttonRef, buttonInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
+
+  // Start animations when elements enter viewport
+  useEffect(() => {
+    if (titleInView) {
+      titleControls.start("visible");
+    }
+  }, [titleInView, titleControls]);
+
+  useEffect(() => {
+    if (buttonInView) {
+      buttonControls.start("visible");
+    }
+  }, [buttonInView, buttonControls]);
+
+  // Animation variants
+  const titleVariant = {
+    hidden: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1.2,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const buttonVariant = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.7,
+        delay: 0.3,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  // Background stars animation
+  const starsVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: [0.2, 0.4, 0.2],
+      transition: {
+        duration: 4,
+        ease: "easeInOut",
+        repeat: Infinity,
+      },
+    },
+  };
 
   // Functions to handle About modal
   const openAboutModal = () => {
@@ -39,9 +108,22 @@ const Hero = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       ></div>
 
+      {/* Stars overlay similar to GraphicDesign */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={starsVariant}
+        className="absolute inset-0 w-full h-full stars-background pointer-events-none"
+        style={{ zIndex: 1 }}
+      ></motion.div>
+
       {/* Top Content */}
       <div className="relative z-10 flex flex-col items-center gap-[19px] text-white">
-        <h1
+        <motion.h1
+          ref={titleRef}
+          initial="hidden"
+          animate={titleControls}
+          variants={titleVariant}
           className="text-[36px] md:text-[55px] font-spartan font-600 mb-0 mt-[257px] md:mt-[230px]"
           style={{
             background:
@@ -52,31 +134,20 @@ const Hero = () => {
           }}
         >
           WELCOME
-        </h1>
-        <ExploreBtn
-          text="Explore"
-          className="font-orbitron font-[700px] text-[15px]"
-          onClick={openAboutModal}
-        />
+        </motion.h1>
+        <motion.div
+          ref={buttonRef}
+          initial="hidden"
+          animate={buttonControls}
+          variants={buttonVariant}
+        >
+          <ExploreBtn
+            text="Explore"
+            className="font-orbitron font-[700px] text-[15px]"
+            onClick={openAboutModal}
+          />
+        </motion.div>
       </div>
-
-      {/* Experience Content
-      <div className="relative z-10 flex flex-col items-center mb-0 pt-[480px]">
-        <h1 className="text-[32px] font-poppins tracking-[15px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] md:text-[55px] text-[#094058] font-[800] drop-shadow-lg">
-          5 + YEARS
-        </h1>
-        <div className="mt-[27px] gap-[33px] md:gap-0 flex flex-col md:flex-row items-center text-[#FFFFFF] md:text-xl text-[12px] font-aldrich">
-          <div className="flex">
-            <h2 className="border-l-1 px-2">Game Designer</h2>
-            <h2 className="border-l-1 px-2">Video Editor</h2>
-            <h2 className="border-l-1 border-r-1 px-2">Software Engineer</h2>
-          </div>
-          <h2 className="border-r-1 px-2">3D Generalist</h2>
-        </div>
-        <h1 className="md:text-[52px] text-[32px] font-poppins text-white font-[800] tracking-[7px] [text-shadow:_0_4px_4px_rgb(225_255_255_/_0.25)] drop-shadow-lg mt-[37px]">
-          OF EXPERIENCE
-        </h1>
-      </div> */}
 
       {/* About Me Modal */}
       <AboutModal
@@ -91,6 +162,26 @@ const Hero = () => {
         onClose={closeVideoModal}
         videoSrc={videoSrc}
       />
+
+      {/* CSS for stars */}
+      <style jsx>{`
+        .stars-background {
+          background-image: radial-gradient(
+              2px 2px at 20px 30px,
+              #ffffff,
+              rgba(0, 0, 0, 0)
+            ),
+            radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0, 0, 0, 0)),
+            radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0, 0, 0, 0)),
+            radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0, 0, 0, 0)),
+            radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0, 0, 0, 0)),
+            radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0, 0, 0, 0));
+          background-repeat: repeat;
+          background-size: 200px 200px;
+          mix-blend-mode: screen;
+          opacity: 0.3;
+        }
+      `}</style>
     </div>
   );
 };
