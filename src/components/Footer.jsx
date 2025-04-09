@@ -86,7 +86,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <h2 className="absolute font-inter font-[400] text-white bottom-8 text-center w-full drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
+      <h2 className="absolute font-inter font-[400] md:text-[15px] text-[11px] text-white bottom-8 text-center w-full drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
         © 2024 Designed by Tempest Digital, All rights reserved.
       </h2>
     </div>

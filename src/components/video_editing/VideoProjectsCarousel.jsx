@@ -320,7 +320,7 @@ const VideoModal = ({ project, onClose }) => {
           ref={youtubeContainerRef}
           style={{
             position: "relative",
-            paddingTop: "56.25%", // 16:9 aspect ratio
+            paddingTop: "56.25%",
           }}
         >
           <div
@@ -368,18 +368,13 @@ const VideoModal = ({ project, onClose }) => {
       );
     }
 
-    // TikTok videos - Using scaled implementation
+    /// TikTok videos - Using improved responsive implementation
     if (project.videoUrl.includes("tiktok.com")) {
       return (
-        <div
-          className="tiktok-container w-full flex items-center justify-center"
-          style={{
-            height: "calc(75vh - 40px)",
-            maxHeight: "600px",
-          }}
-        >
-          <ManualTikTokEmbed url={project.videoUrl} />
-        </div>
+        <ManualTikTokEmbed
+          url={project.videoUrl}
+          onLoad={() => setLoading(false)}
+        />
       );
     }
 
@@ -521,17 +516,20 @@ const VideoModal = ({ project, onClose }) => {
           </div>
         ) : (
           <div
-            className="video-modal-content bg-black flex items-center justify-center"
+            className={`video-modal-content bg-black flex items-center justify-center ${
+              project.videoUrl.includes("tiktok.com")
+                ? "overflow-visible"
+                : "overflow-hidden"
+            }`}
             style={{
               height: project.videoUrl.includes("tiktok.com")
-                ? "calc(75vh - 40px)"
+                ? "auto"
                 : isVerticalVideo()
                 ? "90vh"
                 : "auto",
               maxHeight: project.videoUrl.includes("tiktok.com")
-                ? "600px"
+                ? "none" // Eliminamos la restricción para TikTok
                 : "auto",
-              overflow: "hidden",
             }}
           >
             {renderEmbed()}

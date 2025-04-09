@@ -1,164 +1,198 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const ManualTikTokEmbed = ({ url }) => {
+const ManualTikTokEmbed = ({ url, onLoad }) => {
+  const embedRef = useRef(null);
   const containerRef = useRef(null);
-  const scriptRef = useRef(null);
-  const [containerSize, setContainerSize] = useState({
-    width: "100%",
-    height: "100%",
-  });
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [scale, setScale] = useState(1);
+  const [containerHeight, setContainerHeight] = useState("auto");
 
+  // Function to extract TikTok video ID from URL
+  const extractTikTokId = (url) => {
+    if (!url || !url.includes("tiktok.com")) return null;
+
+    const regex = /tiktok\.com\/@[^\/]+\/video\/(\d+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  };
+
+  // Calculate and apply the appropriate scale based on viewport height
+  const calculateScale = () => {
+    const viewportHeight = window.innerHeight;
+
+    // Default TikTok embed is around 650-700px tall with content
+    const defaultHeight = 680;
+
+    // Calculate available height (accounting for modal padding)
+    const availableHeight = viewportHeight * 0.8 - 30; // 80% of viewport minus padding
+
+    // Calculate the scale ratio
+    let newScale = 1;
+
+    // If the available height is less than what TikTok needs, scale it down
+    if (availableHeight < defaultHeight) {
+      newScale = Math.max(0.5, availableHeight / defaultHeight); // Never go below 0.5
+    }
+
+    return newScale;
+  };
+
+  // Handle window resize to recalculate scale
   useEffect(() => {
-    // Function to adjust container size based on viewport
-    const adjustSize = () => {
-      const viewportHeight = window.innerHeight;
-      const viewportWidth = window.innerWidth;
+    const handleResize = () => {
+      const newScale = calculateScale();
+      setScale(newScale);
 
-      // Calculate dimensions to fit the entire TikTok embed
-      // Reduced size to make the entire content visible
-      const maxHeight = Math.min(viewportHeight * 0.65, 550);
-
-      // For mobile screens, limit width for better proportion
-      let maxWidth = 300;
-      if (viewportWidth > 768) {
-        maxWidth = 320;
+      // Update container height based on scale
+      // This allows the scrollbar to appear at the right position
+      if (containerRef.current) {
+        const viewportHeight = window.innerHeight;
+        const adjustedHeight = viewportHeight * 0.8; // 80% of viewport
+        setContainerHeight(`${adjustedHeight}px`);
       }
-
-      setContainerSize({
-        width: `${maxWidth}px`,
-        height: `${maxHeight}px`,
-      });
     };
 
-    // Initial adjustment
-    adjustSize();
+    // Initial calculation
+    handleResize();
 
-    // Add resize listener for responsive behavior
-    window.addEventListener("resize", adjustSize);
+    // Add resize listener
+    window.addEventListener("resize", handleResize);
 
-    // Clear any previous script
-    if (scriptRef.current) {
-      document.head.removeChild(scriptRef.current);
-      scriptRef.current = null;
-    }
-
-    if (!containerRef.current || !url) return;
-
-    // Create the blockquote for TikTok
-    containerRef.current.innerHTML = "";
-    const blockquote = document.createElement("blockquote");
-    blockquote.className = "tiktok-embed";
-    blockquote.setAttribute("cite", url);
-
-    // Force TikTok embed to be proper size
-    blockquote.style.maxWidth = "100%";
-    blockquote.style.margin = "0 auto";
-    blockquote.style.display = "flex";
-    blockquote.style.justifyContent = "center";
-    blockquote.style.alignItems = "center";
-
-    // Extract video ID if available
-    const videoIdMatch = url.match(/\/video\/(\d+)/);
-    if (videoIdMatch && videoIdMatch[1]) {
-      blockquote.setAttribute("data-video-id", videoIdMatch[1]);
-    }
-
-    // Add placeholder
-    const placeholder = document.createElement("div");
-    placeholder.textContent = "Loading TikTok...";
-    placeholder.style.display = "flex";
-    placeholder.style.alignItems = "center";
-    placeholder.style.justifyContent = "center";
-    placeholder.style.height = "100%";
-    blockquote.appendChild(placeholder);
-
-    // Add blockquote to container
-    containerRef.current.appendChild(blockquote);
-
-    // Create and load TikTok script with timestamp to force reload
-    const script = document.createElement("script");
-    script.src = `https://www.tiktok.com/embed.js?t=${Date.now()}`;
-    script.id = "tiktok-embed-script";
-    script.async = true;
-
-    // Set loaded state when script loads
-    script.onload = () => {
-      // Wait a moment for TikTok to initialize the embed
-      setTimeout(() => {
-        setIsLoaded(true);
-
-        // Scale the TikTok container to fit properly
-        if (containerRef.current) {
-          const tiktokContainer =
-            containerRef.current.querySelector(".tiktok-embed");
-          if (tiktokContainer) {
-            // Apply scale transformation to fit entire content
-            tiktokContainer.style.transform = "scale(0.85)";
-            tiktokContainer.style.transformOrigin = "center center";
-          }
-        }
-      }, 1000);
-    };
-
-    // Save script reference for cleanup
-    scriptRef.current = script;
-
-    // Add script to head
-    document.head.appendChild(script);
-
-    // Cleanup on unmount
+    // Cleanup
     return () => {
-      window.removeEventListener("resize", adjustSize);
-      if (scriptRef.current) {
-        document.head.removeChild(scriptRef.current);
-        scriptRef.current = null;
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // Create and handle the TikTok embed
+  useEffect(() => {
+    const videoId = extractTikTokId(url);
+
+    if (!videoId) {
+      console.error("Invalid TikTok URL");
+      setError(true);
+      setLoading(false);
+      if (onLoad) onLoad();
+      return;
+    }
+
+    // Create the embed
+    const createEmbed = () => {
+      if (!embedRef.current) return;
+
+      // Clear any existing content
+      embedRef.current.innerHTML = "";
+
+      // Create the blockquote element that TikTok script transforms
+      const blockquote = document.createElement("blockquote");
+      blockquote.className = "tiktok-embed";
+      blockquote.setAttribute("cite", url);
+      blockquote.setAttribute("data-video-id", videoId);
+
+      // Add required attributes
+      blockquote.setAttribute("data-embed-type", "video");
+
+      // Create the section for TikTok script
+      const section = document.createElement("section");
+      blockquote.appendChild(section);
+
+      // Add the blockquote to our container
+      embedRef.current.appendChild(blockquote);
+
+      // Load or reload the TikTok embed script
+      loadTikTokScript();
+    };
+
+    const loadTikTokScript = () => {
+      // Check if script is already loaded
+      if (window.tiktokEmbed) {
+        try {
+          window.tiktokEmbed.reloadEmbeds();
+          setLoading(false);
+          if (onLoad) onLoad();
+        } catch (e) {
+          // If reload fails, load the script again
+          loadScript();
+        }
+      } else {
+        loadScript();
       }
     };
-  }, [url]);
 
-  // Effect to resize TikTok embed after it's loaded
-  useEffect(() => {
-    if (isLoaded && containerRef.current) {
-      const resizeTikTokEmbed = () => {
-        // Find and adjust TikTok iframe elements
-        const tiktokElements = containerRef.current.querySelectorAll(
-          ".tiktok-embed, iframe"
-        );
-
-        tiktokElements.forEach((element) => {
-          // Apply scale transformation
-          element.style.transform = "scale(0.85)";
-          element.style.transformOrigin = "center center";
-
-          // Adjust any iframe specific properties
-          if (element.tagName.toLowerCase() === "iframe") {
-            element.style.maxHeight = "100%";
-          }
-        });
+    const loadScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://www.tiktok.com/embed.js";
+      script.async = true;
+      script.onload = () => {
+        setLoading(false);
+        if (onLoad) onLoad();
+      };
+      script.onerror = () => {
+        console.error("Error loading TikTok embed script");
+        setError(true);
+        setLoading(false);
+        if (onLoad) onLoad();
       };
 
-      // Run once immediately
-      resizeTikTokEmbed();
+      document.body.appendChild(script);
+    };
 
-      // And again after a short delay to handle delayed rendering
-      const timer = setTimeout(resizeTikTokEmbed, 1500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isLoaded]);
+    // Initialize embed
+    createEmbed();
+  }, [url, onLoad]);
 
   return (
     <div
       ref={containerRef}
-      className="flex items-center justify-center"
+      className="tiktok-container w-full flex items-center justify-center overflow-hidden"
       style={{
-        width: containerSize.width,
-        height: containerSize.height,
-        margin: "0 auto",
-        overflow: "hidden", // No scrolling, just contain
+        height: "auto",
+        maxHeight: "95vh",
       }}
-    />
+    >
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
+          <div className="loading-spinner w-10 h-10 border-4 border-blue-500 rounded-full border-t-transparent animate-spin"></div>
+        </div>
+      )}
+
+      {error ? (
+        <div className="flex flex-col items-center justify-center p-6 bg-black/80 rounded-lg text-center">
+          <p className="text-red-500 text-lg mb-3">
+            Could not load TikTok video
+          </p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors"
+          >
+            View on TikTok
+          </a>
+        </div>
+      ) : (
+        <div
+          className="transform-container"
+          style={{
+            transform: `scale(${scale})`,
+            transformOrigin: "center center", // <-- SOLUCIÓN: Cambiar a 'center center'
+            width: "100%",
+            maxWidth: "380px",
+            padding: "0.5rem 0",
+          }}
+        >
+          <div
+            ref={embedRef}
+            className="tiktok-embed-container"
+            style={{
+              minHeight: "200px",
+              width: "100%",
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

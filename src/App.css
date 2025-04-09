@@ -179,45 +179,6 @@
   transform: translateY(0);
 }
 
-/* TikTok container styles */
-.tiktok-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
-  max-height: 80vh;
-  width: 100%;
-}
-
-/* Fix for TikTok embeds */
-.tiktok-embed-fix {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.tiktok-embed-fix iframe {
-  max-width: 100% !important;
-  margin: 0 auto !important;
-}
-
-/* Custom scrollbar for TikTok container */
-.tiktok-container::-webkit-scrollbar,
-.tiktok-embed-fix::-webkit-scrollbar {
-  width: 6px;
-}
-
-.tiktok-container::-webkit-scrollbar-track,
-.tiktok-embed-fix::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.tiktok-container::-webkit-scrollbar-thumb,
-.tiktok-embed-fix::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.5);
-  border-radius: 6px;
-}
-
 /* Instagram container styles */
 .instagram-embed-container {
   display: flex;
@@ -261,4 +222,34 @@
 .video-modal-content {
   width: 100%;
   background-color: #000;
+}
+
+/* Estilos para el contenedor de TikTok */
+.tiktok-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
+.tiktok-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tiktok-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tiktok-container::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 6px;
+  border: transparent;
+}
+
+/* Estilos para centrar el embed de TikTok */
+.tiktok-embed-container .tiktok-embed {
+  margin: 0 auto !important;
+}
+
+/* Si necesitas un margen superior */
+.transform-container {
+  margin-top: 10px;
 }
