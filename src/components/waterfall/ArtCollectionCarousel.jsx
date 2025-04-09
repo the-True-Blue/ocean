@@ -258,11 +258,11 @@ const ArtCollectionCarousel = () => {
   return (
     <div className="relative">
       {/* Section Title */}
-      <div className="mb-8 px-6 flex items-center mx-auto max-w-7xl md:justify-between justify-center">
-        <h2 className="text-2xl lg:text-[40px]  font-orbitron font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl">
+      <div className="mb-8 px-6 flex flex-col md:flex-row items-center mx-auto max-w-7xl justify-between gap-10 md:gap-0">
+        <h2 className="order-2 md:order-0 text-2xl lg:text-[40px]  font-orbitron font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl">
           3D ART Collection
         </h2>
-        <p className="hidden md:block max-w-[671px] font-orbitron lg:text-[20px] tracking-[9%] leading-[162%] font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl">
+        <p className="md:max-w-[671px] font-orbitron lg:text-[20px] text-[13px] tracking-[9%] leading-[162%] font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl">
           Here is work I did as a 3D artist, modeling characters and interior
           spaces in Maya, while designing environments in Unreal.{" "}
         </p>
@@ -336,11 +336,11 @@ const ArtCollectionCarousel = () => {
               <div key={card.id} className="w-full flex-shrink-0 px-4">
                 <div
                   className="bg-blue-900/50 rounded-lg overflow-hidden mx-auto border border-transparent hover:border-blue-400/40 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg hover:shadow-blue-500/20"
-                  style={{ width: "247px", height: "415px" }}
+                  style={{ width: "204px", height: "261px" }}
                 >
                   <div className="p-4 h-full flex flex-col">
-                    <div className="flex-grow flex items-center justify-center mb-3">
-                      <div className="w-full h-48 rounded-lg flex items-center justify-center">
+                    <div className="flex-grow flex items-center justify-center mb-0">
+                      <div className="w-full h-32 rounded-lg flex items-center justify-center">
                         <img
                           src={
                             card.id === 1
@@ -356,7 +356,9 @@ const ArtCollectionCarousel = () => {
                     </div>
                     <div className="text-white flex flex-col items-center h-full justify-evenly ">
                       <div>
-                        <h3 className="text-lg font-bold">{card.title}</h3>
+                        <h3 className="text-xs text-center font-bold">
+                          {card.title}
+                        </h3>
                         <div className="flex items-center mt-2 mb-3">
                           <img
                             src={avatar}
@@ -373,10 +375,10 @@ const ArtCollectionCarousel = () => {
                       </div>
                       <button
                         onClick={() => openModal(card.id)}
-                        className="py-2 cursor-pointer px-4 rounded text-white text-sm font-medium transition-all duration-200 transform btn-pulse focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                        className="py-0 cursor-pointer px-4 rounded text-white text-sm font-medium transition-all duration-200 transform btn-pulse focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                         style={{
-                          width: "133px",
-                          height: "38px",
+                          width: "106px",
+                          height: "28px",
                           background:
                             "linear-gradient(92.23deg, #1194CA 50.63%, #4276CB 69.49%, #348CF0 100%, #87A0FF 117.04%)",
                           boxShadow:

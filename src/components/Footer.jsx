@@ -8,16 +8,12 @@ import backgroundMobile from "../assets/footer/background_mobile.png";
 
 const Footer = () => {
   return (
-    <div id="footer" className="w-full h-[620px] md:h-[750px] relative">
+    <div id="footer" className="w-full h-[400px] md:h-[750px] relative">
       {/*  mobile Background */}
-      <div
-        className="absolute w-full h-full bg-no-repeat bg-cover bg-center md:hidden"
-        style={{ backgroundImage: `url(${backgroundMobile})` }}
-      ></div>
 
       {/* Desktop Background */}
       <div
-        className="absolute w-full h-full bg-no-repeat bg-center md:bg-cover xl:!bg-[length:100%_100%]"
+        className="absolute w-full h-full bg-[length:125%_100%] bg-no-repeat   md:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}
       ></div>
 

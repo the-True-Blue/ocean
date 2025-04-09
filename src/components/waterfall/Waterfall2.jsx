@@ -7,9 +7,9 @@ const Waterfall2 = () => {
   const [activeCard, setActiveCard] = useState("rocket");
 
   return (
-    <div className="w-full h-[1260px] relative overflow-hidden">
+    <div className="w-full md:h-[1260px] h-[800px] relative overflow-hidden">
       <div
-        className="absolute w-[120%] h-full bg-cover bg-no-repeat md:bg-cover xl:!bg-[length:100%_100%]
+        className="absolute w-full h-full bg-no-repeat md:bg-cover bg-[length:125%_100%] xl:bg-[length:100%_100%]
                      md:w-full md:right-0 
                      sm:right-[-20%]"
         style={{ backgroundImage: `url(${background})` }}
