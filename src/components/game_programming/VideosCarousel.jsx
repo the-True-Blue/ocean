@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import thumbnail1 from "../../assets/game_programming/videos/thumbnail1.png";
 import thumbnail2 from "../../assets/game_programming/videos/thumbnail2.png";
 
@@ -10,6 +10,11 @@ const VideosCarousel = () => {
   const [videoIds, setVideoIds] = useState([null, null]);
   const [embedUrls, setEmbedUrls] = useState([null, null]);
   const [thumbnailUrls, setThumbnailUrls] = useState([null, null]);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+  // Refs para los botones
+  const prevButtonRef = useRef(null);
+  const nextButtonRef = useRef(null);
 
   // Extract YouTube video ID from various URL formats
   const getYouTubeVideoId = (url) => {
@@ -73,31 +78,59 @@ const VideosCarousel = () => {
     },
   ];
 
-  const nextSlide = (e) => {
-    // Si el evento viene de un botón, detener la propagación
-    if (e) {
-      e.stopPropagation();
-    }
-    setShowVideo(false);
-    setActiveIndex((prevIndex) => (prevIndex + 1) % videos.length);
+  // Función para evitar múltiples clics rápidos
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   };
 
-  const prevSlide = (e) => {
-    // Si el evento viene de un botón, detener la propagación
+  // Handler para el botón de siguiente con debounce
+  const handleNextSlide = debounce((e) => {
     if (e) {
       e.stopPropagation();
+      e.preventDefault();
     }
+    setIsButtonClicked(true);
+    setShowVideo(false);
+    setActiveIndex((prevIndex) => (prevIndex + 1) % videos.length);
+
+    // Resetear el estado después de un corto tiempo
+    setTimeout(() => {
+      setIsButtonClicked(false);
+    }, 300);
+  }, 100);
+
+  // Handler para el botón de anterior con debounce
+  const handlePrevSlide = debounce((e) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    setIsButtonClicked(true);
     setShowVideo(false);
     setActiveIndex(
       (prevIndex) => (prevIndex - 1 + videos.length) % videos.length
     );
-  };
+
+    // Resetear el estado después de un corto tiempo
+    setTimeout(() => {
+      setIsButtonClicked(false);
+    }, 300);
+  }, 100);
 
   const goToSlide = (index, e) => {
-    // Si el evento viene de un botón, detener la propagación
     if (e) {
       e.stopPropagation();
+      e.preventDefault();
     }
+
     if (activeIndex !== index) {
       setShowVideo(false);
       setActiveIndex(index);
@@ -111,36 +144,54 @@ const VideosCarousel = () => {
 
   // Touch handlers for mobile swipe
   const handleTouchStart = (e) => {
-    // No capturar eventos touch que provengan de los botones de navegación
-    if (e.target.closest("button")) {
+    // No capturar eventos touch si un botón fue clickeado o si el evento viene de un botón
+    if (
+      isButtonClicked ||
+      e.target.closest("button") ||
+      (prevButtonRef.current && prevButtonRef.current.contains(e.target)) ||
+      (nextButtonRef.current && nextButtonRef.current.contains(e.target))
+    ) {
       return;
     }
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e) => {
-    // No procesar el movimiento si no hay touchStart válido
-    // o si el evento proviene de un botón
-    if (touchStart === 0 || e.target.closest("button")) {
+    // No procesar el movimiento si no hay touchStart válido,
+    // si un botón fue clickeado o si el evento proviene de un botón
+    if (
+      touchStart === 0 ||
+      isButtonClicked ||
+      e.target.closest("button") ||
+      (prevButtonRef.current && prevButtonRef.current.contains(e.target)) ||
+      (nextButtonRef.current && nextButtonRef.current.contains(e.target))
+    ) {
       return;
     }
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const handleTouchEnd = (e) => {
-    // No procesar el fin del toque si no hay touchStart/touchEnd válidos
-    // o si el evento proviene de un botón
-    if (touchStart === 0 || touchEnd === 0 || e.target.closest("button")) {
+    // No procesar el fin del toque si no hay touchStart/touchEnd válidos,
+    // si un botón fue clickeado o si el evento proviene de un botón
+    if (
+      touchStart === 0 ||
+      touchEnd === 0 ||
+      isButtonClicked ||
+      e.target.closest("button") ||
+      (prevButtonRef.current && prevButtonRef.current.contains(e.target)) ||
+      (nextButtonRef.current && nextButtonRef.current.contains(e.target))
+    ) {
       return;
     }
 
     if (touchStart - touchEnd > 50) {
       // Swipe left
-      nextSlide();
+      handleNextSlide();
     }
     if (touchStart - touchEnd < -50) {
       // Swipe right
-      prevSlide();
+      handlePrevSlide();
     }
 
     // Resetear valores después de procesar
@@ -261,14 +312,20 @@ const VideosCarousel = () => {
         className="flex items-center gap-5 justify-between py-1 px-2 sm:py-2 sm:px-4 md:px-6"
         style={{ maxWidth: "min(100%, 90vh)", margin: "0 auto" }}
       >
-        {/* Prev button */}
+        {/* Prev button - AUMENTADO PARA MÓVILES */}
         <button
-          className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30"
-          onClick={prevSlide}
-          onTouchEnd={(e) => {
-            e.stopPropagation(); // Prevenir que el evento llegue al contenedor
-            e.preventDefault(); // Prevenir el comportamiento predeterminado
+          ref={prevButtonRef}
+          className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 touch-manipulation"
+          onClick={handlePrevSlide}
+          onTouchStart={(e) => {
+            e.stopPropagation();
           }}
+          onTouchEnd={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            handlePrevSlide(e);
+          }}
+          style={{ touchAction: "manipulation" }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -276,7 +333,8 @@ const VideosCarousel = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-150 hover:-translate-x-1"
+            className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-150 hover:-translate-x-1"
+            style={{ pointerEvents: "none" }}
           >
             <path
               strokeLinecap="round"
@@ -292,33 +350,45 @@ const VideosCarousel = () => {
             <button
               key={video.id}
               onClick={(e) => goToSlide(index, e)}
-              onTouchEnd={(e) => {
-                e.stopPropagation(); // Prevenir que el evento llegue al contenedor
-                e.preventDefault(); // Prevenir el comportamiento predeterminado
+              onTouchStart={(e) => {
+                e.stopPropagation();
               }}
-              className={`transition-all duration-200 hover:shadow-md hover:shadow-blue-400/30 ${
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                goToSlide(index, e);
+              }}
+              className={`transition-all duration-200 hover:shadow-md hover:shadow-blue-400/30 touch-manipulation ${
                 index === activeIndex
                   ? "border border-blue-400 scale-105 hover:border-blue-500"
                   : "border border-blue-600/50 opacity-70 hover:opacity-100 hover:border-blue-400"
               }`}
+              style={{ touchAction: "manipulation" }}
             >
               <img
                 src={video.thumbnailSrc}
                 alt={`Video ${index + 1}`}
                 className="w-8 h-6 sm:w-12 sm:h-8 md:w-16 md:h-10 object-cover rounded"
+                style={{ pointerEvents: "none" }}
               />
             </button>
           ))}
         </div>
 
-        {/* Next button */}
+        {/* Next button - AUMENTADO PARA MÓVILES */}
         <button
-          className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30"
-          onClick={nextSlide}
-          onTouchEnd={(e) => {
-            e.stopPropagation(); // Prevenir que el evento llegue al contenedor
-            e.preventDefault(); // Prevenir el comportamiento predeterminado
+          ref={nextButtonRef}
+          className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30 touch-manipulation"
+          onClick={handleNextSlide}
+          onTouchStart={(e) => {
+            e.stopPropagation();
           }}
+          onTouchEnd={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            handleNextSlide(e);
+          }}
+          style={{ touchAction: "manipulation" }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -326,7 +396,8 @@ const VideosCarousel = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-150 hover:translate-x-1"
+            className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-150 hover:translate-x-1"
+            style={{ pointerEvents: "none" }}
           >
             <path
               strokeLinecap="round"
