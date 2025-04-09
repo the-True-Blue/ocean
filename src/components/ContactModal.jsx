@@ -62,7 +62,6 @@ const ContactModal = ({ isOpen, onClose }) => {
 
   // Initialize EmailJS
   useEffect(() => {
-    // Initialize EmailJS with your public key
     emailjs.init("DM5-yHQq83juMFDrz");
   }, []);
 
@@ -80,7 +79,7 @@ const ContactModal = ({ isOpen, onClose }) => {
 
     // Send email using EmailJS
     emailjs
-      .send("service_yi4m10d", "template_c0oqlza", templateParams)
+      .send("service_lvplw56", "template_c0oqlza", templateParams)
       .then((response) => {
         console.log("Email sent successfully!", response);
         setSubmitStatus("success");

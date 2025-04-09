@@ -3,7 +3,7 @@ import Rive from "@rive-app/react-canvas";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-// Custom CSS for animation delays - add this to your CSS or use a style tag
+// Custom CSS for animation delays
 const AnimationStyles = () => (
   <style jsx>{`
     .animation-delay-300 {
@@ -58,18 +58,16 @@ const VideoEditing = () => {
   const rocketRef = useRef(null);
   const bubbleRef = useRef(null);
 
-  // Animation controls - very simple
   const titleControls = useAnimation();
   const bubbleControls = useAnimation();
 
-  // References to detect when elements are in viewport
   const [titleRef, titleInView] = useInView({
-    triggerOnce: true, // Only trigger once to avoid conflicts
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const [bubbleViewRef, bubbleInView] = useInView({
-    triggerOnce: true, // Only trigger once to avoid conflicts
+    triggerOnce: true,
     threshold: 0.1,
   });
 
@@ -86,13 +84,14 @@ const VideoEditing = () => {
     }
   }, [bubbleInView, bubbleControls]);
 
-  // Simple animation variants that won't interfere with existing functionality
   const titleVariant = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, x: -50 },
     visible: {
       opacity: 1,
+      x: 0,
       transition: {
-        duration: 0.8,
+        duration: 1.8,
+        delay: 0.6,
         ease: "easeOut",
       },
     },
@@ -103,62 +102,56 @@ const VideoEditing = () => {
     visible: {
       opacity: 1,
       transition: {
-        duration: 1,
-        delay: 0.2,
+        duration: 2.4,
+        delay: 0.6,
         ease: "easeOut",
       },
     },
   };
 
-  // Function to permanently show buttons with specific event detection for each element
   const handleRocketHover = () => {
     setIsRocketHovered(true);
-    setShowButtons(true); // Once set to true, it won't hide again
+    setShowButtons(true);
   };
 
-  // Function to remove only the rocket hover effect
   const handleRocketLeave = () => {
     setIsRocketHovered(false);
-    // We don't change showButtons, so it will remain visible
   };
 
-  // Orbital elements configuration with different settings for mobile and desktop
-  // Elements have the same duration to move at the same speed
-  // Initial angles are evenly spaced (90 degrees between each)
   const orbitalElements = [
     {
       id: "ps",
       image: ps,
-      duration: 20, // Same duration for all
+      duration: 20,
       radius: { mobile: 80, desktop: 120 },
-      initialAngle: 0, // Evenly spaced angles
+      initialAngle: 0,
       size: "w-20 md:w-24",
       zIndex: "z-20",
     },
     {
       id: "ae",
       image: ae,
-      duration: 20, // Same duration for all
+      duration: 20,
       radius: { mobile: 85, desktop: 130 },
-      initialAngle: 90, // Evenly spaced angles
+      initialAngle: 90,
       size: "w-20 md:w-24",
       zIndex: "z-10",
     },
     {
       id: "pr",
       image: pr,
-      duration: 20, // Same duration for all
+      duration: 20,
       radius: { mobile: 90, desktop: 140 },
-      initialAngle: 180, // Evenly spaced angles
+      initialAngle: 180,
       size: "w-20 md:w-24",
       zIndex: "z-30",
     },
     {
       id: "ai",
       image: ai,
-      duration: 20, // Same duration for all
+      duration: 20,
       radius: { mobile: 95, desktop: 150 },
-      initialAngle: 270, // Evenly spaced angles
+      initialAngle: 270,
       size: "w-20 md:w-24",
       zIndex: "z-0",
     },
@@ -176,13 +169,11 @@ const VideoEditing = () => {
 
   // Function to prevent event propagation between overlapping elements
   useEffect(() => {
-    // Ensure bubble hover event doesn't affect rocket
     const bubbleElement = bubbleRef.current;
     const rocketElement = rocketRef.current;
 
     if (bubbleElement && rocketElement) {
       const handleBubbleMouseEnter = (e) => {
-        // Prevent event from propagating to rocket if overlapped
         e.stopPropagation();
       };
 
@@ -194,7 +185,6 @@ const VideoEditing = () => {
     }
   }, []);
 
-  // Measure container size to be responsive
   useEffect(() => {
     updateSizeAndDevice();
     window.addEventListener("resize", updateSizeAndDevice);
@@ -228,8 +218,8 @@ const VideoEditing = () => {
         <div className="relative">
           <motion.div
             ref={(el) => {
-              bubbleRef.current = el; // Mantiene la referencia original
-              bubbleViewRef(el); // Añade la referencia para la animación
+              bubbleRef.current = el;
+              bubbleViewRef(el);
             }}
             initial="hidden"
             animate={bubbleControls}
@@ -244,25 +234,22 @@ const VideoEditing = () => {
           </motion.div>
         </div>
 
-        {/* Orbit container with corrected positioning - NO animation wrapper here to preserve functionality */}
         <div className="absolute top-[350px] md:top-25 right-1/2 md:right-5 transform translate-x-1/2 md:translate-x-0 rocket-container">
           <div
             ref={orbitRef}
             className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]"
           >
-            {/* Central rocket with adjusted position and updated size */}
             <div
               ref={rocketRef}
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
               onMouseEnter={handleRocketHover}
               onMouseLeave={handleRocketLeave}
             >
-              {/* Glow effect - more subtle */}
               <div
                 className="absolute inset-0 bg-blue-400 blur-md rounded-full scale-110 -z-10 transition-opacity duration-500"
                 style={{
                   opacity: isRocketHovered ? 0.7 : 0,
-                  pointerEvents: "none", // Prevent mouse events capture
+                  pointerEvents: "none",
                 }}
               ></div>
 
@@ -272,7 +259,7 @@ const VideoEditing = () => {
                 style={{
                   opacity: isRocketHovered ? 1 : 0,
                   transition: "opacity 300ms ease",
-                  pointerEvents: "none", // Prevent mouse events capture
+                  pointerEvents: "none",
                 }}
               >
                 <div className="h-16 md:h-24 animate-pulse bg-gradient-to-t from-orange-500 via-yellow-400 to-transparent rounded-b-full"></div>
@@ -381,23 +368,18 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
       const centerX = containerSize.width / 2.5;
       const centerY = containerSize.height / 2;
 
-      // Select radius based on mobile or desktop
       const radius = isMobile ? item.radius.mobile : item.radius.desktop;
 
-      // Adjust radius to fit container
       const radiusX = radius * (containerSize.width / (isMobile ? 250 : 350));
       const radiusY = radius * (containerSize.height / (isMobile ? 700 : 700));
 
-      // Calculate angle based on time and duration
       const angleOffset = (elapsedSeconds / item.duration) * 2 * Math.PI;
       const angle = (item.initialAngle * Math.PI) / 180 + angleOffset;
 
-      // Calculate orbital position
       const x = centerX + radiusX * Math.cos(angle);
       const y = centerY + radiusY * Math.sin(angle);
 
-      // Apply Z value to simulate depth
-      const z = Math.sin(angle) * 40; // More pronounced for better effect
+      const z = Math.sin(angle) * 40;
 
       setPosition({ x, y, z });
       animationFrameId = requestAnimationFrame(animate);
@@ -427,10 +409,10 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
         top: position.y,
         zIndex: dynamicZIndex,
         transform: "translate(-50%, -50%)",
-        transition: "none", // Removed to avoid conflicts with frame animation
-        filter: position.z < 0 ? "brightness(0.7)" : "brightness(1)", // Darken when "behind"
-        scale: 1 + position.z / 400, // Minimal scale for subtle effect
-        willChange: "transform, filter", // Performance optimization
+        transition: "none",
+        filter: position.z < 0 ? "brightness(0.7)" : "brightness(1)",
+        scale: 1 + position.z / 400,
+        willChange: "transform, filter",
       }}
     >
       <img

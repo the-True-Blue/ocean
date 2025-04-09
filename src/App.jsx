@@ -23,7 +23,6 @@ function App() {
       <div id="graphic-design">
         <GraphicDesign />
       </div>
-      {/* Asumiendo que estas secciones corresponden a 3D ART y Web Design */}
       <div>
         <Waterfall />
       </div>

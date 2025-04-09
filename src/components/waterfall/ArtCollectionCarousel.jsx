@@ -83,7 +83,7 @@ const ArtCollectionCarousel = () => {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.8,
+        duration: 1.2,
         ease: "easeOut",
       },
     },
@@ -95,8 +95,8 @@ const ArtCollectionCarousel = () => {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.8,
-        delay: 0.2,
+        duration: 1.4,
+        delay: 0.8,
         ease: "easeOut",
       },
     },
@@ -107,9 +107,9 @@ const ArtCollectionCarousel = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-        duration: 0.5,
+        staggerChildren: 0.6,
+        delayChildren: 0.8,
+        duration: 1,
       },
     },
   };
@@ -120,7 +120,7 @@ const ArtCollectionCarousel = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 1,
         ease: "easeOut",
       },
     },
@@ -296,7 +296,6 @@ const ArtCollectionCarousel = () => {
       ) {
         setIsVideoLoading(true);
 
-        // Reset loading state after a period (simulating load completion)
         const timer = setTimeout(() => {
           setIsVideoLoading(false);
         }, 2500);
@@ -348,7 +347,7 @@ const ArtCollectionCarousel = () => {
   // Open modal function
   const openModal = (id) => {
     setActiveModal(id);
-    setCurrentModalSlide(0); // Reset modal carousel to first slide
+    setCurrentModalSlide(0);
 
     // Set loading state when opening a modal with videos
     const card = cards.find((card) => card.id === id);
@@ -378,7 +377,6 @@ const ArtCollectionCarousel = () => {
 
   // Prevent clicks on the video from propagating to the carousel controls
   const handleVideoContainerClick = (e) => {
-    // If we're clicking directly on the video container, prevent propagation
     if (e.target === videoContainerRef.current) {
       e.stopPropagation();
     }
