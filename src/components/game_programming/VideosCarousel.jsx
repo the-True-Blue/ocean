@@ -73,19 +73,31 @@ const VideosCarousel = () => {
     },
   ];
 
-  const nextSlide = () => {
+  const nextSlide = (e) => {
+    // Si el evento viene de un botón, detener la propagación
+    if (e) {
+      e.stopPropagation();
+    }
     setShowVideo(false);
     setActiveIndex((prevIndex) => (prevIndex + 1) % videos.length);
   };
 
-  const prevSlide = () => {
+  const prevSlide = (e) => {
+    // Si el evento viene de un botón, detener la propagación
+    if (e) {
+      e.stopPropagation();
+    }
     setShowVideo(false);
     setActiveIndex(
       (prevIndex) => (prevIndex - 1 + videos.length) % videos.length
     );
   };
 
-  const goToSlide = (index) => {
+  const goToSlide = (index, e) => {
+    // Si el evento viene de un botón, detener la propagación
+    if (e) {
+      e.stopPropagation();
+    }
     if (activeIndex !== index) {
       setShowVideo(false);
       setActiveIndex(index);
@@ -99,14 +111,29 @@ const VideosCarousel = () => {
 
   // Touch handlers for mobile swipe
   const handleTouchStart = (e) => {
+    // No capturar eventos touch que provengan de los botones de navegación
+    if (e.target.closest("button")) {
+      return;
+    }
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e) => {
+    // No procesar el movimiento si no hay touchStart válido
+    // o si el evento proviene de un botón
+    if (touchStart === 0 || e.target.closest("button")) {
+      return;
+    }
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e) => {
+    // No procesar el fin del toque si no hay touchStart/touchEnd válidos
+    // o si el evento proviene de un botón
+    if (touchStart === 0 || touchEnd === 0 || e.target.closest("button")) {
+      return;
+    }
+
     if (touchStart - touchEnd > 50) {
       // Swipe left
       nextSlide();
@@ -115,11 +142,15 @@ const VideosCarousel = () => {
       // Swipe right
       prevSlide();
     }
+
+    // Resetear valores después de procesar
+    setTouchStart(0);
+    setTouchEnd(0);
   };
 
   return (
     <div
-      className="w-full relative overflow-hidden flex flex-col  pt-2 sm:pt-3 md:pt-4"
+      className="w-full relative overflow-hidden flex flex-col pt-2 sm:pt-3 md:pt-4"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -234,6 +265,10 @@ const VideosCarousel = () => {
         <button
           className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30"
           onClick={prevSlide}
+          onTouchEnd={(e) => {
+            e.stopPropagation(); // Prevenir que el evento llegue al contenedor
+            e.preventDefault(); // Prevenir el comportamiento predeterminado
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -256,7 +291,11 @@ const VideosCarousel = () => {
           {videos.map((video, index) => (
             <button
               key={video.id}
-              onClick={() => goToSlide(index)}
+              onClick={(e) => goToSlide(index, e)}
+              onTouchEnd={(e) => {
+                e.stopPropagation(); // Prevenir que el evento llegue al contenedor
+                e.preventDefault(); // Prevenir el comportamiento predeterminado
+              }}
               className={`transition-all duration-200 hover:shadow-md hover:shadow-blue-400/30 ${
                 index === activeIndex
                   ? "border border-blue-400 scale-105 hover:border-blue-500"
@@ -276,6 +315,10 @@ const VideosCarousel = () => {
         <button
           className="bg-blue-600/50 hover:bg-blue-600/70 active:bg-blue-700/60 text-white rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 hover:shadow-lg hover:shadow-blue-500/30"
           onClick={nextSlide}
+          onTouchEnd={(e) => {
+            e.stopPropagation(); // Prevenir que el evento llegue al contenedor
+            e.preventDefault(); // Prevenir el comportamiento predeterminado
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
