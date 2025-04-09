@@ -111,7 +111,7 @@ const ContactModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md ">
       <div
         ref={modalRef}
-        className="relative max-w-[946px] w-full mx-4 md:mx-auto max-h-[524px] bg-[#253e85]/40 rounded-lg text-white p-8 flex flex-col md:flex-row"
+        className="relative max-w-[946px] w-full mx-4 md:mx-auto md:max-h-[524px] bg-[#253e85]/40 rounded-lg text-white p-8 flex flex-col md:flex-row"
       >
         {/* Close button */}
         <button
@@ -230,7 +230,7 @@ const ContactModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Contact information and logo */}
-        <div className="w-full md:w-1/2 mt-8 md:mt-0 md:flex flex-col items-center justify-center hidden">
+        <div className="w-full md:w-1/2 mt-8 md:mt-0 flex flex-col items-center justify-center ">
           <img
             src={Logo}
             alt="Logo"
