@@ -60,13 +60,19 @@ const VideoEditing = () => {
 
   const titleControls = useAnimation();
   const bubbleControls = useAnimation();
+  const rocketControls = useAnimation();
 
-  const [titleRef, titleInView] = useInView({
+  const { ref: titleViewRef, inView: titleInView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
-  const [bubbleViewRef, bubbleInView] = useInView({
+  const { ref: bubbleViewRef, inView: bubbleInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const { ref: rocketViewRef, inView: rocketInView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
@@ -83,6 +89,12 @@ const VideoEditing = () => {
       bubbleControls.start("visible");
     }
   }, [bubbleInView, bubbleControls]);
+
+  useEffect(() => {
+    if (rocketInView) {
+      rocketControls.start("visible");
+    }
+  }, [rocketInView, rocketControls]);
 
   const titleVariant = {
     hidden: { opacity: 0, x: -50 },
@@ -104,6 +116,20 @@ const VideoEditing = () => {
       transition: {
         duration: 2.4,
         delay: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const rocketVariant = {
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 2.2,
+        delay: 1.2,
         ease: "easeOut",
       },
     },
@@ -205,7 +231,7 @@ const VideoEditing = () => {
       {/* Content */}
       <div className="relative z-10 w-full">
         <motion.h1
-          ref={titleRef}
+          ref={titleViewRef}
           initial="hidden"
           animate={titleControls}
           variants={titleVariant}
@@ -217,10 +243,7 @@ const VideoEditing = () => {
 
         <div className="relative">
           <motion.div
-            ref={(el) => {
-              bubbleRef.current = el;
-              bubbleViewRef(el);
-            }}
+            ref={bubbleViewRef}
             initial="hidden"
             animate={bubbleControls}
             variants={bubbleVariant}
@@ -239,8 +262,11 @@ const VideoEditing = () => {
             ref={orbitRef}
             className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]"
           >
-            <div
-              ref={rocketRef}
+            <motion.div
+              ref={rocketViewRef}
+              initial="hidden"
+              animate={rocketControls}
+              variants={rocketVariant}
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
               onMouseEnter={handleRocketHover}
               onMouseLeave={handleRocketLeave}
@@ -291,7 +317,7 @@ const VideoEditing = () => {
                 <div className="absolute top-1/2 right-1/4 w-3 h-3 bg-white rounded-full animate-ping animation-delay-1000"></div>
                 <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-yellow-200 rounded-full animate-ping animation-delay-500"></div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Orbital elements */}
             {orbitalElements.map((item) => (
@@ -350,10 +376,22 @@ const VideoEditing = () => {
   );
 };
 
-// Orbital element component with improved positioning
+// Orbital element component with improved positioning and entrance animation
 const OrbitalElement = ({ item, containerSize, isMobile }) => {
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
   const elementRef = useRef(null);
+  const controls = useAnimation();
+  const { ref: elementInViewRef, inView: elementInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  // Start animation when element enters viewport
+  useEffect(() => {
+    if (elementInView) {
+      controls.start("visible");
+    }
+  }, [elementInView, controls]);
 
   // Effect for circular animation
   useEffect(() => {
@@ -400,9 +438,26 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
   // Calculate z-index dynamically
   const dynamicZIndex = Math.round(position.z + 50);
 
+  // Define animation variants
+  const orbitalElementVariant = {
+    hidden: { opacity: 0, scale: 0.6 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.8,
+        delay: 1.5 + item.initialAngle / 120, // Stagger effect based on angle
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <motion.div
-      ref={elementRef}
+      ref={elementInViewRef}
+      initial="hidden"
+      animate={controls}
+      variants={orbitalElementVariant}
       className={`absolute ${item.size} pointer-events-none`}
       style={{
         left: position.x,
