@@ -159,7 +159,7 @@ const GraphicDesign = () => {
         ref={titleRef}
       >
         <motion.h1
-          className="text-white font-orbitron text-[32px] md:text-[40px] font-[900] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl"
+          className="text-white text-center md:text-start font-orbitron text-[32px] md:text-[40px] font-[900] [text-shadow:_3px_6px_4px_rgba(52,140,240,1)] drop-shadow-xl"
           initial="hidden"
           animate={titleControls}
           variants={titleVariant}

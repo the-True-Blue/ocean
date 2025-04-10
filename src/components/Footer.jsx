@@ -204,9 +204,12 @@ const Footer = () => {
         initial="hidden"
         animate={copyrightControls}
         variants={copyrightVariant}
-        className="absolute font-inter font-[400] md:text-[15px] text-[11px] text-white bottom-8 text-center w-full drop-shadow-[0_4px_4px_rgba(0,0,0,1)]"
+        className="absolute font-inter font-[400] md:text-[15px] text-[8px] text-white bottom-8 text-center w-full drop-shadow-[0_4px_4px_rgba(0,0,0,1)]"
       >
-        © 2024 Designed by Tempest Digital, All rights reserved.
+        © 2025 Designed by Tempest Digital, All rights reserved. <br />
+        <a href="https://www.crixiumdigital.com/en/" target="_blank">
+          Developed by <span className="hover:text-black">CrixiumDigital</span>{" "}
+        </a>
       </motion.h2>
     </div>
   );
