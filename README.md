@@ -53,19 +53,52 @@ The `build/` folder contains a production-ready version of the application. You 
 
 ## Making Changes
 
+Guide to Editing Content in React
+If you're familiar with HTML but new to React, here's what you need to know:
+
+1- Component-Based Structure:
+
+React organizes UI into components (similar to reusable HTML sections)
+Each component is typically in its own .jsx file in the src/components/ directory
+
+2- How to Edit Text Content:
+
+- Look for text directly in JSX (similar to HTML but inside JavaScript):
+
+<h1>This text can be edited directly</h1>
+
+- Or in variables/constants near the top of component files:
+
+const pageTitle = "About Us"; // Edit this text
+
+function AboutPage() {
+return <h1>{pageTitle}</h1>;
+}
+
+3- Images:
+
+Static images are in `src/assets/`
+To change an image, replace the file (keeping the same name) or update the import path in the component.
+
+4- After Making Changes:
+
+Save the file (the browser will automatically refresh in dev mode)
+Run npm run build to create a new production version
+
 ### Content Changes
 
-Most text and image content can be found in the source code, typically in the following locations:
+Most text and image content can be found in the source code, in the following locations:
 
 - `src/components/` - UI components
 - `src/assets/` - Images, icons, and other static assets
+- `public/` - Bubbles animation
 
 ### Style Changes
 
 The project uses TailwindCSS for styling:
 
-- Global styles can be found in `src/index.css`
-- Component-specific styles are applied using Tailwind classes in the component files
+- Global styles can be found in `src/index.css` and `src/App.css`
+- Component-specific styles are applied using Tailwind classes in the component files except for complex animations or styles foun in in `src/index.css` and `src/App.css`.
 
 ## Dependencies
 
@@ -90,5 +123,3 @@ Email: cristianccggg@gmail.com
 Website: [www.crixiumdigital.com](https://www.crixiumdigital.com)
 
 ---
-
-© 2025 CrixiumDigital. All Rights Reserved.
