@@ -96,7 +96,7 @@ const projectsData = [
     description:
       "Drew a fictional avatar of myself and animated its facial features with each frame in Photoshop. Then added animations and VFX with After Effects.",
     videoUrl:
-      "https://www.instagram.com/p/C6uDVeHJG0b/?igsh=bXJyNm4xczlodHNz",
+      "https://www.tiktok.com/@tempestdigital_/video/7342469276441365802",
   },
 ];
 
