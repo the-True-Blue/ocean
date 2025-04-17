@@ -22,18 +22,18 @@ The delivery includes two main folders:
 
 1. Navigate to the source code directory
 
-   ```bash
+   ```
    cd source-code
    ```
 
 2. Install the dependencies
 
-   ```bash
+   ```
    npm install
    ```
 
 3. Start the development server
-   ```bash
+   ```
    npm run dev
    ```
    This will start the application in development mode, typically at http://localhost:5173
