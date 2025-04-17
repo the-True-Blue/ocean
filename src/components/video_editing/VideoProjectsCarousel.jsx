@@ -88,7 +88,7 @@ const projectsData = [
     title: "Across the Spiderverse TikTok Edit",
     description:
       "Made a TikTok Edit of us dressed up as Miles Morales and Gwen Stacy during New York Comic Con 2023 from the famous Across the Spiderverse movie. Using trendy text animations and VFX transitions, I made short-form video edit.",
-    videoUrl: "https://www.tiktok.com/@tempestdigital_/video/7494156807141723422",
+    videoUrl: "",
   },
   {
     id: 10,
@@ -96,7 +96,7 @@ const projectsData = [
     description:
       "Drew a fictional avatar of myself and animated its facial features with each frame in Photoshop. Then added animations and VFX with After Effects.",
     videoUrl:
-      "https://www.tiktok.com/@tempestdigital_/video/7342469276441365802",
+      "https://www.instagram.com/p/C6uDVeHJG0b/?igsh=bXJyNm4xczlodHNz",
   },
 ];
 
