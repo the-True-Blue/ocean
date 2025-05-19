@@ -27,7 +27,7 @@ const Navbar = () => {
         top: section.offsetTop - 75,
         behavior: "smooth",
       });
-      setIsOpen(false);
+      setIsOpen(false); // Cierra el menú móvil después de hacer clic
     }
   };
 
