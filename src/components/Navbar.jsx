@@ -20,11 +20,11 @@ const Navbar = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  // Modificación: versión mejorada para dispositivos móviles
+  // Enhanced version for mobile devices
   const scrollToSection = (sectionId) => {
-    console.log("Scrolling to section:", sectionId); // Para debug
+    console.log("Scrolling to section:", sectionId); // For debugging
     
-    // Retraso pequeño para asegurar que el menú se cierre primero
+    // Small delay to ensure menu closes first
     setTimeout(() => {
       const section = document.getElementById(sectionId);
       if (section) {
@@ -37,7 +37,7 @@ const Navbar = () => {
       }
     }, 100);
     
-    // Cerrar el menú móvil inmediatamente
+    // Close mobile menu immediately
     setIsOpen(false);
   };
 
@@ -114,7 +114,7 @@ const Navbar = () => {
     },
   };
 
-  // Handlers con navegación inmediata para menú móvil
+  // Direct handlers for mobile menu navigation
   const handleGameProgrammingClick = () => scrollToSection("game-programming");
   const handle3DArtClick = () => scrollToSection("3d-art");
   const handleGraphicDesignClick = () => scrollToSection("graphic-design");
@@ -275,7 +275,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile menu dropdown con manejadores directos */}
+        {/* Mobile menu dropdown with direct handlers */}
         <motion.div
           className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
             isOpen ? "max-h-64" : "max-h-0"
