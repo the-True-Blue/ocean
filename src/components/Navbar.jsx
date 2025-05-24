@@ -20,15 +20,25 @@ const Navbar = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  // Enhanced version for mobile devices
   const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      window.scrollTo({
-        top: section.offsetTop - 75,
-        behavior: "smooth",
-      });
-      setIsOpen(false);
-    }
+    console.log("Scrolling to section:", sectionId); // For debugging
+    
+    // Small delay to ensure menu closes first
+    setTimeout(() => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        window.scrollTo({
+          top: section.offsetTop - 75,
+          behavior: "smooth",
+        });
+      } else {
+        console.error("Section not found:", sectionId);
+      }
+    }, 100);
+    
+    // Close mobile menu immediately
+    setIsOpen(false);
   };
 
   const scrollToTop = () => {
@@ -103,6 +113,13 @@ const Navbar = () => {
       },
     },
   };
+
+  // Direct handlers for mobile menu navigation
+  const handleGameProgrammingClick = () => scrollToSection("game-programming");
+  const handle3DArtClick = () => scrollToSection("3d-art");
+  const handleGraphicDesignClick = () => scrollToSection("graphic-design");
+  const handleVideoEditingClick = () => scrollToSection("video-editing");
+  const handleWebDesignClick = () => scrollToSection("web-design");
 
   return (
     <>
@@ -258,7 +275,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile menu dropdown with subtle animation */}
+        {/* Mobile menu dropdown with direct handlers */}
         <motion.div
           className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
             isOpen ? "max-h-64" : "max-h-0"
@@ -276,51 +293,51 @@ const Navbar = () => {
                 animate={{ opacity: 1 }}
                 transition={{ staggerChildren: 0.15, delayChildren: 0.1 }}
               >
-                <motion.div
-                  className="text-white hover:text-blue-200 cursor-pointer p-2"
-                  onClick={() => scrollToSection("game-programming")}
+                <motion.button
+                  className="text-white hover:text-blue-200 cursor-pointer p-2 w-full text-left"
+                  onClick={handleGameProgrammingClick}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
                   Game Programming
-                </motion.div>
-                <motion.div
-                  className="text-white hover:text-blue-200 cursor-pointer p-2"
-                  onClick={() => scrollToSection("3d-art")}
+                </motion.button>
+                <motion.button
+                  className="text-white hover:text-blue-200 cursor-pointer p-2 w-full text-left"
+                  onClick={handle3DArtClick}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.35 }}
                 >
                   3D ART
-                </motion.div>
-                <motion.div
-                  className="text-white hover:text-blue-200 cursor-pointer p-2"
-                  onClick={() => scrollToSection("graphic-design")}
+                </motion.button>
+                <motion.button
+                  className="text-white hover:text-blue-200 cursor-pointer p-2 w-full text-left"
+                  onClick={handleGraphicDesignClick}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                 >
                   Graphic Design
-                </motion.div>
-                <motion.div
-                  className="text-white hover:text-blue-200 cursor-pointer p-2"
-                  onClick={() => scrollToSection("video-editing")}
+                </motion.button>
+                <motion.button
+                  className="text-white hover:text-blue-200 cursor-pointer p-2 w-full text-left"
+                  onClick={handleVideoEditingClick}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.65 }}
                 >
                   Video Editing
-                </motion.div>
-                <motion.div
-                  className="text-white hover:text-blue-200 cursor-pointer p-2"
-                  onClick={() => scrollToSection("web-design")}
+                </motion.button>
+                <motion.button
+                  className="text-white hover:text-blue-200 cursor-pointer p-2 w-full text-left"
+                  onClick={handleWebDesignClick}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
                 >
                   Web Design
-                </motion.div>
+                </motion.button>
               </motion.div>
             )}
           </div>
