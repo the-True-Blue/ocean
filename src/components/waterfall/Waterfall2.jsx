@@ -162,7 +162,7 @@ const Waterfall2 = () => {
                         alt="Telescope"
                         onClick={() =>
                           window.open(
-                            "https://tempest-digital.io/Project%20presentation/index.html",
+                            "https://the-true-blue.github.io/domportfolio/Project%20presentation/index.html",
                             "_blank"
                           )
                         }
@@ -222,7 +222,7 @@ const Waterfall2 = () => {
                         alt="Rocket"
                         onClick={() =>
                           window.open(
-                            "https://tempest-digital.io/Final%20Project/FinalProject.html",
+                            "https://the-true-blue.github.io/domportfolio/Final%20Project/FinalProject.html",
                             "_blank"
                           )
                         }
