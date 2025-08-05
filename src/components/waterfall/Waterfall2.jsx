@@ -4,9 +4,12 @@ import { useInView } from "react-intersection-observer";
 import rocket from "../../assets/waterfall2/rocket.png";
 import telescope from "../../assets/waterfall2/telescope.png";
 import background from "../../assets/waterfall2/background.png";
+import StarryNight from "../projects/StarryNight";
+import AnimatedComic from "../projects/AnimatedComic";
 
 const Waterfall2 = () => {
   const [activeCard, setActiveCard] = useState("rocket");
+  const [activeProject, setActiveProject] = useState(null);
 
   // Animation controls
   const titleControls = useAnimation();
@@ -160,12 +163,7 @@ const Waterfall2 = () => {
                       <img
                         src={telescope}
                         alt="Telescope"
-                        onClick={() =>
-                          window.open(
-                            "https://the-true-blue.github.io/domportfolio/Project%20presentation/index.html",
-                            "_blank"
-                          )
-                        }
+                        onClick={() => setActiveProject("starrynight")}
                         className="w-[163px] h-[181px] object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
                       />
                       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -220,12 +218,7 @@ const Waterfall2 = () => {
                       <img
                         src={rocket}
                         alt="Rocket"
-                        onClick={() =>
-                          window.open(
-                            "https://the-true-blue.github.io/domportfolio/Final%20Project/FinalProject.html",
-                            "_blank"
-                          )
-                        }
+                        onClick={() => setActiveProject("animatedcomic")}
                         className="w-[151px] h-[166px] object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
                       />
                       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -269,6 +262,14 @@ const Waterfall2 = () => {
           mix-blend-mode: screen;
         }
       `}</style>
+
+      {/* Project Components */}
+      {activeProject === "starrynight" && (
+        <StarryNight onClose={() => setActiveProject(null)} />
+      )}
+      {activeProject === "animatedcomic" && (
+        <AnimatedComic onClose={() => setActiveProject(null)} />
+      )}
     </div>
   );
 };
