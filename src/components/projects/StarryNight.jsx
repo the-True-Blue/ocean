@@ -25,13 +25,26 @@ const StarryNight = ({ onClose }) => {
     setActiveModal(page);
   };
 
+  const getPageContent = (page) => {
+    const pageMap = {
+      page1: "page1.html",
+      page2: "page2.html", 
+      page3: "page3.html",
+      page4: "page4.html",
+      page5: "page5.html", 
+      page6: "page6.html",
+      page7: "page7.html"
+    };
+    return pageMap[page] || "page1.html";
+  };
+
   const closeModal = () => {
     setActiveModal(null);
   };
 
   const handleRocketClick = () => {
-    // Close the StarryNight component instead of opening external link
-    onClose();
+    // Open external link like the original HTML
+    window.open("https://tempest-digital.io", "_self");
   };
 
   const generateBackgroundStars = () => {
@@ -2627,7 +2640,7 @@ const StarryNight = ({ onClose }) => {
               &times;
             </button>
             <iframe
-              src={`/Project presentation/${activeModal}.html`}
+              src={`/Project presentation/${getPageContent(activeModal)}`}
               id="modal-iframe"
               style={{ border: "none" }}
               width="100%"
@@ -2991,6 +3004,10 @@ const StarryNight = ({ onClose }) => {
           background: #000;
         }
 
+        .modal iframe {
+          border: none;
+        }
+
         .modal .modal-close {
           position: absolute;
           right: 30px;
@@ -3003,6 +3020,10 @@ const StarryNight = ({ onClose }) => {
           color: #000;
           cursor: pointer;
           z-index: 10001;
+        }
+
+        .modal .modal-close:hover {
+          background: #f0f0f0;
         }
 
         @media (max-width: 1250px) {
