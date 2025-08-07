@@ -22,18 +22,18 @@ const StarryNight = ({ onClose }) => {
   };
 
   const handleStarClick = (page) => {
-    setActiveModal(page);
+    // Only allow pages 1-3 since those are the only HTML files that exist
+    const availablePages = ['page1', 'page2', 'page3'];
+    if (availablePages.includes(page)) {
+      setActiveModal(page);
+    }
   };
 
   const getPageContent = (page) => {
     const pageMap = {
       page1: "page1.html",
       page2: "page2.html", 
-      page3: "page3.html",
-      page4: "page4.html",
-      page5: "page5.html", 
-      page6: "page6.html",
-      page7: "page7.html"
+      page3: "page3.html"
     };
     return pageMap[page] || "page1.html";
   };
@@ -2557,73 +2557,6 @@ const StarryNight = ({ onClose }) => {
         </a>
       </div>
 
-      <div>
-        <a
-          href="page4.html"
-          className="star glow star4"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page4");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
-
-      <div>
-        <a
-          href="page5.html"
-          className="star glow star5"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page5");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
-
-      <div>
-        <a
-          href="page6.html"
-          className="star glow star6"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page6");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
-
-      <div>
-        <a
-          href="page7.html"
-          className="star glow star7"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page7");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
 
       {/* Sky wrapper with animated background - exact recreation */}
       <div className="sky-wrapper">
@@ -2740,33 +2673,6 @@ const StarryNight = ({ onClose }) => {
           animation-delay: -1.4s;
         }
 
-        .star4 {
-          position: absolute;
-          top: 410px;
-          left: 580px;
-          animation-delay: -1.1s;
-        }
-
-        .star5 {
-          position: absolute;
-          top: 520px;
-          left: 475px;
-          animation-delay: -0.8s;
-        }
-
-        .star6 {
-          position: absolute;
-          top: 660px;
-          left: 595px;
-          animation-delay: -0.5s;
-        }
-
-        .star7 {
-          position: absolute;
-          top: 590px;
-          left: 740px;
-          animation-delay: -0.2s;
-        }
 
         a.star img {
           position: absolute;
@@ -2778,6 +2684,7 @@ const StarryNight = ({ onClose }) => {
         a.star.glow {
           background: rgba(255, 255, 255, 0.48);
         }
+
 
         @keyframes glitter {
           0% {
@@ -3053,25 +2960,6 @@ const StarryNight = ({ onClose }) => {
             top: 42%;
           }
 
-          .star4 {
-            left: 15%;
-            top: 55%;
-          }
-
-          .star5 {
-            left: 20%;
-            top: 78%;
-          }
-
-          .star6 {
-            left: 45%;
-            top: 88%;
-          }
-
-          .star7 {
-            left: 75%;
-            top: 78%;
-          }
         }
 
         @media (max-width: 450px) {
