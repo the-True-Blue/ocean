@@ -22,7 +22,20 @@ const StarryNight = ({ onClose }) => {
   };
 
   const handleStarClick = (page) => {
-    setActiveModal(page);
+    // Only allow pages 1-3 since those are the only HTML files that exist
+    const availablePages = ['page1', 'page2', 'page3'];
+    if (availablePages.includes(page)) {
+      setActiveModal(page);
+    }
+  };
+
+  const getPageContent = (page) => {
+    const pageMap = {
+      page1: "page1.html",
+      page2: "page2.html", 
+      page3: "page3.html"
+    };
+    return pageMap[page] || "page1.html";
   };
 
   const closeModal = () => {
@@ -30,8 +43,8 @@ const StarryNight = ({ onClose }) => {
   };
 
   const handleRocketClick = () => {
-    // Close the StarryNight component instead of opening external link
-    onClose();
+    // Open external link like the original HTML
+    window.open("https://tempest-digital.io", "_self");
   };
 
   const generateBackgroundStars = () => {
@@ -2544,73 +2557,6 @@ const StarryNight = ({ onClose }) => {
         </a>
       </div>
 
-      <div>
-        <a
-          href="page4.html"
-          className="star glow star4"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page4");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
-
-      <div>
-        <a
-          href="page5.html"
-          className="star glow star5"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page5");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
-
-      <div>
-        <a
-          href="page6.html"
-          className="star glow star6"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page6");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
-
-      <div>
-        <a
-          href="page7.html"
-          className="star glow star7"
-          onClick={(e) => {
-            e.preventDefault();
-            handleStarClick("page7");
-          }}
-        >
-          <img
-            src="/Project presentation/star1.png"
-            alt="HTML tutorial"
-            style={{ width: "70px", height: "70px" }}
-          />
-        </a>
-      </div>
 
       {/* Sky wrapper with animated background - exact recreation */}
       <div className="sky-wrapper">
@@ -2627,7 +2573,7 @@ const StarryNight = ({ onClose }) => {
               &times;
             </button>
             <iframe
-              src={`/Project presentation/${activeModal}.html`}
+              src={`/Project presentation/${getPageContent(activeModal)}`}
               id="modal-iframe"
               style={{ border: "none" }}
               width="100%"
@@ -2727,33 +2673,6 @@ const StarryNight = ({ onClose }) => {
           animation-delay: -1.4s;
         }
 
-        .star4 {
-          position: absolute;
-          top: 410px;
-          left: 580px;
-          animation-delay: -1.1s;
-        }
-
-        .star5 {
-          position: absolute;
-          top: 520px;
-          left: 475px;
-          animation-delay: -0.8s;
-        }
-
-        .star6 {
-          position: absolute;
-          top: 660px;
-          left: 595px;
-          animation-delay: -0.5s;
-        }
-
-        .star7 {
-          position: absolute;
-          top: 590px;
-          left: 740px;
-          animation-delay: -0.2s;
-        }
 
         a.star img {
           position: absolute;
@@ -2765,6 +2684,7 @@ const StarryNight = ({ onClose }) => {
         a.star.glow {
           background: rgba(255, 255, 255, 0.48);
         }
+
 
         @keyframes glitter {
           0% {
@@ -2991,6 +2911,10 @@ const StarryNight = ({ onClose }) => {
           background: #000;
         }
 
+        .modal iframe {
+          border: none;
+        }
+
         .modal .modal-close {
           position: absolute;
           right: 30px;
@@ -3003,6 +2927,10 @@ const StarryNight = ({ onClose }) => {
           color: #000;
           cursor: pointer;
           z-index: 10001;
+        }
+
+        .modal .modal-close:hover {
+          background: #f0f0f0;
         }
 
         @media (max-width: 1250px) {
@@ -3032,25 +2960,6 @@ const StarryNight = ({ onClose }) => {
             top: 42%;
           }
 
-          .star4 {
-            left: 15%;
-            top: 55%;
-          }
-
-          .star5 {
-            left: 20%;
-            top: 78%;
-          }
-
-          .star6 {
-            left: 45%;
-            top: 88%;
-          }
-
-          .star7 {
-            left: 75%;
-            top: 78%;
-          }
         }
 
         @media (max-width: 450px) {
