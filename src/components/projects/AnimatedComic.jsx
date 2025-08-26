@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 const AnimatedComic = ({ onClose }) => {
   const [comicPageIndex, setComicPageIndex] = useState(0);
@@ -18,8 +18,53 @@ const AnimatedComic = ({ onClose }) => {
     };
   }, []);
 
-  // Initialize audio refs on mount
-  useEffect(() => {
+  // Cleanup audio function
+  const cleanupAudio = useCallback(() => {
+    // Stop and cleanup background audio
+    if (bgAudioRefs.current) {
+      bgAudioRefs.current.forEach((audio) => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.src = '';
+        }
+      });
+      bgAudioRefs.current = [];
+    }
+
+    // Stop and cleanup effect audio
+    if (effectAudioRefs.current) {
+      effectAudioRefs.current.forEach((audio) => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.src = '';
+        }
+      });
+      effectAudioRefs.current = [];
+    }
+
+    // Stop and cleanup button audio
+    if (btnAudioRef.current) {
+      btnAudioRef.current.pause();
+      btnAudioRef.current.currentTime = 0;
+      btnAudioRef.current.src = '';
+      btnAudioRef.current = null;
+    }
+
+    if (btnHoverAudioRef.current) {
+      btnHoverAudioRef.current.pause();
+      btnHoverAudioRef.current.currentTime = 0;
+      btnHoverAudioRef.current.src = '';
+      btnHoverAudioRef.current = null;
+    }
+  }, []);
+
+  // Initialize audio function
+  const initializeAudio = useCallback(() => {
+    // Clean up existing audio first
+    cleanupAudio();
+
     // Background music
     bgAudioRefs.current = [
       new Audio("/audio/Sonic 1 Jingle.mp3"),
@@ -188,13 +233,24 @@ const AnimatedComic = ({ onClose }) => {
 
     if (btnAudioRef.current) btnAudioRef.current.volume = 0.3;
     if (btnHoverAudioRef.current) btnHoverAudioRef.current.volume = 0.2;
+  }, [cleanupAudio]);
 
-    // Cleanup
+  // Initialize audio refs and component state on mount
+  useEffect(() => {
+    // Reset all state to initial values
+    setComicPageIndex(0);
+    setComicPanelIndex(0);
+    setIsStarted(false);
+    setIsLoading(false);
+
+    // Initialize audio refs fresh
+    initializeAudio();
+
+    // Cleanup on unmount
     return () => {
-      bgAudioRefs.current.forEach((audio) => audio.pause());
-      effectAudioRefs.current.forEach((audio) => audio.pause());
+      cleanupAudio();
     };
-  }, []);
+  }, [initializeAudio, cleanupAudio]);
 
   // Comic pages structure - exact match from original HTML
   const comicPages = [
@@ -364,16 +420,6 @@ const AnimatedComic = ({ onClose }) => {
     }
   };
 
-  const gotoComicPanelNumber = (n) => {
-    const currentPage = comicPages[comicPageIndex];
-    if (!currentPage) return;
-
-    let panelNum = n;
-    if (panelNum > currentPage.length) panelNum = currentPage.length;
-    else if (panelNum < 1) panelNum = 1;
-
-    setComicPanelIndex(panelNum - 1);
-  };
 
   // Background audio control - exact from original
   const playBgAudioNumber = (n) => {
@@ -566,7 +612,7 @@ const AnimatedComic = ({ onClose }) => {
           <div
             key={index}
             className={`panel ${
-              index === 0 ? "" : index <= comicPanelIndex ? "active" : ""
+              index === 0 ? "active" : index <= comicPanelIndex ? "active" : ""
             }`}
           >
             <img src={imagePath} alt="image" />
