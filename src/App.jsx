@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/hero/Hero";
@@ -10,6 +11,18 @@ import Footer from "./components/Footer";
 import MidWaterfall from "./components/waterfall/MidWaterfall";
 
 function App() {
+  useEffect(() => {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      setTimeout(() => {
+        const section = document.getElementById(hash);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 500);
+    }
+  }, []);
+
   return (
     <>
       <Navbar />
