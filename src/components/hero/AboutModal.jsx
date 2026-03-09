@@ -110,23 +110,10 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                     >
                       <div className="flex justify-between">
                         <h3 className="border-s-1 border-e-1 px-1">
-                          Game Programmer
+                          Where Waves take you to Unreality. Make your game maps' identity the essence of character design. 
                         </h3>
                         <h3 className="border-s-1 border-e-1 px-1">
-                          3D Artist
                         </h3>
-                      </div>
-                      <div className="flex justify-between">
-                        <h3 className="border-s-1 border-e-1 px-1">
-                          Graphic Design
-                        </h3>
-                        <h3 className="border-s-1 border-e-1 px-1">
-                          Video Editing
-                        </h3>
-                      </div>
-                      <h3 className="border-s-1 border-e-1 px-1">
-                        Web Design & UI/UX
-                      </h3>
                     </div>
                   </div>
                 </div>
@@ -134,15 +121,19 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
               <div className="max-w-[946px] w-full h-full font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border backdrop-blur-xl bg-blue-500/10">
                 <h1 className="text-[25px] font-[800]">About Me</h1>
                 <p className="text-[11px] font-[400]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Interdum quis amet, faucibus lorem. Lectus amet odio quis sed
-                  adipiscing adipiscing magna non. Nullam turpis faucibus
-                  ridiculus suscipit. Et blandit suspendisse curabitur eu congue
-                  dui ut.Lorem ipsum dolor sit amet, consectetur cipit. Et
-                  blandit suspendisse curabitur eu congue dui ut.Lorem bitur eu
-                  congue dui ut.Et blandit suspendisse curabitur eu congue dui
-                  ut.Et blandit suspendisse curabitur eu congue dui ut.Et
-                  blandit suspendisse curabitur eu.
+                  Hey guys! I'm Dominique, but you can call me Dom for short. If it wasn't obvious already, I love the ocean, I love blue and I am obsessed 
+                  with Sonic The Hedgehog. Something as simple as the color blue and a hedgehog is why I'm a game developer today. I am a 3D artist and game
+                  programmer. Outside of game development, I'm a software developer, primarily in front-end development and UX design. In addition to that, I am
+                  also a video editor and I take pride in making engaging edits of my work and my life. My creative expression
+                  in the game dev environment enables me to fully drive the player experience. I love constrcuting maps for video games.
+                  Open-world or not, a map with depth in a game is what tells a complete story. I can visualize anything in seconds with the patience to 
+                  actually code it. Whether it's designing immsersive game environments with VFX in Unreal Engine, modeling stylized 3D assets in Maya with
+                  Substance or ZBrush, or program game mechanics that make you think outside the box, it's all done in one house!
+
+                  
+                  
+  
+                
                 </p>
                 <div
                   className="flex items-center justify-end gap-2 mt-5 cursor-pointer hover:opacity-80 transition-opacity"
