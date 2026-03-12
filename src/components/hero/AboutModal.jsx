@@ -110,10 +110,10 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                     >
                       <div className="flex justify-between">
                         <h3 className="border-s-1 border-e-1 px-1">
-                          Where Waves take you to Unreality. Make your game map's identity the essence of character design. 
+                          Where Waves take you to Unreality. Make your game
+                          map's identity the essence of character design.
                         </h3>
-                        <h3 className="border-s-1 border-e-1 px-1">
-                        </h3>
+                        <h3 className="border-s-1 border-e-1 px-1"></h3>
                       </div>
                     </div>
                   </div>
@@ -122,15 +122,23 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
               <div className="max-w-[946px] w-full h-full font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border backdrop-blur-xl bg-blue-500/10">
                 <h1 className="text-[25px] font-[800]">About Me</h1>
                 <p className="text-[11px] font-[400]">
-                  Hey guys! I'm Dominique, but you can call me Dom for short. If it wasn't obvious already, I love the ocean, I love blue and I am obsessed 
-                  with Sonic The Hedgehog. Something as simple as the color blue and a hedgehog is why I'm a game developer today. I am a 3D artist and game
-                  programmer. Outside of game development, I'm a software developer, primarily in front-end development and UX design. In addition to that, I am
-                  also a video editor and I take pride in making engaging edits of my work and my life. My creative expression
-                  in the game dev environment enables me to fully drive the player experience. I love constrcuting maps for video games.
-                  Open-world or not, a map with depth in a game is what tells a complete story. I can visualize anything in seconds with the patience to 
-                  actually code it. Whether it's designing immsersive game environments with VFX in Unreal Engine, modeling stylized 3D assets in Maya with
-                  Substance or ZBrush, or program game mechanics that make you think outside the box, it's all done in one house!
-
+                  Hey guys! I'm Dominique, but you can call me Dom for short. If
+                  it wasn't obvious already, I love the ocean, I love blue and I
+                  am obsessed with Sonic The Hedgehog. Something as simple as
+                  the color blue and a hedgehog is why I'm a game developer
+                  today. I am a 3D artist and game programmer. Outside of game
+                  development, I'm a software developer, primarily in front-end
+                  development and UX design. In addition to that, I am also a
+                  video editor and I take pride in making engaging edits of my
+                  work and my life. My creative expression in the game dev
+                  environment enables me to fully drive the player experience. I
+                  love constrcuting maps for video games. Open-world or not, a
+                  map with depth in a game is what tells a complete story. I can
+                  visualize anything in seconds with the patience to actually
+                  code it. Whether it's designing immsersive game environments
+                  with VFX in Unreal Engine, modeling stylized 3D assets in Maya
+                  with Substance or ZBrush, or program game mechanics that make
+                  you think outside the box, it's all done in one house!
                 </p>
                 <div
                   className="flex items-center justify-end gap-2 mt-5 cursor-pointer hover:opacity-80 transition-opacity"
@@ -144,8 +152,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
           </div>
 
           {/* About Mobile */}
-          <div className="md:hidden relative mt-0">
-            {/* Close button for mobile */}
+          <div className="md:hidden relative mt-0 w-[85vw] max-w-[320px]">
             <button
               onClick={onClose}
               className="absolute -right-2 -top-8 text-white rounded-full p-1 hover:bg-gray-700 transition-colors z-10"
@@ -154,53 +161,62 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
               <X size={26} />
             </button>
 
-            <div className="relative w-80">
-              <div className="w-[101px] h-full relative">
+            <div className="relative pt-[90px]">
+              <div className="absolute left-0 top-0 z-10 w-[108px]">
                 <img
                   src={profilePicture}
                   alt="profile-picture"
                   className="w-full"
                 />
-                {/* Parent container for positioning */}
-                <div className="absolute -bottom-5 w-[101px]">
-                  {/* Border layer */}
-                  <div className="absolute rounded-xl inset-0 -m-0.5 [clip-path:polygon(15px_0%,100%_0%,100%_100%,0%_100%,0%_15px)] bg-[#729a9f] z-0"></div>
-
-                  {/* Content layer */}
-                  <div className="relative rounded-xl [clip-path:polygon(15px_0%,100%_0%,100%_100%,0%_100%,0%_15px)] flex px-2 py-3 items-center bg-gradient-to-r from-[rgb(37_150_190)] to-[#4c8284] gap-2 z-10">
-                    <img src={avatar} alt="avatar-icon" className="w-[18px]" />
-                    <div className="flex">
-                      <h3 className="text-white font-rajdhani text-[8px]">
+                <div className="absolute w-full" style={{ bottom: "37px" }}>
+                  <div className="absolute rounded-xl inset-0 -m-0.5 [clip-path:polygon(12px_0%,100%_0%,100%_100%,0%_100%,0%_12px)] bg-[#729a9f] z-0"></div>
+                  <div className="relative rounded-xl [clip-path:polygon(12px_0%,100%_0%,100%_100%,0%_100%,0%_12px)] flex px-1.5 py-1.5 items-center bg-gradient-to-r from-[rgb(37_150_190)] to-[#4c8284] gap-1 z-10">
+                    <img
+                      src={avatar}
+                      alt="avatar-icon"
+                      className="w-[12px] shrink-0"
+                    />
+                    <div className="flex items-center">
+                      <h3 className="text-white font-rajdhani text-[7px] whitespace-nowrap">
                         @tempestdigital_
                       </h3>
                       <img
                         src={check}
                         alt="check-icon"
-                        className="w-[5px] object-contain"
+                        className="w-[4px] object-contain shrink-0"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="w-[271px] absolute left-15 top-15 -z-10 font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border bg-linear-to-b from-[#53b1ba] via-[#1f8aa8] to-[#274f79]">
-                <h1 className="text-[25px] font-[800]">About Me</h1>
-                <p className="text-[11px] font-[400]">
-                  Hey guys! I'm Dominique, but you can call me Dom for short. If it wasn't obvious already, I love the ocean, I love blue and I am obsessed 
-                  with Sonic The Hedgehog. Something as simple as the color blue and a hedgehog is why I'm a game developer today. I am a 3D artist and game
-                  programmer. Outside of game development, I'm a software developer, primarily in front-end development and UX design. In addition to that, I am
-                  also a video editor and I take pride in making engaging edits of my work and my life. My creative expression
-                  in the game dev environment enables me to fully drive the player experience. I love constrcuting maps for video games.
-                  Open-world or not, a map with depth in a game is what tells a complete story. I can visualize anything in seconds with the patience to 
-                  actually code it. Whether it's designing immsersive game environments with VFX in Unreal Engine, modeling stylized 3D assets in Maya with
-                  Substance or ZBrush, or program game mechanics that make you think outside the box, it's all done in one house!
 
+              <div className="font-inter ml-[90px] pb-[16px] pt-[12px] px-[14px] text-white about-me-border bg-linear-to-b from-[#53b1ba] via-[#1f8aa8] to-[#274f79]">
+                <h1 className="text-[16px] font-[800] ps-5">About Me</h1>
+                <p className="text-[8px] font-[400] leading-relaxed mt-1 ps-5">
+                  Hey guys! I'm Dominique, but you can call me Dom for short. If
+                  it wasn't obvious already, I love the ocean, I love blue and I
+                  am obsessed with Sonic The Hedgehog. Something as simple as
+                  the color blue and a hedgehog is why I'm a game developer
+                  today. I am a 3D artist and game programmer. Outside of game
+                  development, I'm a software developer, primarily in front-end
+                  development and UX design. In addition to that, I am also a
+                  video editor and I take pride in making engaging edits of my
+                  work and my life. My creative expression in the game dev
+                  environment enables me to fully drive the player experience. I
+                  love constrcuting maps for video games. Open-world or not, a
+                  map with depth in a game is what tells a complete story. I can
+                  visualize anything in seconds with the patience to actually
+                  code it. Whether it's designing immsersive game environments
+                  with VFX in Unreal Engine, modeling stylized 3D assets in Maya
+                  with Substance or ZBrush, or program game mechanics that make
+                  you think outside the box, it's all done in one house!
                 </p>
                 <div
-                  className="flex items-center justify-end gap-2 mt-5 cursor-pointer hover:opacity-80 transition-opacity"
+                  className="flex items-center justify-end gap-2 mt-3 cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={onOpenVideo}
                 >
-                  <Play className="w-4 fill-white"></Play>
-                  <h3 className="text-[10px]">Intro</h3>
+                  <Play className="w-3 fill-white"></Play>
+                  <h3 className="text-[8px]">Intro</h3>
                 </div>
               </div>
             </div>
