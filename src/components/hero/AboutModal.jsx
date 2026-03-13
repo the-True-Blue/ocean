@@ -68,52 +68,53 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
               <X size={26} />
             </button>
 
-            <div className="flex w-full xl:h-[374px]">
-              <div className="max-w-[266px] h-auto object-contain relative">
-                <img
-                  src={profilePicture}
-                  alt="profile-picture"
-                  className="w-full"
-                />
-                {/* Parent container for positioning */}
-                <div className="absolute md:-bottom-0 max-w-[266px] w-full">
-                  {/* Border layer */}
-                  <div className="absolute rounded-xl inset-0 -m-0.5 [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] bg-[#729a9f] z-0"></div>
-
-                  {/* Content layer */}
-                  <div className="relative lg:ps-[19px] lg:pe-[19px] rounded-xl [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] flex flex-col p-3 items-start bg-[linear-gradient(170deg,#6a7fac_0%,#305798_30%,#0933b9_60%)] gap-2 z-10">
-                    <div className="flex gap-2">
-                      <img src={avatar} alt="avatar-icon" />
-                      <div className="flex">
-                        <h3
-                          className="text-white font-rajdhani text-[8px] font-[600] md:text-[14.92px]"
-                          style={{
-                            WebkitTextStroke: "1.7px #FFFFFF47",
-                            textStroke: "1.7px #FFFFFF47",
-                          }}
-                        >
-                          @tempestdigital_
-                        </h3>
-                        <img
-                          src={check}
-                          alt="check-icon"
-                          className="w-[5px] object-contain"
-                        />
+            <div className="flex w-full xl:h-[369px]">
+              <div className="max-w-[266px]  h-auto object-contain relative">
+                <div className="flex flex-col items-start relative">
+                  <img
+                    src={profilePicture}
+                    alt="profile-picture"
+                    className="w-full "
+                  />
+                  {/* Parent container for positioning */}
+                  <div className="absolute -bottom-25 max-w-[266px] w-full">
+                    {/* Border layer */}
+                    <div className="absolute rounded-xl inset-0 -m-0.5 [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] bg-[#729a9f] z-0"></div>
+                    {/* Content layer */}
+                    <div className="relative lg:ps-[19px] lg:pe-[19px] rounded-xl [clip-path:polygon(30px_0%,100%_0%,100%_100%,0%_100%,0%_30px)] flex flex-col p-3 items-start bg-[linear-gradient(170deg,#6a7fac_0%,#305798_30%,#0933b9_60%)] gap-2 z-10">
+                      <div className="flex gap-2">
+                        <img src={avatar} alt="avatar-icon" />
+                        <div className="flex">
+                          <h3
+                            className="text-white font-rajdhani text-[8px] font-[600] md:text-[14.92px]"
+                            style={{
+                              WebkitTextStroke: "1.7px #FFFFFF47",
+                              textStroke: "1.7px #FFFFFF47",
+                            }}
+                          >
+                            @tempestdigital_
+                          </h3>
+                          <img
+                            src={check}
+                            alt="check-icon"
+                            className="w-[5px] object-contain"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div
-                      className="flex w-full flex-col gap-1 text-white font-[600] font-rajdhani xl:text-[16px] text-xs"
-                      style={{
-                        WebkitTextStroke: "1.7px #FFFFFF47",
-                        textStroke: "1.7px #FFFFFF47",
-                      }}
-                    >
-                      <div className="flex justify-between">
-                        <h3 className="border-s-1 border-e-1 px-1">
-                          Where Waves take you to Unreality. Make your game
-                          map's identity the essence of character design.
-                        </h3>
-                        <h3 className="border-s-1 border-e-1 px-1"></h3>
+                      <div
+                        className="flex w-full flex-col gap-1 text-white font-[600] font-rajdhani xl:text-[16px] text-xs"
+                        style={{
+                          WebkitTextStroke: "1.7px #FFFFFF47",
+                          textStroke: "1.7px #FFFFFF47",
+                        }}
+                      >
+                        <div className="flex justify-between">
+                          <h3 className="border-s-1 border-e-1 px-1">
+                            Where Waves take you to Unreality. Make your game
+                            map's identity the essence of character design.
+                          </h3>
+                          <h3 className="border-s-1 border-e-1 px-1"></h3>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -168,7 +169,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                   alt="profile-picture"
                   className="w-full"
                 />
-                <div className="absolute w-full" style={{ bottom: "37px" }}>
+                <div className="absolute w-full -bottom-3">
                   <div className="absolute rounded-xl inset-0 -m-0.5 [clip-path:polygon(12px_0%,100%_0%,100%_100%,0%_100%,0%_12px)] bg-[#729a9f] z-0"></div>
                   <div className="relative rounded-xl [clip-path:polygon(12px_0%,100%_0%,100%_100%,0%_100%,0%_12px)] flex px-1.5 py-1.5 items-center bg-gradient-to-r from-[rgb(37_150_190)] to-[#4c8284] gap-1 z-10">
                     <img
