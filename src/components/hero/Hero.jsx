@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import heroVideoMp4 from "../../assets/Animations/Hero/hero.mp4";
+import heroPoster from "../../assets/Animations/Hero/hero-poster.png";
 import heroImage from "../../assets/hero/hero.png";
 import ExploreBtn from "../ExploreBtn";
 import AboutModal from "./AboutModal";
@@ -12,6 +14,23 @@ const Hero = () => {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const videoSrc = "https://www.youtube.com/embed/your-video-id";
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const [videoReady, setVideoReady] = useState(!isSafari);
+
+  useEffect(() => {
+    if (!isSafari) return;
+    const unlock = () => setVideoReady(true);
+    document.addEventListener("click", unlock, { once: true });
+    document.addEventListener("touchstart", unlock, { once: true });
+    document.addEventListener("scroll", unlock, { once: true });
+    document.addEventListener("keydown", unlock, { once: true });
+    return () => {
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("scroll", unlock);
+      document.removeEventListener("keydown", unlock);
+    };
+  }, []);
 
   // Animation controls
   const titleControls = useAnimation();
@@ -101,24 +120,37 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-[1285px] relative w-full">
-      {/* Desktop Image */}
+    <div className="relative w-full">
+      {/* Mobile: imagen estática */}
       <div
-        className="absolute inset-0 h-full bg-center bg-no-repeat bg-cover xl:!bg-[length:100%_100%]"
+        className="md:hidden h-[1285px] bg-center bg-no-repeat bg-cover"
         style={{ backgroundImage: `url(${heroImage})` }}
-      ></div>
+      />
 
-      {/* Stars overlay similar to GraphicDesign */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={starsVariant}
-        className="absolute inset-0 w-full h-full stars-background pointer-events-none"
-        style={{ zIndex: 1 }}
-      ></motion.div>
+      {/* Desktop: video animado */}
+      <div className="hidden md:block">
+        {videoReady ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full block"
+            style={{ pointerEvents: "none" }}
+          >
+            <source src={heroVideoMp4} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={heroPoster}
+            className="w-full block"
+            style={{ pointerEvents: "none" }}
+          />
+        )}
+      </div>
 
       {/* Top Content */}
-      <div className="relative z-10 flex flex-col items-center gap-[19px] text-white">
+      <div className="absolute inset-0 z-10 flex flex-col items-center gap-[19px] text-white">
         <motion.h1
           ref={titleRef}
           initial="hidden"
@@ -162,23 +194,6 @@ const Hero = () => {
         onClose={closeVideoModal}
         videoSrc={videoSrc}
       />
-
-      {/* CSS for stars */}
-      <style jsx>{`
-        .stars-background {
-          background-image:
-            radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0, 0, 0, 0)),
-            radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0, 0, 0, 0)),
-            radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0, 0, 0, 0)),
-            radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0, 0, 0, 0)),
-            radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0, 0, 0, 0)),
-            radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0, 0, 0, 0));
-          background-repeat: repeat;
-          background-size: 200px 200px;
-          mix-blend-mode: screen;
-          opacity: 0.3;
-        }
-      `}</style>
     </div>
   );
 };

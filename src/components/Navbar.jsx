@@ -23,7 +23,7 @@ const Navbar = () => {
   // Enhanced version for mobile devices
   const scrollToSection = (sectionId) => {
     console.log("Scrolling to section:", sectionId); // For debugging
-    
+
     // Small delay to ensure menu closes first
     setTimeout(() => {
       const section = document.getElementById(sectionId);
@@ -36,7 +36,7 @@ const Navbar = () => {
         console.error("Section not found:", sectionId);
       }
     }, 100);
-    
+
     // Close mobile menu immediately
     setIsOpen(false);
   };
