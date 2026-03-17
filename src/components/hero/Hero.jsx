@@ -166,11 +166,8 @@ const Hero = () => {
       {/* CSS for stars */}
       <style jsx>{`
         .stars-background {
-          background-image: radial-gradient(
-              2px 2px at 20px 30px,
-              #ffffff,
-              rgba(0, 0, 0, 0)
-            ),
+          background-image:
+            radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0, 0, 0, 0)),

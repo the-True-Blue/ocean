@@ -113,7 +113,7 @@ const GameProgrammingSection = () => {
   return (
     <div
       id="game-programming-section"
-      className="w-full md:h-[1260px] min-h-[822px] relative"
+      className="w-full  md:h-[1260px] min-h-[822px] relative"
     >
       {/* Desktop Image */}
       <div
@@ -211,11 +211,8 @@ const GameProgrammingSection = () => {
       {/* CSS for stars - copied from GraphicDesign */}
       <style jsx>{`
         .stars-background {
-          background-image: radial-gradient(
-              2px 2px at 20px 30px,
-              #77a0ff,
-              rgba(0, 0, 0, 0)
-            ),
+          background-image:
+            radial-gradient(2px 2px at 20px 30px, #77a0ff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 40px 70px, #a1b8ff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 50px 160px, #5d99ff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 90px 40px, #8bb3ff, rgba(0, 0, 0, 0)),
@@ -226,11 +223,8 @@ const GameProgrammingSection = () => {
         }
 
         .stars-background-small {
-          background-image: radial-gradient(
-              1px 1px at 10px 10px,
-              #77a0ff,
-              rgba(0, 0, 0, 0)
-            ),
+          background-image:
+            radial-gradient(1px 1px at 10px 10px, #77a0ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 150px 150px, #a1b8ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 100px 50px, #5d99ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 60px 120px, #8bb3ff, rgba(0, 0, 0, 0)),
