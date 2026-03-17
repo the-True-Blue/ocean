@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import heroVideoMp4 from "../../assets/Animations/Hero/hero.mp4";
+import heroVideoMp4 from "../../assets/Animations/Hero/hero-animation.mp4";
 import heroPoster from "../../assets/Animations/Hero/hero-poster.png";
 import heroImage from "../../assets/hero/hero.png";
 import ExploreBtn from "../ExploreBtn";
@@ -148,6 +148,15 @@ const Hero = () => {
           />
         )}
       </div>
+
+      {/* Gradient transition to submarine section */}
+      <div
+        className="hidden md:block absolute bottom-0 left-0 w-full h-[180px] pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, transparent, #38f0fd)",
+          zIndex: 2,
+        }}
+      />
 
       {/* Top Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center gap-[19px] text-white">

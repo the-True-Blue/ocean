@@ -3,9 +3,28 @@ import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import GameCarousel from "./GameCarousel";
 import background from "../../assets/game_programming/background.png";
+import submarineVideo from "../../assets/Animations/Submarine/submarine-animation.mp4";
 import Rive from "@rive-app/react-canvas";
 
 const GameProgrammingSection = () => {
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const [videoReady, setVideoReady] = useState(!isSafari);
+
+  useEffect(() => {
+    if (!isSafari) return;
+    const unlock = () => setVideoReady(true);
+    document.addEventListener("click", unlock, { once: true });
+    document.addEventListener("touchstart", unlock, { once: true });
+    document.addEventListener("scroll", unlock, { once: true });
+    document.addEventListener("keydown", unlock, { once: true });
+    return () => {
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("scroll", unlock);
+      document.removeEventListener("keydown", unlock);
+    };
+  }, []);
+
   // Controls for animations
   const titleControls = useAnimation();
   const descriptionControls = useAnimation();
@@ -113,15 +132,27 @@ const GameProgrammingSection = () => {
   return (
     <div
       id="game-programming-section"
-      className="w-full  md:h-[1260px] min-h-[822px] relative"
+      className="w-full min-h-[822px] relative"
     >
-      {/* Desktop Image */}
+      {/* Mobile: imagen estática */}
       <div
-        className="absolute inset-0 h-full bg-center bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: `url(${background})`,
-        }}
-      ></div>
+        className="md:hidden absolute inset-0 h-full bg-center bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url(${background})` }}
+      />
+
+      {/* Desktop: video animado */}
+      {videoReady ? (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="hidden md:block w-full"
+          style={{ pointerEvents: "none" }}
+        >
+          <source src={submarineVideo} type="video/mp4" />
+        </video>
+      ) : null}
 
       {/* Stars background overlay */}
       <motion.div
@@ -149,7 +180,7 @@ const GameProgrammingSection = () => {
       ></motion.div>
 
       {/* Content */}
-      <div className="relative z-10 w-full">
+      <div className="absolute inset-0 z-10 w-full">
         <motion.h1
           ref={titleRef}
           initial="hidden"
