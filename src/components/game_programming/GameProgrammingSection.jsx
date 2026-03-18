@@ -133,7 +133,7 @@ const GameProgrammingSection = () => {
   return (
     <div
       id="game-programming-section"
-      className="w-full min-h-[822px] relative"
+      className="w-full min-h-[822px] -mb-1  relative"
     >
       {/* Mobile: imagen estática */}
       <div
@@ -149,7 +149,7 @@ const GameProgrammingSection = () => {
             loop
             muted
             playsInline
-            className="w-full"
+            className="w-full "
             style={{ pointerEvents: "none" }}
           >
             <source src={submarineVideo} type="video/mp4" />
