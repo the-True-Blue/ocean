@@ -15,7 +15,7 @@ const Waterfall = () => {
       },
       {
         threshold: 0.8,
-      }
+      },
     );
 
     if (textRef.current) {
@@ -30,7 +30,7 @@ const Waterfall = () => {
   }, []);
 
   return (
-    <div className="w-full md:h-screen h-[750px] relative flex flex-col md:justify-end justify-center overflow-hidden">
+    <div className="w-full border md:h-screen h-[750px] relative flex flex-col md:justify-end justify-center overflow-hidden">
       <div
         className="absolute w-full h-full bg-[length:170%_100%] bg-no-repeat bg-center md:bg-cover xl:!bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${background})` }}
