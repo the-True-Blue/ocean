@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import GameCarousel from "./GameCarousel";
 import background from "../../assets/game_programming/background.png";
 import submarineVideo from "../../assets/Animations/Submarine/submarine-animation.mp4";
+import submarinePoster from "../../assets/Animations/Submarine/submarine.png";
 import Rive from "@rive-app/react-canvas";
 
 const GameProgrammingSection = () => {
@@ -141,18 +142,26 @@ const GameProgrammingSection = () => {
       />
 
       {/* Desktop: video animado */}
-      {videoReady ? (
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="hidden md:block w-full"
-          style={{ pointerEvents: "none" }}
-        >
-          <source src={submarineVideo} type="video/mp4" />
-        </video>
-      ) : null}
+      <div className="hidden md:block">
+        {videoReady ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full"
+            style={{ pointerEvents: "none" }}
+          >
+            <source src={submarineVideo} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={submarinePoster}
+            className="w-full block"
+            style={{ pointerEvents: "none" }}
+          />
+        )}
+      </div>
 
       {/* Stars background overlay */}
       <motion.div
