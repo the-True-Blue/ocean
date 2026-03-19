@@ -1,8 +1,28 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import background from "../../assets/waterfall/background.png";
+import waterfallMp4 from "../../assets/Animations/waterfall1/Upper-Waterfall.mp4";
+import waterfallPoster from "../../assets/Animations/waterfall1/waterfall1.png";
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 const Waterfall = () => {
   const textRef = useRef(null);
+  const [videoReady, setVideoReady] = useState(!isSafari);
+
+  useEffect(() => {
+    if (!isSafari) return;
+    const unlock = () => setVideoReady(true);
+    document.addEventListener("click", unlock, { once: true });
+    document.addEventListener("touchstart", unlock, { once: true });
+    document.addEventListener("scroll", unlock, { once: true });
+    document.addEventListener("keydown", unlock, { once: true });
+    return () => {
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("scroll", unlock);
+      document.removeEventListener("keydown", unlock);
+    };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,15 +50,38 @@ const Waterfall = () => {
   }, []);
 
   return (
-    <div className="w-full border md:h-screen h-[750px] relative flex flex-col md:justify-end justify-center overflow-hidden">
+    <div className="w-full h-[750px] md:h-auto relative flex flex-col md:justify-end justify-center overflow-hidden">
+      {/* Mobile: imagen estática */}
       <div
-        className="absolute w-full h-full bg-[length:170%_100%] bg-no-repeat bg-center md:bg-cover xl:!bg-[length:100%_100%]"
+        className="md:hidden absolute w-full h-full bg-[length:170%_100%] bg-no-repeat bg-center"
         style={{ backgroundImage: `url(${background})` }}
       ></div>
 
+      {/* Desktop: video animado */}
+      <div className="hidden md:block">
+        {videoReady ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full block"
+            style={{ pointerEvents: "none" }}
+          >
+            <source src={waterfallMp4} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={waterfallPoster}
+            className="w-full block"
+            style={{ pointerEvents: "none" }}
+          />
+        )}
+      </div>
+
       <div
         ref={textRef}
-        className="relative w-full max-w-[1359px] xl:mb-15 md:mb-10  mx-auto opacity-0 transition-opacity duration-1000 ease-in-out fade-in"
+        className="md:absolute md:bottom-0 md:left-1/2 md:-translate-x-1/2 relative w-full max-w-[1359px] xl:mb-15 md:mb-10 mx-auto opacity-0 transition-opacity duration-1000 ease-in-out fade-in"
       >
         <div className="text-white flex md:flex-row md:justify-between justify-evenly items-center font-poppins font-[900]">
           <div className="flex flex-col items-center lg:pl-25 md:pl-5">
