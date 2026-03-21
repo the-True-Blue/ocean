@@ -6,9 +6,8 @@ import GameProgrammingSection from "./components/game_programming/GameProgrammin
 import VideoEditing from "./components/video_editing/VideoEditing";
 import GraphicDesign from "./components/graphic_design/GraphicDesign";
 import Waterfall from "./components/waterfall/Waterfall";
-import Waterfall2 from "./components/waterfall/Waterfall2";
 import Footer from "./components/Footer";
-import MidWaterfall from "./components/waterfall/MidWaterfall";
+import MidWaterfall2 from "./components/waterfall/MidWaterfall2";
 
 function App() {
   useEffect(() => {
@@ -40,10 +39,7 @@ function App() {
         <Waterfall />
       </div>
       <div id="3d-art">
-        <MidWaterfall />
-      </div>
-      <div id="web-design">
-        <Waterfall2 />
+        <MidWaterfall2 />
       </div>
       <div id="contact">
         <Footer />
