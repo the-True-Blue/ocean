@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import rocket from "../../assets/waterfall2/rocket.png";
 import telescope from "../../assets/waterfall2/telescope.png";
 import videoSrc from "../../assets/Animations/waterfall2/waterfall2_alpha.webm";
+import videoSrcMov from "../../assets/Animations/waterfall2/waterfall2_alpha.mov";
 import videoPoster from "../../assets/Animations/waterfall2/waterfall2.png";
 import bgMidWaterfall from "../../assets/mid_waterfall/background.png";
 import bgWaterfall2 from "../../assets/waterfall2/background.png";
@@ -77,7 +78,7 @@ const MidWaterfall2 = () => {
   };
 
   return (
-    <div className="w-full relative overflow-hidden">
+    <div className="w-full -mt-32 relative overflow-hidden">
       {/* Mobile: dos fondos estáticos apilados */}
       <div className="md:hidden">
         {/* Top section mobile */}
@@ -188,6 +189,7 @@ const MidWaterfall2 = () => {
             className="w-full block"
             style={{ pointerEvents: "none" }}
           >
+            <source src={videoSrcMov} type="video/quicktime" />
             <source src={videoSrc} type="video/webm" />
           </video>
         ) : (
