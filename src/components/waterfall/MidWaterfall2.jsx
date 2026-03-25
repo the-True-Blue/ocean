@@ -78,7 +78,7 @@ const MidWaterfall2 = () => {
   };
 
   return (
-    <div className="w-full -mt-32 relative overflow-hidden">
+    <div className="w-full -mt-32 relative overflow-hidden z-10">
       {/* Mobile: dos fondos estáticos apilados */}
       <div className="md:hidden">
         {/* Top section mobile */}
