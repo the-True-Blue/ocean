@@ -80,6 +80,12 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
           {/* Featured Video - Desktop */}
           {/* Gradient border wrapper */}
           <div className="hidden md:block relative w-full lg:max-w-[1000px] max-w-[700px] mb-20 rounded-xl p-[1px] border-teal-300 border">
+            {/* Featured badge */}
+            <div className="absolute top-1 right-1 z-20">
+              <div className="bg-yellow-400 text-blue-900 py-1 px-3 text-xs font-bold shadow-md font-orbitron rounded-tr-lg rounded-tl-xs">
+                FEATURED
+              </div>
+            </div>
             {/* Corner glows: large dot sits ON the corner edge, smaller ones fan inward */}
             {/* Top-left */}
             <div
@@ -483,6 +489,12 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                 "0 0 12px 2px rgba(100,180,255,0.3), 0 0 24px 2px rgba(60,120,220,0.12)",
             }}
           >
+            {/* Featured badge */}
+            <div className="absolute top-1 right-1 z-20">
+              <div className="bg-yellow-400 text-blue-900 py-0.5 px-2 text-[6px] font-bold shadow-md font-orbitron rounded-tr-lg rounded-tl-xs">
+                FEATURED
+              </div>
+            </div>
             {/* Top-left */}
             <div
               className="absolute z-10"
