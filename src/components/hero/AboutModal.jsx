@@ -78,42 +78,310 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
           </div>
 
           {/* Featured Video - Desktop */}
-          <div className="hidden md:flex flex-row w-full lg:max-w-[1000px] max-w-[700px] mb-20 backdrop-blur-sm bg-black/20 rounded-lg overflow-hidden shadow-xl border border-[#729a9f]">
-            <div className="w-2/5 p-3">
+          {/* Gradient border wrapper */}
+          <div className="hidden md:block relative w-full lg:max-w-[1000px] max-w-[700px] mb-20 rounded-xl p-[1px] border-teal-300 border">
+            {/* Corner glows: large dot sits ON the corner edge, smaller ones fan inward */}
+            {/* Top-left */}
+            <div
+              className="absolute z-10"
+              style={{ top: "-6px", left: "-6px" }}
+            >
               <div
-                className="w-full overflow-hidden rounded-lg shadow-lg"
-                style={{ aspectRatio: "16/9" }}
-              >
-                <video
-                  src={featuredVideoFile}
-                  poster={videoThumbnail}
-                  className="w-full h-full object-cover"
-                  controls
-                  style={{ objectPosition: "center 15%" }}
-                />
-              </div>
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  top: 0,
+                  left: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "2px",
+                  left: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "3px",
+                  left: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "10px",
+                  left: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "21px",
+                  left: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
             </div>
-            <div className="w-3/5 p-4 flex flex-col justify-between">
-              <h3 className="text-xl font-bold text-white font-orbitron">
-                {featuredVideo.title}
-              </h3>
-              <hr className="border-gray-400/50" />
-              <p className="text-white text-lg font-rajdhani line-clamp-3">
-                {featuredVideo.description}
-              </p>
-              <a
-                href={featuredVideo.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="self-center flex items-center gap-2 px-4 py-2 bg-[#3b5bdb] hover:bg-[#4c6ef5] text-white text-sm font-orbitron rounded-full transition-colors duration-200"
-              >
-                <ExternalLink />
-                View Full Campaign
-              </a>
-              <hr className="border-gray-400/50" />
-              <p className="text-white text-lg font-rajdhani">
-                Play anywhere, anytime, any way with Google Play.
-              </p>
+            {/* Top-right */}
+            <div
+              className="absolute z-10"
+              style={{ top: "-6px", right: "-6px" }}
+            >
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  top: 0,
+                  right: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "2px",
+                  right: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "3px",
+                  right: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "10px",
+                  right: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "21px",
+                  right: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+            </div>
+            {/* Bottom-left */}
+            <div
+              className="absolute z-10"
+              style={{ bottom: "-6px", left: "-6px" }}
+            >
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  bottom: 0,
+                  left: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "2px",
+                  left: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "3px",
+                  left: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "10px",
+                  left: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "21px",
+                  left: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+            </div>
+            {/* Bottom-right */}
+            <div
+              className="absolute z-10"
+              style={{ bottom: "-6px", right: "-6px" }}
+            >
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  bottom: 0,
+                  right: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "2px",
+                  right: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "3px",
+                  right: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "10px",
+                  right: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "21px",
+                  right: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+            </div>
+            <div className="flex flex-row w-full rounded-xl overflow-hidden backdrop-blur-xl bg-[#0d2a5e]/10">
+              <div className="w-2/5 p-3">
+                <div
+                  className="w-full overflow-hidden rounded-lg shadow-lg border-teal-300 border"
+                  style={{ aspectRatio: "16/9" }}
+                >
+                  <video
+                    src={featuredVideoFile}
+                    poster={videoThumbnail}
+                    className="w-full h-full object-cover"
+                    controls
+                    style={{ objectPosition: "center 15%" }}
+                  />
+                </div>
+              </div>
+              <div className="w-3/5 p-4 flex flex-col justify-between">
+                <h3 className="text-xl font-bold text-white font-orbitron">
+                  {featuredVideo.title}
+                </h3>
+                <hr className="border-white/20" />
+                <p className="text-white/90 text-lg font-rajdhani line-clamp-3">
+                  {featuredVideo.description}
+                </p>
+                <a
+                  href={featuredVideo.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="self-center flex items-center hover:scale-105 gap-2 px-4 py-2 bg-[linear-gradient(170deg,#6a7fac_0%,#305798_30%,#0933b9_60%)] border-[#4c6ef5] text-white text-sm  rounded-full transition-colors duration-200"
+                >
+                  <ExternalLink size={20} className="text-[#4f87f2]" />
+                  View Full Campaign
+                </a>
+                <hr className="border-white/20" />
+                <p className="text-white/90 text-lg font-rajdhani">
+                  Play anywhere, anytime, any way with Google Play.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -205,54 +473,316 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
           </div>
 
           {/* Featured Video - Mobile */}
-          <div className="md:hidden flex flex-row w-[85vw] max-w-[320px] mb-3 backdrop-blur-sm bg-black/20 rounded-lg overflow-hidden shadow-xl border border-[#729a9f]">
-            <div className="w-2/5 p-1.5">
+          {/* Gradient border wrapper */}
+          <div
+            className="md:hidden relative w-[85vw] max-w-[320px] mb-3 rounded-xl p-[1px]"
+            style={{
+              background:
+                "linear-gradient(135deg, #7dd8f8 0%, #2a7fd4 30%, #1a3a8f 50%, #2a7fd4 70%, #7dd8f8 100%)",
+              boxShadow:
+                "0 0 12px 2px rgba(100,180,255,0.3), 0 0 24px 2px rgba(60,120,220,0.12)",
+            }}
+          >
+            {/* Top-left */}
+            <div
+              className="absolute z-10"
+              style={{ top: "-6px", left: "-6px" }}
+            >
               <div
-                className="w-full overflow-hidden rounded-lg shadow-lg"
-                style={{ aspectRatio: "16/9" }}
-              >
-                <video
-                  src={featuredVideoFile}
-                  poster={videoThumbnail}
-                  className="w-full h-full object-cover"
-                  controls
-                />
-              </div>
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  top: 0,
+                  left: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "2px",
+                  left: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "3px",
+                  left: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "10px",
+                  left: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "21px",
+                  left: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
             </div>
-            <div className="w-3/5 p-2 flex flex-col justify-between">
-              <h3 className="text-[10px] font-bold text-white font-orbitron truncate">
-                {featuredVideo.title}
-              </h3>
-              <hr className="border-gray-400/50" />
-              <p className="text-white/80 text-[8px] font-rajdhani line-clamp-2">
-                {featuredVideo.description}
-              </p>
-              <a
-                href={featuredVideo.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="self-start flex items-center gap-1 px-2 py-1 bg-[#3b5bdb] hover:bg-[#4c6ef5] text-white text-[8px] font-orbitron rounded-full transition-colors duration-200"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-2.5 h-2.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+            {/* Top-right */}
+            <div
+              className="absolute z-10"
+              style={{ top: "-6px", right: "-6px" }}
+            >
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  top: 0,
+                  right: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "2px",
+                  right: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "3px",
+                  right: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  top: "10px",
+                  right: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  top: "21px",
+                  right: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+            </div>
+            {/* Bottom-left */}
+            <div
+              className="absolute z-10"
+              style={{ bottom: "-6px", left: "-6px" }}
+            >
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  bottom: 0,
+                  left: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "2px",
+                  left: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "3px",
+                  left: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "10px",
+                  left: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "21px",
+                  left: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+            </div>
+            {/* Bottom-right */}
+            <div
+              className="absolute z-10"
+              style={{ bottom: "-6px", right: "-6px" }}
+            >
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  bottom: 0,
+                  right: 0,
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 40%,transparent 70%)",
+                  boxShadow: "0 0 10px 4px rgba(125,216,248,0.95)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "2px",
+                  right: "10px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "3px",
+                  right: "21px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  bottom: "10px",
+                  right: "2px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 5px 2px rgba(125,216,248,0.75)",
+                }}
+              />
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  bottom: "21px",
+                  right: "3px",
+                  background:
+                    "radial-gradient(circle,#fff 0%,#7dd8f8 50%,transparent 70%)",
+                  boxShadow: "0 0 3px 1px rgba(125,216,248,0.6)",
+                }}
+              />
+            </div>
+            <div className="flex flex-row w-full rounded-xl overflow-hidden backdrop-blur-xl bg-[#0d2a5e]/60">
+              <div className="w-2/5 p-1.5">
+                <div
+                  className="w-full overflow-hidden rounded-lg shadow-lg"
+                  style={{ aspectRatio: "16/9" }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  <video
+                    src={featuredVideoFile}
+                    poster={videoThumbnail}
+                    className="w-full h-full object-cover"
+                    controls
                   />
-                </svg>
-                View Full Campaign
-              </a>
-              <hr className="border-gray-400/50" />
-              <p className="text-white/80 text-[8px] font-rajdhani line-clamp-1">
-                Play anywhere, anytime, any way with Google Play.
-              </p>
+                </div>
+              </div>
+              <div className="w-3/5 p-2 flex flex-col justify-between">
+                <h3 className="text-[10px] font-bold text-white font-orbitron truncate">
+                  {featuredVideo.title}
+                </h3>
+                <hr className="border-white/20" />
+                <p className="text-white/90 text-[8px] font-rajdhani line-clamp-2">
+                  {featuredVideo.description}
+                </p>
+                <a
+                  href={featuredVideo.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="self-center flex items-center gap-1 px-2 py-1 bg-[linear-gradient(170deg,#6a7fac_0%,#305798_30%,#0933b9_60%)] border-[#4c6ef5] text-white text-[6px] font-orbitron rounded-full transition-colors duration-200"
+                >
+                  <ExternalLink size={10} className="text-[#4f87f2]" />
+                  View Full Campaign
+                </a>
+                <hr className="border-white/20" />
+                <p className="text-white/90 text-[8px] font-rajdhani line-clamp-1">
+                  Play anywhere, anytime, any way with Google Play.
+                </p>
+              </div>
             </div>
           </div>
 
