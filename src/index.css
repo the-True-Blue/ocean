@@ -17,3 +17,17 @@
   --text-shadow-blue: 2px 2px 4px rgba(0, 0, 0, 0.5);
   --text-tiny: 8px;
 }
+
+/* About modal featured video: contain + black bars only in fullscreen */
+.about-featured-video:fullscreen {
+  object-fit: contain;
+  background: black;
+}
+.about-featured-video:-webkit-full-screen {
+  object-fit: contain;
+  background: black;
+}
+.about-featured-video:-moz-full-screen {
+  object-fit: contain;
+  background: black;
+}

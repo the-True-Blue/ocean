@@ -360,7 +360,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                   <video
                     src={featuredVideoFile}
                     poster={videoThumbnail}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover about-featured-video"
                     controls
                     style={{ objectPosition: "center 15%" }}
                   />
@@ -768,7 +768,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                   <video
                     src={featuredVideoFile}
                     poster={videoThumbnail}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover about-featured-video"
                     controls
                   />
                 </div>
