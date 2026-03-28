@@ -1,8 +1,17 @@
 import React, { useEffect, useRef } from "react";
-import { X, Play } from "lucide-react";
+import { X, Play, ExternalLink } from "lucide-react";
 import profilePicture from "../../assets/hero/About-picture.png";
 import check from "../../assets/hero/check.png";
 import avatar from "../../assets/hero/avatar.png";
+import featuredVideoFile from "../../assets/hero/featured_google.mp4";
+import videoThumbnail from "../../assets/hero/videoThumbnail.png";
+
+const featuredVideo = {
+  title: "Google Play Ad",
+  description:
+    "Selected to participate in this ad; we discuss how services like Google Play can aid developers in making games more accessible through mobile devices.",
+  sourceUrl: "https://x.com/googleplaybiz/status/2034036547100549140?s=46",
+};
 
 const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
   const modalRef = useRef(null);
@@ -55,19 +64,62 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
         {/* Modal container */}
         <div
           ref={modalRef}
-          className="absolute inset-0 z-50 flex flex-col items-center md:justify-center py-10 pt-24 md:py-10"
+          className="absolute inset-0 z-50 flex flex-col items-center md:justify-center py-10 pt-16 md:pt-10"
         >
-          {/* About Desktop */}
-          <div className="hidden md:block px-10 relative">
-            {/* Close button */}
+          {/* Close button - top of modal */}
+          <div className="w-full max-w-[1212px] flex justify-end px-10 md:px-0 mb-2">
             <button
               onClick={onClose}
-              className="absolute right-10 -top-8 text-white rounded-full p-1 hover:bg-gray-700 transition-colors z-10"
+              className="text-white rounded-full p-1 hover:bg-gray-700 transition-colors"
               aria-label="Close modal"
             >
               <X size={26} />
             </button>
+          </div>
 
+          {/* Featured Video - Desktop */}
+          <div className="hidden md:flex flex-row w-full lg:max-w-[1000px] max-w-[700px] mb-20 backdrop-blur-sm bg-black/20 rounded-lg overflow-hidden shadow-xl border border-[#729a9f]">
+            <div className="w-2/5 p-3">
+              <div
+                className="w-full overflow-hidden rounded-lg shadow-lg"
+                style={{ aspectRatio: "16/9" }}
+              >
+                <video
+                  src={featuredVideoFile}
+                  poster={videoThumbnail}
+                  className="w-full h-full object-cover"
+                  controls
+                  style={{ objectPosition: "center 15%" }}
+                />
+              </div>
+            </div>
+            <div className="w-3/5 p-4 flex flex-col justify-between">
+              <h3 className="text-xl font-bold text-white font-orbitron">
+                {featuredVideo.title}
+              </h3>
+              <hr className="border-gray-400/50" />
+              <p className="text-white text-lg font-rajdhani line-clamp-3">
+                {featuredVideo.description}
+              </p>
+              <a
+                href={featuredVideo.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-center flex items-center gap-2 px-4 py-2 bg-[#3b5bdb] hover:bg-[#4c6ef5] text-white text-sm font-orbitron rounded-full transition-colors duration-200"
+              >
+                <ExternalLink />
+                View Full Campaign
+              </a>
+              <hr className="border-gray-400/50" />
+              <p className="text-white text-lg font-rajdhani">
+                Play anywhere, anytime, any way with Google Play.
+              </p>
+            </div>
+          </div>
+
+          {/* About Desktop */}
+          <div className="hidden md:block px-10 relative">
+            {/* Close button */}
             <div className="flex w-full xl:h-[369px]">
               <div className="max-w-[266px]  h-auto object-contain relative">
                 <div className="flex flex-col items-start relative">
@@ -152,16 +204,60 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
             </div>
           </div>
 
+          {/* Featured Video - Mobile */}
+          <div className="md:hidden flex flex-row w-[85vw] max-w-[320px] mb-3 backdrop-blur-sm bg-black/20 rounded-lg overflow-hidden shadow-xl border border-[#729a9f]">
+            <div className="w-2/5 p-1.5">
+              <div
+                className="w-full overflow-hidden rounded-lg shadow-lg"
+                style={{ aspectRatio: "16/9" }}
+              >
+                <video
+                  src={featuredVideoFile}
+                  poster={videoThumbnail}
+                  className="w-full h-full object-cover"
+                  controls
+                />
+              </div>
+            </div>
+            <div className="w-3/5 p-2 flex flex-col justify-between">
+              <h3 className="text-[10px] font-bold text-white font-orbitron truncate">
+                {featuredVideo.title}
+              </h3>
+              <hr className="border-gray-400/50" />
+              <p className="text-white/80 text-[8px] font-rajdhani line-clamp-2">
+                {featuredVideo.description}
+              </p>
+              <a
+                href={featuredVideo.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start flex items-center gap-1 px-2 py-1 bg-[#3b5bdb] hover:bg-[#4c6ef5] text-white text-[8px] font-orbitron rounded-full transition-colors duration-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-2.5 h-2.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+                View Full Campaign
+              </a>
+              <hr className="border-gray-400/50" />
+              <p className="text-white/80 text-[8px] font-rajdhani line-clamp-1">
+                Play anywhere, anytime, any way with Google Play.
+              </p>
+            </div>
+          </div>
+
           {/* About Mobile */}
           <div className="md:hidden relative mt-0 w-[85vw] max-w-[320px]">
-            <button
-              onClick={onClose}
-              className="absolute -right-2 -top-8 text-white rounded-full p-1 hover:bg-gray-700 transition-colors z-10"
-              aria-label="Close modal"
-            >
-              <X size={26} />
-            </button>
-
             <div className="relative pt-[90px]">
               <div className="absolute left-0 top-0 z-10 w-[108px]">
                 <img

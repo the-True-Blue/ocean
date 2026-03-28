@@ -383,7 +383,7 @@ const ArtCollectionCarousel = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       {/* Section Title */}
       <div className="mb-8 px-6 flex flex-col md:flex-row items-center mx-auto max-w-7xl justify-between gap-10 md:gap-0">
         <motion.h2

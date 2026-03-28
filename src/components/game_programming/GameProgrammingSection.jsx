@@ -113,7 +113,7 @@ const GameProgrammingSection = () => {
   return (
     <div
       id="game-programming-section"
-      className="w-full md:h-[1260px] min-h-[822px] relative"
+      className="w-full md:h-[1260px] min-h-[822px] relative overflow-hidden"
     >
       {/* Desktop Image */}
       <div

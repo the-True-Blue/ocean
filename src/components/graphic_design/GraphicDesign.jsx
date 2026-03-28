@@ -102,7 +102,7 @@ const GraphicDesign = () => {
   };
 
   return (
-    <div className="relative md:min-h-fit flex flex-col items-center pb-35 -mb-2">
+    <div className="relative hidden md:min-h-fit flex flex-col items-center pb-35 -mb-2">
       {/* Background with gradient */}
       <div className="absolute inset-0 w-full h-full">
         <div className="absolute inset-0 w-full h-full bg-[#060757]"></div>
@@ -170,7 +170,7 @@ const GraphicDesign = () => {
 
       {/* Card container with overlay effect */}
       <div
-        className="relative flex items-center justify-center mt-8 w-full z-30"
+        className="relative flex items-center justify-center mt-8 w-full z-30 overflow-hidden"
         ref={ref}
       >
         {/* Center card */}
@@ -320,11 +320,8 @@ const GraphicDesign = () => {
       {/* CSS for stars */}
       <style jsx>{`
         .stars-background {
-          background-image: radial-gradient(
-              2px 2px at 20px 30px,
-              #77a0ff,
-              rgba(0, 0, 0, 0)
-            ),
+          background-image:
+            radial-gradient(2px 2px at 20px 30px, #77a0ff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 40px 70px, #a1b8ff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 50px 160px, #5d99ff, rgba(0, 0, 0, 0)),
             radial-gradient(2px 2px at 90px 40px, #8bb3ff, rgba(0, 0, 0, 0)),
@@ -335,11 +332,8 @@ const GraphicDesign = () => {
         }
 
         .stars-background-small {
-          background-image: radial-gradient(
-              1px 1px at 10px 10px,
-              #77a0ff,
-              rgba(0, 0, 0, 0)
-            ),
+          background-image:
+            radial-gradient(1px 1px at 10px 10px, #77a0ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 150px 150px, #a1b8ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 100px 50px, #5d99ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 60px 120px, #8bb3ff, rgba(0, 0, 0, 0)),
@@ -350,11 +344,8 @@ const GraphicDesign = () => {
         }
 
         .stars-background-tiny {
-          background-image: radial-gradient(
-              1px 1px at 45px 45px,
-              #77a0ff,
-              rgba(0, 0, 0, 0)
-            ),
+          background-image:
+            radial-gradient(1px 1px at 45px 45px, #77a0ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 95px 95px, #a1b8ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 145px 25px, #5d99ff, rgba(0, 0, 0, 0)),
             radial-gradient(1px 1px at 195px 155px, #8bb3ff, rgba(0, 0, 0, 0)),
