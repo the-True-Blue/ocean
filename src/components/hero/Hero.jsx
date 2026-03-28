@@ -80,15 +80,24 @@ const Hero = () => {
     },
   };
 
+  // Open modal on load if hash is #about
+  useEffect(() => {
+    if (window.location.hash === "#about") {
+      setIsAboutModalOpen(true);
+      setIsVideoModalOpen(false);
+    }
+  }, []);
+
   // Functions to handle About modal
   const openAboutModal = () => {
     setIsAboutModalOpen(true);
-    // Make sure video modal is closed when About opens
     setIsVideoModalOpen(false);
+    window.history.replaceState(null, "", "#about");
   };
 
   const closeAboutModal = () => {
     setIsAboutModalOpen(false);
+    window.history.replaceState(null, "", window.location.pathname);
   };
 
   // Functions to handle Video modal
