@@ -41,10 +41,22 @@ const Waterfall2 = ({ selectedProject: externalSelectedProject, setSelectedProje
 
   // Handle external project selection from URL hash
   useEffect(() => {
-    if (externalSelectedProject) {
-      setActiveProject(externalSelectedProject);
-    }
+    setActiveProject(externalSelectedProject || null);
   }, [externalSelectedProject]);
+
+  const handleCloseAnimatedComic = () => {
+    setActiveProject(null);
+    if (setExternalSelectedProject) {
+      setExternalSelectedProject(null);
+    }
+
+    setTimeout(() => {
+      const section = document.getElementById("web-design");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 0);
+  };
 
   // Animation variants
   const titleVariant = {
@@ -275,7 +287,7 @@ const Waterfall2 = ({ selectedProject: externalSelectedProject, setSelectedProje
         <StarryNight onClose={() => setActiveProject(null)} />
       )}
       {activeProject === "animatedcomic" && (
-        <AnimatedComic onClose={() => setActiveProject(null)} />
+        <AnimatedComic onClose={handleCloseAnimatedComic} />
       )}
     </div>
   );

@@ -2,10 +2,36 @@ import React, { useState, useEffect } from "react";
 import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import GameCarousel from "./GameCarousel";
+import VideosModal from "./VideosModal";
 import background from "../../assets/game_programming/background.png";
 import Rive from "@rive-app/react-canvas";
 
-const GameProgrammingSection = () => {
+const GameProgrammingSection = ({ selectedProject, setSelectedProject }) => {
+  const [showVideosModal, setShowVideosModal] = useState(false);
+
+  // Handle external project selection from URL hash
+  useEffect(() => {
+    if (selectedProject === "sonicfangame") {
+      setShowVideosModal(true);
+    } else {
+      setShowVideosModal(false);
+    }
+  }, [selectedProject]);
+
+  const handleCloseVideosModal = () => {
+    setShowVideosModal(false);
+    if (setSelectedProject) {
+      setSelectedProject(null);
+    }
+
+    setTimeout(() => {
+      const section = document.getElementById("game-programming");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 0);
+  };
+
   // Controls for animations
   const titleControls = useAnimation();
   const descriptionControls = useAnimation();
@@ -185,7 +211,9 @@ const GameProgrammingSection = () => {
           className="relative top-[350px] md:top-[180px] w-full flex justify-center"
         >
           <div className="w-full max-w-[1200px]">
-            <GameCarousel />
+            <GameCarousel 
+              onSonicGameClick={() => setShowVideosModal(true)}
+            />
           </div>
         </motion.div>
 
@@ -207,6 +235,11 @@ const GameProgrammingSection = () => {
 
       {/* Additional space for mobile */}
       <div className="h-[200px] md:h-0 w-full"></div>
+
+      {/* Videos Modal */}
+      {showVideosModal && (
+        <VideosModal onClose={handleCloseVideosModal} />
+      )}
 
       {/* CSS for stars - copied from GraphicDesign */}
       <style jsx>{`

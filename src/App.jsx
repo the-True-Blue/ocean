@@ -14,20 +14,47 @@ function App() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-      // Check if hash is for animated-comic
-      if (hash === "animated-comic") {
-        setSelectedProject("animatedcomic");
-      } else {
-        setTimeout(() => {
-          const section = document.getElementById(hash);
-          if (section) {
-            section.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 500);
+    const handleHashNavigation = () => {
+      const hash = window.location.hash.substring(1);
+      if (!hash) {
+        return;
       }
-    }
+
+      if (hash === "animated-comic") {
+        setSelectedProject(null);
+        // Open immediately to avoid flashing the landing page before modal mount.
+        setTimeout(() => {
+          setSelectedProject("animatedcomic");
+        }, 0);
+        return;
+      }
+
+      if (hash === "sonic-fan-game") {
+        setSelectedProject(null);
+
+        // Open immediately to avoid flashing the landing page before modal mount.
+        setTimeout(() => {
+          setSelectedProject("sonicfangame");
+        }, 0);
+        return;
+      }
+
+      setSelectedProject(null);
+
+      setTimeout(() => {
+        const section = document.getElementById(hash);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 200);
+    };
+
+    handleHashNavigation();
+    window.addEventListener("hashchange", handleHashNavigation);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashNavigation);
+    };
   }, []);
 
   return (
@@ -35,7 +62,10 @@ function App() {
       <Navbar />
       <Hero />
       <div id="game-programming">
-        <GameProgrammingSection />
+        <GameProgrammingSection 
+          selectedProject={selectedProject} 
+          setSelectedProject={setSelectedProject}
+        />
       </div>
       <div id="video-editing">
         <VideoEditing />

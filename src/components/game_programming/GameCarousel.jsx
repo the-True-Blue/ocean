@@ -7,13 +7,11 @@ import element1 from "../../assets/game_programming/element1.png";
 import element2 from "../../assets/game_programming/element2.png";
 import element3 from "../../assets/game_programming/element3.png";
 import gem from "../../assets/game_programming/gem.png";
-import VideosModal from "./VideosModal";
 
-const GameCarousel = () => {
+const GameCarousel = ({ onSonicGameClick }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
-  const [showVideosModal, setShowVideosModal] = useState(false);
   const [isTouching, setIsTouching] = useState(false);
 
   const projects = [
@@ -93,7 +91,9 @@ const GameCarousel = () => {
     const currentProject = projects[activeIndex];
 
     if (currentProject.id === 6) {
-      setShowVideosModal(true);
+      if (onSonicGameClick) {
+        onSonicGameClick();
+      }
     } else if (currentProject.link) {
       window.open(currentProject.link);
     }
@@ -276,10 +276,6 @@ const GameCarousel = () => {
           ))}
         </div>
       </div>
-
-      {showVideosModal && (
-        <VideosModal onClose={() => setShowVideosModal(false)} />
-      )}
     </>
   );
 };
