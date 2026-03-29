@@ -7,9 +7,9 @@ import background from "../../assets/waterfall2/background.png";
 import StarryNight from "../projects/StarryNight";
 import AnimatedComic from "../projects/AnimatedComic";
 
-const Waterfall2 = () => {
+const Waterfall2 = ({ selectedProject: externalSelectedProject, setSelectedProject: setExternalSelectedProject }) => {
   const [activeCard, setActiveCard] = useState("rocket");
-  const [activeProject, setActiveProject] = useState(null);
+  const [activeProject, setActiveProject] = useState(externalSelectedProject || null);
 
   // Animation controls
   const titleControls = useAnimation();
@@ -38,6 +38,13 @@ const Waterfall2 = () => {
       cardsControls.start("visible");
     }
   }, [cardsInView, cardsControls]);
+
+  // Handle external project selection from URL hash
+  useEffect(() => {
+    if (externalSelectedProject) {
+      setActiveProject(externalSelectedProject);
+    }
+  }, [externalSelectedProject]);
 
   // Animation variants
   const titleVariant = {

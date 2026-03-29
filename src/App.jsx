@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/hero/Hero";
@@ -11,15 +11,22 @@ import Footer from "./components/Footer";
 import MidWaterfall from "./components/waterfall/MidWaterfall";
 
 function App() {
+  const [selectedProject, setSelectedProject] = useState(null);
+
   useEffect(() => {
     const hash = window.location.hash.substring(1);
     if (hash) {
-      setTimeout(() => {
-        const section = document.getElementById(hash);
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 500);
+      // Check if hash is for animated-comic
+      if (hash === "animated-comic") {
+        setSelectedProject("animatedcomic");
+      } else {
+        setTimeout(() => {
+          const section = document.getElementById(hash);
+          if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 500);
+      }
     }
   }, []);
 
@@ -43,7 +50,10 @@ function App() {
         <MidWaterfall />
       </div>
       <div id="web-design">
-        <Waterfall2 />
+        <Waterfall2 
+          selectedProject={selectedProject} 
+          setSelectedProject={setSelectedProject}
+        />
       </div>
       <div id="contact">
         <Footer />
