@@ -46,6 +46,9 @@ const Waterfall2 = ({ selectedProject: externalSelectedProject, setSelectedProje
 
   const handleCloseAnimatedComic = () => {
     setActiveProject(null);
+    if (window.location.hash === "#animated-comic") {
+      window.history.replaceState(null, "", "#web-design");
+    }
     if (setExternalSelectedProject) {
       setExternalSelectedProject(null);
     }

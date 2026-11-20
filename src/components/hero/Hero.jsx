@@ -80,12 +80,20 @@ const Hero = () => {
     },
   };
 
-  // Open modal on load if hash is #about
+  // Keep the About viewer synchronized with direct links and browser history.
   useEffect(() => {
-    if (window.location.hash === "#about") {
-      setIsAboutModalOpen(true);
+    const handleAboutNavigation = () => {
+      setIsAboutModalOpen(window.location.hash === "#about");
       setIsVideoModalOpen(false);
-    }
+    };
+
+    handleAboutNavigation();
+    window.addEventListener("hashchange", handleAboutNavigation);
+    window.addEventListener("popstate", handleAboutNavigation);
+    return () => {
+      window.removeEventListener("hashchange", handleAboutNavigation);
+      window.removeEventListener("popstate", handleAboutNavigation);
+    };
   }, []);
 
   // Functions to handle About modal

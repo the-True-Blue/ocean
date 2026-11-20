@@ -16,6 +16,7 @@ import character6 from "../../assets/mid_waterfall/character/Sonic3.jpg";
 import interior from "../../assets/mid_waterfall/interior/Fireplace.png";
 import interior1 from "../../assets/mid_waterfall/interior/room.png";
 import interior2 from "../../assets/mid_waterfall/interior/window.png";
+import { environmentArtLinks } from "./environmentArtLinks";
 
 const ArtCollectionCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,6 +24,31 @@ const ArtCollectionCarousel = () => {
   const [currentModalSlide, setCurrentModalSlide] = useState(0);
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const videoContainerRef = useRef(null);
+
+  // Open the exact environment video for direct links and browser history.
+  useEffect(() => {
+    const handleEnvironmentLink = () => {
+      const hash = window.location.hash.slice(1);
+      const slide = environmentArtLinks.indexOf(hash);
+      if (hash === "3d-environment-art" || slide !== -1) {
+        setCurrentSlide(2);
+      }
+      if (slide !== -1) {
+        setActiveModal(3);
+        setCurrentModalSlide(slide);
+      } else {
+        setActiveModal((previous) => previous === 3 ? null : previous);
+      }
+    };
+
+    handleEnvironmentLink();
+    window.addEventListener("hashchange", handleEnvironmentLink);
+    window.addEventListener("popstate", handleEnvironmentLink);
+    return () => {
+      window.removeEventListener("hashchange", handleEnvironmentLink);
+      window.removeEventListener("popstate", handleEnvironmentLink);
+    };
+  }, []);
 
   // Animation controls
   const titleControls = useAnimation();
@@ -316,11 +342,18 @@ const ArtCollectionCarousel = () => {
   };
 
   // Modal carousel navigation
+  const selectModalSlide = (index) => {
+    setCurrentModalSlide(index);
+    if (activeModal === 3) {
+      window.history.replaceState(null, "", `#${environmentArtLinks[index]}`);
+    }
+  };
+
   const nextModalSlide = () => {
     if (activeModal) {
       const card = cards.find((card) => card.id === activeModal);
-      setCurrentModalSlide((prev) =>
-        prev === card.modalContent.length - 1 ? 0 : prev + 1
+      selectModalSlide(
+        currentModalSlide === card.modalContent.length - 1 ? 0 : currentModalSlide + 1
       );
 
       // Set loading state when navigating to a new slide
@@ -333,8 +366,8 @@ const ArtCollectionCarousel = () => {
   const prevModalSlide = () => {
     if (activeModal) {
       const card = cards.find((card) => card.id === activeModal);
-      setCurrentModalSlide((prev) =>
-        prev === 0 ? card.modalContent.length - 1 : prev - 1
+      selectModalSlide(
+        currentModalSlide === 0 ? card.modalContent.length - 1 : currentModalSlide - 1
       );
 
       // Set loading state when navigating to a new slide
@@ -348,6 +381,9 @@ const ArtCollectionCarousel = () => {
   const openModal = (id) => {
     setActiveModal(id);
     setCurrentModalSlide(0);
+    if (id === 3) {
+      window.history.pushState(null, "", `#${environmentArtLinks[0]}`);
+    }
 
     // Set loading state when opening a modal with videos
     const card = cards.find((card) => card.id === id);
@@ -358,6 +394,9 @@ const ArtCollectionCarousel = () => {
 
   // Close modal function
   const closeModal = () => {
+    if (activeModal === 3) {
+      window.history.replaceState(null, "", "#3d-environment-art");
+    }
     setActiveModal(null);
     setCurrentModalSlide(0);
     setIsVideoLoading(false);
@@ -383,7 +422,7 @@ const ArtCollectionCarousel = () => {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div id="3d-environment-art" className="relative overflow-hidden scroll-mt-24">
       {/* Section Title */}
       <div className="mb-8 px-6 flex flex-col md:flex-row items-center mx-auto max-w-7xl justify-between gap-10 md:gap-0">
         <motion.h2
@@ -403,7 +442,22 @@ const ArtCollectionCarousel = () => {
           className="md:max-w-[671px] font-orbitron lg:text-[20px] text-[13px] tracking-[9%] leading-[162%] font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl"
         >
           Here is work I did as a 3D artist, modeling characters and interior
-          spaces in Maya, while designing environments in Unreal.{" "}
+          spaces in Maya, while designing{" "}
+          <a
+            href="#3d-environment-art"
+            onClick={(event) => {
+              event.preventDefault();
+              setCurrentSlide(2);
+              window.location.hash = "3d-environment-art";
+              document.getElementById("3d-environment-art")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }}
+            className="underline underline-offset-4 hover:text-blue-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+          >
+            environments in Unreal
+          </a>.{" "}
         </motion.p>
       </div>
 
@@ -660,7 +714,7 @@ const ArtCollectionCarousel = () => {
                 ?.modalContent.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentModalSlide(index)}
+                    onClick={() => selectModalSlide(index)}
                     className={`w-3 h-3 mx-1 rounded-full ${
                       currentModalSlide === index
                         ? "bg-blue-400"

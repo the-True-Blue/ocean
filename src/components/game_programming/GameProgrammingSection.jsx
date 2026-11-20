@@ -20,6 +20,9 @@ const GameProgrammingSection = ({ selectedProject, setSelectedProject }) => {
 
   const handleCloseVideosModal = () => {
     setShowVideosModal(false);
+    if (window.location.hash === "#sonic-fan-game") {
+      window.history.replaceState(null, "", "#game-programming");
+    }
     if (setSelectedProject) {
       setSelectedProject(null);
     }
