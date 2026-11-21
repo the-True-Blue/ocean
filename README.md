@@ -114,7 +114,8 @@ The player loads only when opened, supports native playback controls and mobile
 inline playback, and offers a link to open the video separately.
 
 To replace the reel, put a web-optimized MP4 and matching JPG poster at those
-paths. Keep the video below GitHub's 100 MB per-file limit. These public files
+paths. Keep the video below 50 MB to avoid GitHub's large-file warning
+(the hard per-file limit is 100 MiB). These public files
 are copied into the production build without bundling them into JavaScript.
 
 ## 3D Collection Direct Links
