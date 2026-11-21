@@ -436,8 +436,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
                       >
                         <div className="flex justify-between">
                           <h3 className="border-s-1 border-e-1 px-1">
-                            Where Waves take you to Unreality. Make your game
-                            map's identity the essence of character design.
+                            Building the bridge between technology and art in game design. One ocean. One place. One destiny.
                           </h3>
                           <h3 className="border-s-1 border-e-1 px-1"></h3>
                         </div>
@@ -449,23 +448,19 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
               <div className="max-w-[946px] w-full h-full font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border backdrop-blur-xl bg-blue-500/10">
                 <h1 className="text-[25px] font-[800]">About Me</h1>
                 <p className="text-[11px] font-[400]">
-                  Hey guys! I'm Dominique, but you can call me Dom for short. If
-                  it wasn't obvious already, I love the ocean, I love blue and I
-                  am obsessed with Sonic The Hedgehog. Something as simple as
-                  the color blue and a hedgehog is why I'm a game developer
-                  today. I am a 3D artist and game programmer. Outside of game
-                  development, I'm a software developer, primarily in front-end
-                  development and UX design. In addition to that, I am also a
-                  video editor and I take pride in making engaging edits of my
-                  work and my life. My creative expression in the game dev
-                  environment enables me to fully drive the player experience. I
-                  love constrcuting maps for video games. Open-world or not, a
-                  map with depth in a game is what tells a complete story. I can
-                  visualize anything in seconds with the patience to actually
-                  code it. Whether it's designing immsersive game environments
-                  with VFX in Unreal Engine, modeling stylized 3D assets in Maya
-                  with Substance or ZBrush, or program game mechanics that make
-                  you think outside the box, it's all done in one house!
+                  Hey guys! I'm Dominique, but you can call me Dom for short. If it wasn't obvious already, 
+                  I love the ocean, I love blue and I am obsessed with Sonic The Hedgehog. Something as simple as the 
+                  color blue and a hedgehog is why I'm a game developer today. Ever since high school, I’ve talked about bridging the gap between technology and art because I always saw myself in both. 
+                  My journey into game design kicked off blasting at super speed alongside a certain blue hedgehog named 
+                  Sonic, and from that moment on, I wasn’t just obsessed with games. I am a game programmer. But, I am also a 
+                  3D Artist. I love coding game mechanics and complex systems like combat and exploration. But I also have a deep
+                  obsession with making water shaders and special VFX. That lifelong love for how games feel, move, and come alive led me straight to my path as a Technical Artist. To me, 
+technical art is the true language of a game because it is how you communicate visually with the player through
+ shaders, lighting, motion, and visual effects. When visual communication is clear and intentional, it naturally 
+ opens the door to accessibility and shapes the entire player experience for everyone.
+My goal is to keep pushing how art and engineering elevate each other, and my mission is simple: to champion
+ inclusive game development where accessibility is never an afterthought, building expressive, 
+ welcoming worlds where creativity has no limits and every single player can experience the full magic of play.
                 </p>
                 <a
                   href="#demo-reel"
