@@ -100,6 +100,22 @@ The project uses TailwindCSS for styling:
 - Global styles can be found in `src/index.css` and `src/App.css`
 - Component-specific styles are applied using Tailwind classes in the component files except for complex animations or styles foun in in `src/index.css` and `src/App.css`.
 
+## Demo Reel
+
+The About Me viewer (`#about`) includes a **Watch Demo Reel** button.
+Append `#demo-reel` to the website URL to open the reel directly. Closing the
+player returns to About Me; browser Back and Forward also navigate the viewer.
+
+The web-ready video is in `public/videos/demo-reel.mp4`, with its poster in
+`public/videos/demo-reel.jpg`. It is a 1080p/30fps H.264/AAC copy optimized
+for streaming (MP4 fast start); the original file is not modified or included.
+The player loads only when opened, supports native playback controls and mobile
+inline playback, and offers a link to open the video separately.
+
+To replace the reel, put a web-optimized MP4 and matching JPG poster at those
+paths. Keep the video below GitHub's 100 MB per-file limit. These public files
+are copied into the production build without bundling them into JavaScript.
+
 ## 3D Collection Direct Links
 
 Append a hash below to the website URL (for example,

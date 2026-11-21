@@ -13,7 +13,7 @@ const featuredVideo = {
   sourceUrl: "https://x.com/googleplaybiz/status/2034036547100549140?s=46",
 };
 
-const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
+const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
   const modalRef = useRef(null);
 
   // Handle click outside to close
@@ -467,6 +467,14 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                   with Substance or ZBrush, or program game mechanics that make
                   you think outside the box, it's all done in one house!
                 </p>
+                <a
+                  href="#demo-reel"
+                  onClick={onOpenDemoReel}
+                  className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+                >
+                  <Play className="w-4 h-4 fill-white" />
+                  Watch Demo Reel
+                </a>
                 <div
                   className="flex items-center justify-end gap-2 mt-5 cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={onOpenVideo}
@@ -850,6 +858,14 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo }) => {
                   with Substance or ZBrush, or program game mechanics that make
                   you think outside the box, it's all done in one house!
                 </p>
+                <a
+                  href="#demo-reel"
+                  onClick={onOpenDemoReel}
+                  className="inline-flex items-center gap-1 mt-3 px-2 py-2 rounded bg-blue-600 hover:bg-blue-500 text-[10px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+                >
+                  <Play className="w-3 h-3 fill-white" />
+                  Watch Demo Reel
+                </a>
                 <div
                   className="flex items-center justify-end gap-2 mt-3 cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={onOpenVideo}

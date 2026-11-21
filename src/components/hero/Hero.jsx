@@ -6,11 +6,13 @@ import heroImage from "../../assets/hero/hero.png";
 import ExploreBtn from "../ExploreBtn";
 import AboutModal from "./AboutModal";
 import VideoModal from "./VideoModal";
+import DemoReelModal from "./DemoReelModal";
 
 const Hero = () => {
   // Separate states for each modal
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isDemoReelOpen, setIsDemoReelOpen] = useState(false);
   const videoSrc = "https://www.youtube.com/embed/your-video-id";
 
   // Animation controls
@@ -83,7 +85,9 @@ const Hero = () => {
   // Keep the About viewer synchronized with direct links and browser history.
   useEffect(() => {
     const handleAboutNavigation = () => {
-      setIsAboutModalOpen(window.location.hash === "#about");
+      const hash = window.location.hash;
+      setIsAboutModalOpen(hash === "#about" || hash === "#demo-reel");
+      setIsDemoReelOpen(hash === "#demo-reel");
       setIsVideoModalOpen(false);
     };
 
@@ -100,6 +104,7 @@ const Hero = () => {
   const openAboutModal = () => {
     setIsAboutModalOpen(true);
     setIsVideoModalOpen(false);
+    setIsDemoReelOpen(false);
     window.history.replaceState(null, "", "#about");
   };
 
@@ -115,6 +120,17 @@ const Hero = () => {
 
   const closeVideoModal = () => {
     setIsVideoModalOpen(false);
+  };
+
+  const openDemoReel = (event) => {
+    event.preventDefault();
+    setIsDemoReelOpen(true);
+    window.history.pushState(null, "", "#demo-reel");
+  };
+
+  const closeDemoReel = () => {
+    setIsDemoReelOpen(false);
+    window.history.replaceState(null, "", "#about");
   };
 
   return (
@@ -168,9 +184,10 @@ const Hero = () => {
 
       {/* About Me Modal */}
       <AboutModal
-        isOpen={isAboutModalOpen}
+        isOpen={isAboutModalOpen && !isDemoReelOpen}
         onClose={closeAboutModal}
         onOpenVideo={openVideoModal}
+        onOpenDemoReel={openDemoReel}
       />
 
       {/* Video Modal (independent from About) */}
@@ -179,6 +196,8 @@ const Hero = () => {
         onClose={closeVideoModal}
         videoSrc={videoSrc}
       />
+
+      {isDemoReelOpen && <DemoReelModal onClose={closeDemoReel} />}
 
       {/* CSS for stars */}
       <style jsx>{`
