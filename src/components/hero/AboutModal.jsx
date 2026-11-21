@@ -59,8 +59,13 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
   if (!isOpen) return null;
 
   return createPortal(
+    <>
       <div
-        className="fixed inset-0 z-50 overflow-y-auto overscroll-contain backdrop-blur-xs"
+        className="fixed inset-0 backdrop-blur-xs z-30 h-screen"
+        aria-hidden="true"
+      />
+      <div
+        className="fixed top-15 md:top-0 bottom-0 left-0 w-full z-40 overflow-y-auto overscroll-contain"
         role="dialog"
         aria-modal="true"
         aria-label="About Me"
@@ -887,7 +892,8 @@ My goal is to keep pushing how art and engineering elevate each other, and my mi
             </div>
           </div>
         </div>
-      </div>,
+      </div>
+    </>,
       document.body
   );
 };
