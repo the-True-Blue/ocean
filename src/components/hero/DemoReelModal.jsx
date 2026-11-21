@@ -5,14 +5,9 @@ import { X } from "lucide-react";
 const videoSrc = `${import.meta.env.BASE_URL}videos/demo-reel.mp4`;
 const playerSrc = `${import.meta.env.BASE_URL}demo-reel-player.html`;
 
-const DemoReelModal = ({ onClose, onPlaybackOpenChange }) => {
+const DemoReelModal = ({ onClose }) => {
   const [hasVideoError, setHasVideoError] = useState(false);
   const playerRef = useRef(null);
-
-  useEffect(() => {
-    onPlaybackOpenChange(true);
-    return () => onPlaybackOpenChange(false);
-  }, [onPlaybackOpenChange]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -21,10 +16,6 @@ const DemoReelModal = ({ onClose, onPlaybackOpenChange }) => {
     const previousHeight = pageRoot?.style.height;
     const previousContentVisibility = pageRoot?.style.contentVisibility;
     const previousInert = pageRoot?.inert;
-    const animations = pageRoot
-      ? pageRoot.getAnimations({ subtree: true }).filter((animation) => animation.playState === "running")
-      : [];
-    animations.forEach((animation) => animation.pause());
     document.body.style.overflow = "hidden";
     // Preserve page state and size while skipping background layout and paint.
     if (pageRoot) {
@@ -56,9 +47,6 @@ const DemoReelModal = ({ onClose, onPlaybackOpenChange }) => {
       }
       document.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("message", handlePlayerMessage);
-      animations.forEach((animation) => {
-        if (animation.playState === "paused") animation.play();
-      });
     };
   }, [onClose]);
 

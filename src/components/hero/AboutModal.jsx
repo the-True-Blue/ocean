@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { X, Play, ExternalLink } from "lucide-react";
-import profilePicture from "../../assets/hero/About-picture.png";
+import profilePicture from "../../assets/hero/About-picture.webp";
 import check from "../../assets/hero/check.png";
 import avatar from "../../assets/hero/avatar.png";
 import featuredVideoFile from "../../assets/hero/featured_google.mp4";
@@ -18,21 +19,23 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
 
   // Handle click outside to close
   useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
     const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+      if (
+        modalRef.current &&
+        (event.target === modalRef.current || !modalRef.current.contains(event.target))
+      ) {
         onClose();
       }
     };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      // Prevent scrolling when modal is open
-      document.body.style.overflow = "hidden";
-    }
+    document.addEventListener("mousedown", handleClickOutside);
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen, onClose]);
 
@@ -55,16 +58,17 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
 
   if (!isOpen) return null;
 
-  return (
-    <>
-      {/* Backdrop with blur effect */}
-      <div className="fixed inset-0 backdrop-blur-xs z-30 h-screen"></div>
-
-      <div className="h-screen w-full fixed md:top-0 top-15 left-0 z-40">
+  return createPortal(
+      <div
+        className="fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-blue-950/90"
+        role="dialog"
+        aria-modal="true"
+        aria-label="About Me"
+      >
         {/* Modal container */}
         <div
           ref={modalRef}
-          className="absolute inset-0 z-50 flex flex-col items-center md:justify-center py-10 pt-16 md:pt-10"
+          className="relative min-h-full flex flex-col items-center md:justify-center px-4 pt-16 md:pt-10 pb-28 md:pb-32"
         >
           {/* Close button - top of modal */}
           <div className="w-full max-w-[1212px] flex justify-end px-10 md:px-0 mb-2">
@@ -72,6 +76,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
               onClick={onClose}
               className="text-white rounded-full p-1 hover:bg-gray-700 transition-colors"
               aria-label="Close modal"
+              autoFocus
             >
               <X size={26} />
             </button>
@@ -351,7 +356,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
                 }}
               />
             </div>
-            <div className="flex flex-row w-full rounded-xl overflow-hidden backdrop-blur-xl bg-[#0d2a5e]/10">
+            <div className="flex flex-row w-full rounded-xl overflow-hidden bg-[#0d2a5e]">
               <div className="w-2/5 p-3">
                 <div
                   className="w-full overflow-hidden rounded-lg shadow-lg border-teal-300 border"
@@ -362,6 +367,8 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
                     poster={videoThumbnail}
                     className="w-full h-full object-cover about-featured-video"
                     controls
+                    playsInline
+                    preload="none"
                     style={{ objectPosition: "center 15%" }}
                   />
                 </div>
@@ -392,14 +399,17 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
           </div>
 
           {/* About Desktop */}
-          <div className="hidden md:block px-10 relative">
+          <div className="hidden md:block w-full max-w-[1292px] px-10 relative">
             {/* Close button */}
             <div className="flex w-full xl:h-[369px]">
-              <div className="max-w-[266px]  h-auto object-contain relative">
+              <div className="w-[266px] shrink-0 h-auto object-contain relative">
                 <div className="flex flex-col items-start relative">
                   <img
                     src={profilePicture}
                     alt="profile-picture"
+                    width={800}
+                    height={803}
+                    decoding="async"
                     className="w-full "
                   />
                   {/* Parent container for positioning */}
@@ -445,7 +455,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
                   </div>
                 </div>
               </div>
-              <div className="max-w-[946px] w-full h-full font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border backdrop-blur-xl bg-blue-500/10">
+              <div className="max-w-[946px] w-full h-full font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border bg-blue-900/90">
                 <h1 className="text-[25px] font-[800]">About Me</h1>
                 <p className="text-[11px] font-[400]">
                   Hey guys! I'm Dominique, but you can call me Dom for short. If it wasn't obvious already, 
@@ -762,7 +772,7 @@ My goal is to keep pushing how art and engineering elevate each other, and my mi
                 }}
               />
             </div>
-            <div className="flex flex-row w-full rounded-xl overflow-hidden backdrop-blur-xl bg-[#0d2a5e]/60">
+            <div className="flex flex-row w-full rounded-xl overflow-hidden bg-[#0d2a5e]">
               <div className="w-2/5 p-1.5">
                 <div
                   className="w-full overflow-hidden rounded-lg shadow-lg"
@@ -773,6 +783,8 @@ My goal is to keep pushing how art and engineering elevate each other, and my mi
                     poster={videoThumbnail}
                     className="w-full h-full object-cover about-featured-video"
                     controls
+                    playsInline
+                    preload="none"
                   />
                 </div>
               </div>
@@ -808,6 +820,9 @@ My goal is to keep pushing how art and engineering elevate each other, and my mi
                 <img
                   src={profilePicture}
                   alt="profile-picture"
+                  width={800}
+                  height={803}
+                  decoding="async"
                   className="w-full"
                 />
                 <div className="absolute w-full -bottom-3">
@@ -872,8 +887,8 @@ My goal is to keep pushing how art and engineering elevate each other, and my mi
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </div>,
+      document.body
   );
 };
 

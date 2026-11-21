@@ -67,7 +67,7 @@ function App() {
   return (
     <BackgroundAnimationContext.Provider value={isBackgroundPaused}>
       <Navbar />
-      <Hero onDemoReelOpenChange={setIsBackgroundPaused} />
+      <Hero onViewerOpenChange={setIsBackgroundPaused} />
       <div id="game-programming">
         <GameProgrammingSection 
           selectedProject={selectedProject} 

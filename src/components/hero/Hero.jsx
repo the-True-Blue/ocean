@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import React from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -8,12 +8,29 @@ import AboutModal from "./AboutModal";
 import VideoModal from "./VideoModal";
 import DemoReelModal from "./DemoReelModal";
 
-const Hero = ({ onDemoReelOpenChange }) => {
+const Hero = ({ onViewerOpenChange }) => {
   // Separate states for each modal
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isDemoReelOpen, setIsDemoReelOpen] = useState(false);
   const videoSrc = "https://www.youtube.com/embed/your-video-id";
+  const isViewerOpen = isAboutModalOpen || isVideoModalOpen || isDemoReelOpen;
+
+  useEffect(() => {
+    onViewerOpenChange(isViewerOpen);
+    if (!isViewerOpen) return;
+    const pageRoot = document.getElementById("root");
+    const animations = pageRoot
+      ? pageRoot.getAnimations({ subtree: true }).filter((animation) => animation.playState === "running")
+      : [];
+    animations.forEach((animation) => animation.pause());
+    return () => {
+      onViewerOpenChange(false);
+      animations.forEach((animation) => {
+        if (animation.playState === "paused") animation.play();
+      });
+    };
+  }, [isViewerOpen, onViewerOpenChange]);
 
   // Animation controls
   const titleControls = useAnimation();
@@ -108,19 +125,19 @@ const Hero = ({ onDemoReelOpenChange }) => {
     window.history.replaceState(null, "", "#about");
   };
 
-  const closeAboutModal = () => {
+  const closeAboutModal = useCallback(() => {
     setIsAboutModalOpen(false);
     window.history.replaceState(null, "", window.location.pathname);
-  };
+  }, []);
 
   // Functions to handle Video modal
   const openVideoModal = () => {
     setIsVideoModalOpen(true);
   };
 
-  const closeVideoModal = () => {
+  const closeVideoModal = useCallback(() => {
     setIsVideoModalOpen(false);
-  };
+  }, []);
 
   const openDemoReel = (event) => {
     event.preventDefault();
@@ -128,10 +145,10 @@ const Hero = ({ onDemoReelOpenChange }) => {
     window.history.pushState(null, "", "#demo-reel");
   };
 
-  const closeDemoReel = () => {
+  const closeDemoReel = useCallback(() => {
     setIsDemoReelOpen(false);
     window.history.replaceState(null, "", "#about");
-  };
+  }, []);
 
   return (
     <div className="h-[1285px] relative w-full">
@@ -198,10 +215,7 @@ const Hero = ({ onDemoReelOpenChange }) => {
       />
 
       {isDemoReelOpen && (
-        <DemoReelModal
-          onClose={closeDemoReel}
-          onPlaybackOpenChange={onDemoReelOpenChange}
-        />
+        <DemoReelModal onClose={closeDemoReel} />
       )}
 
       {/* CSS for stars */}
