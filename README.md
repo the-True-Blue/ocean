@@ -107,8 +107,9 @@ Append `#demo-reel` to the website URL to open the reel directly. Closing the
 player returns to About Me; browser Back and Forward also navigate the viewer.
 
 The web-ready video is in `public/videos/demo-reel.mp4`, with its poster in
-`public/videos/demo-reel.jpg`. It is a 1080p/30fps H.264/AAC copy optimized
+`public/videos/demo-reel.jpg`. It is a 1080p/60fps H.264/AAC copy optimized
 for streaming (MP4 fast start); the original file is not modified or included.
+The original 60fps frame rate is preserved so fast motion remains smooth.
 The player loads only when opened, supports native playback controls and mobile
 inline playback, and offers a link to open the video separately.
 
