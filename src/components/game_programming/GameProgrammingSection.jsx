@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import GameCarousel from "./GameCarousel";
 import VideosModal from "./VideosModal";
 import background from "../../assets/game_programming/background.png";
-import Rive from "@rive-app/react-canvas";
+import RocketThrust from "../RocketThrust";
 
 const GameProgrammingSection = ({ selectedProject, setSelectedProject }) => {
   const [showVideosModal, setShowVideosModal] = useState(false);
@@ -228,11 +228,7 @@ const GameProgrammingSection = ({ selectedProject, setSelectedProject }) => {
           variants={riveVariant}
           className="absolute -bottom-80 left-0 md:left-50 w-[300px] h-[300px] z-20"
         >
-          <Rive
-            src="/animations/untitled.riv"
-            animations="Timeline 1"
-            autoPlay={true}
-          />
+          <RocketThrust />
         </motion.div>
       </div>
 

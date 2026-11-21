@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo Reel Player</title>
+    <style>
+      html, body { margin: 0; width: 100%; height: 100%; background: black; }
+      video { display: block; width: 100%; height: 100%; object-fit: contain; }
+    </style>
+  </head>
+  <body>
+    <video
+      src="./videos/demo-reel.mp4"
+      poster="./videos/demo-reel.jpg"
+      controls
+      playsinline
+      preload="auto"
+      aria-label="Demo reel video"
+    >
+      Your browser does not support embedded video.
+    </video>
+    <script>
+      document.querySelector("video").addEventListener("error", () => {
+        window.parent.postMessage({ type: "demo-reel-error" }, window.location.origin);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !document.fullscreenElement) {
+          window.parent.postMessage({ type: "demo-reel-close" }, window.location.origin);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,28 +1,70 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 const videoSrc = `${import.meta.env.BASE_URL}videos/demo-reel.mp4`;
-const posterSrc = `${import.meta.env.BASE_URL}videos/demo-reel.jpg`;
+const playerSrc = `${import.meta.env.BASE_URL}demo-reel-player.html`;
 
-const DemoReelModal = ({ onClose }) => {
+const DemoReelModal = ({ onClose, onPlaybackOpenChange }) => {
   const [hasVideoError, setHasVideoError] = useState(false);
+  const playerRef = useRef(null);
+
+  useEffect(() => {
+    onPlaybackOpenChange(true);
+    return () => onPlaybackOpenChange(false);
+  }, [onPlaybackOpenChange]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    const pageRoot = document.getElementById("root");
+    const previousVisibility = pageRoot?.style.visibility;
+    const previousHeight = pageRoot?.style.height;
+    const previousContentVisibility = pageRoot?.style.contentVisibility;
+    const previousInert = pageRoot?.inert;
+    const animations = pageRoot
+      ? pageRoot.getAnimations({ subtree: true }).filter((animation) => animation.playState === "running")
+      : [];
+    animations.forEach((animation) => animation.pause());
     document.body.style.overflow = "hidden";
+    // Preserve page state and size while skipping background layout and paint.
+    if (pageRoot) {
+      pageRoot.style.height = `${pageRoot.getBoundingClientRect().height}px`;
+      pageRoot.style.contentVisibility = "hidden";
+      pageRoot.style.visibility = "hidden";
+      pageRoot.inert = true;
+    }
     const handleKeyDown = (event) => {
       if (event.key === "Escape") onClose();
     };
+    const handlePlayerMessage = (event) => {
+      if (
+        event.origin !== window.location.origin ||
+        event.source !== playerRef.current?.contentWindow
+      ) return;
+      if (event.data?.type === "demo-reel-close") onClose();
+      if (event.data?.type === "demo-reel-error") setHasVideoError(true);
+    };
     document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("message", handlePlayerMessage);
     return () => {
       document.body.style.overflow = previousOverflow;
+      if (pageRoot) {
+        pageRoot.style.height = previousHeight;
+        pageRoot.style.contentVisibility = previousContentVisibility;
+        pageRoot.style.visibility = previousVisibility;
+        pageRoot.inert = previousInert;
+      }
       document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("message", handlePlayerMessage);
+      animations.forEach((animation) => {
+        if (animation.playState === "paused") animation.play();
+      });
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-60 flex items-center justify-center bg-black p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="demo-reel-title"
@@ -42,18 +84,13 @@ const DemoReelModal = ({ onClose }) => {
             <X size={26} />
           </button>
         </div>
-        <video
-          src={videoSrc}
-          poster={posterSrc}
-          controls
-          playsInline
-          preload="metadata"
-          aria-label="Demo reel video"
-          className="w-full max-h-[65dvh] rounded-lg bg-black"
-          onError={() => setHasVideoError(true)}
-        >
-          Your browser does not support embedded video.
-        </video>
+        <iframe
+          ref={playerRef}
+          src={playerSrc}
+          title="Demo reel video"
+          allowFullScreen
+          className="block w-full aspect-video max-h-[65dvh] border-0 bg-black"
+        />
         {hasVideoError && (
           <p role="alert" className="mt-3 text-red-300">
             The demo reel could not be loaded. Try opening the video below.
@@ -68,7 +105,8 @@ const DemoReelModal = ({ onClose }) => {
           Open video in a new tab
         </a>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

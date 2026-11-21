@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import Rive from "@rive-app/react-canvas";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import RocketThrust from "../RocketThrust";
+import { BackgroundAnimationContext } from "../BackgroundAnimationContext";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -330,11 +331,7 @@ const VideoEditing = () => {
             ))}
           </div>
           <div className="absolute bottom-25 left-0 w-[300px] h-[300px] z-20">
-            <Rive
-              src="/animations/untitled.riv"
-              animations="Timeline 1"
-              autoPlay={true}
-            />
+            <RocketThrust />
           </div>
         </div>
 
@@ -378,6 +375,7 @@ const VideoEditing = () => {
 
 // Orbital element component with improved positioning and entrance animation
 const OrbitalElement = ({ item, containerSize, isMobile }) => {
+  const isBackgroundPaused = useContext(BackgroundAnimationContext);
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
   const elementRef = useRef(null);
   const controls = useAnimation();
@@ -424,7 +422,7 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
     };
 
     // Only start animation if container has dimensions
-    if (containerSize.width > 0 && containerSize.height > 0) {
+    if (!isBackgroundPaused && containerSize.width > 0 && containerSize.height > 0) {
       animationFrameId = requestAnimationFrame(animate);
     }
 
@@ -433,7 +431,7 @@ const OrbitalElement = ({ item, containerSize, isMobile }) => {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [item, containerSize, isMobile]);
+  }, [item, containerSize, isMobile, isBackgroundPaused]);
 
   // Calculate z-index dynamically
   const dynamicZIndex = Math.round(position.z + 50);

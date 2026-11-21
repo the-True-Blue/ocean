@@ -10,9 +10,11 @@ import Waterfall2 from "./components/waterfall/Waterfall2";
 import Footer from "./components/Footer";
 import MidWaterfall from "./components/waterfall/MidWaterfall";
 import { artCollectionLinks } from "./components/waterfall/artCollectionLinks";
+import { BackgroundAnimationContext } from "./components/BackgroundAnimationContext";
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isBackgroundPaused, setIsBackgroundPaused] = useState(false);
 
   useEffect(() => {
     const handleHashNavigation = () => {
@@ -63,9 +65,9 @@ function App() {
   }, []);
 
   return (
-    <>
+    <BackgroundAnimationContext.Provider value={isBackgroundPaused}>
       <Navbar />
-      <Hero />
+      <Hero onDemoReelOpenChange={setIsBackgroundPaused} />
       <div id="game-programming">
         <GameProgrammingSection 
           selectedProject={selectedProject} 
@@ -93,7 +95,7 @@ function App() {
       <div id="contact">
         <Footer />
       </div>
-    </>
+    </BackgroundAnimationContext.Provider>
   );
 }
 

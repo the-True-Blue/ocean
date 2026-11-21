@@ -8,7 +8,7 @@ import AboutModal from "./AboutModal";
 import VideoModal from "./VideoModal";
 import DemoReelModal from "./DemoReelModal";
 
-const Hero = () => {
+const Hero = ({ onDemoReelOpenChange }) => {
   // Separate states for each modal
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -197,7 +197,12 @@ const Hero = () => {
         videoSrc={videoSrc}
       />
 
-      {isDemoReelOpen && <DemoReelModal onClose={closeDemoReel} />}
+      {isDemoReelOpen && (
+        <DemoReelModal
+          onClose={closeDemoReel}
+          onPlaybackOpenChange={onDemoReelOpenChange}
+        />
+      )}
 
       {/* CSS for stars */}
       <style jsx>{`

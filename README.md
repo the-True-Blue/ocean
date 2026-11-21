@@ -112,6 +112,16 @@ for streaming (MP4 fast start); the original file is not modified or included.
 The original 60fps frame rate is preserved so fast motion remains smooth.
 The player loads only when opened, supports native playback controls and mobile
 inline playback, and offers a link to open the video separately.
+The player uses an opaque, unblurred overlay outside the animated page. While
+it is open, the page is hidden and non-interactive with its size reserved, so
+the browser can skip background layout and painting. The reel buffers only
+when its player is opened;
+closing the player restores the page without resetting its state or layout.
+Background CSS animations, Rive rocket effects, and orbital animation loops
+pause while the popup is open and resume when it closes.
+Inside the popup, `public/demo-reel-player.html` provides a lightweight,
+isolated native video player. It keeps playback separate from React and the
+animated page while retaining volume, seeking, and fullscreen controls.
 
 To replace the reel, put a web-optimized MP4 and matching JPG poster at those
 paths. Keep the video below 50 MB to avoid GitHub's large-file warning
