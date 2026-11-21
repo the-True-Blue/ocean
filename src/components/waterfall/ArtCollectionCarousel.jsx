@@ -16,7 +16,7 @@ import character6 from "../../assets/mid_waterfall/character/Sonic3.jpg";
 import interior from "../../assets/mid_waterfall/interior/Fireplace.png";
 import interior1 from "../../assets/mid_waterfall/interior/room.png";
 import interior2 from "../../assets/mid_waterfall/interior/window.png";
-import { environmentArtLinks } from "./environmentArtLinks";
+import { artCollectionLinks } from "./artCollectionLinks";
 
 const ArtCollectionCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -25,28 +25,30 @@ const ArtCollectionCarousel = () => {
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const videoContainerRef = useRef(null);
 
-  // Open the exact environment video for direct links and browser history.
+  // Select the collection and exact image or video for direct links and history.
   useEffect(() => {
-    const handleEnvironmentLink = () => {
+    const handleCollectionLink = () => {
       const hash = window.location.hash.slice(1);
-      const slide = environmentArtLinks.indexOf(hash);
-      if (hash === "3d-environment-art" || slide !== -1) {
-        setCurrentSlide(2);
-      }
-      if (slide !== -1) {
-        setActiveModal(3);
-        setCurrentModalSlide(slide);
+      const collectionIndex = artCollectionLinks.findIndex(
+        (collection) => collection.section === hash || collection.items.includes(hash)
+      );
+      const collection = artCollectionLinks[collectionIndex];
+      if (collection) {
+        setCurrentSlide(collectionIndex);
+        const slide = collection.items.indexOf(hash);
+        setActiveModal(slide === -1 ? null : collection.id);
+        setCurrentModalSlide(slide === -1 ? 0 : slide);
       } else {
-        setActiveModal((previous) => previous === 3 ? null : previous);
+        setActiveModal(null);
       }
     };
 
-    handleEnvironmentLink();
-    window.addEventListener("hashchange", handleEnvironmentLink);
-    window.addEventListener("popstate", handleEnvironmentLink);
+    handleCollectionLink();
+    window.addEventListener("hashchange", handleCollectionLink);
+    window.addEventListener("popstate", handleCollectionLink);
     return () => {
-      window.removeEventListener("hashchange", handleEnvironmentLink);
-      window.removeEventListener("popstate", handleEnvironmentLink);
+      window.removeEventListener("hashchange", handleCollectionLink);
+      window.removeEventListener("popstate", handleCollectionLink);
     };
   }, []);
 
@@ -344,8 +346,9 @@ const ArtCollectionCarousel = () => {
   // Modal carousel navigation
   const selectModalSlide = (index) => {
     setCurrentModalSlide(index);
-    if (activeModal === 3) {
-      window.history.replaceState(null, "", `#${environmentArtLinks[index]}`);
+    const collection = artCollectionLinks.find((collection) => collection.id === activeModal);
+    if (collection) {
+      window.history.replaceState(null, "", `#${collection.items[index]}`);
     }
   };
 
@@ -381,9 +384,8 @@ const ArtCollectionCarousel = () => {
   const openModal = (id) => {
     setActiveModal(id);
     setCurrentModalSlide(0);
-    if (id === 3) {
-      window.history.pushState(null, "", `#${environmentArtLinks[0]}`);
-    }
+    const collection = artCollectionLinks.find((collection) => collection.id === id);
+    window.history.pushState(null, "", `#${collection.items[0]}`);
 
     // Set loading state when opening a modal with videos
     const card = cards.find((card) => card.id === id);
@@ -394,8 +396,9 @@ const ArtCollectionCarousel = () => {
 
   // Close modal function
   const closeModal = () => {
-    if (activeModal === 3) {
-      window.history.replaceState(null, "", "#3d-environment-art");
+    const collection = artCollectionLinks.find((collection) => collection.id === activeModal);
+    if (collection) {
+      window.history.replaceState(null, "", `#${collection.section}`);
     }
     setActiveModal(null);
     setCurrentModalSlide(0);
@@ -421,6 +424,16 @@ const ArtCollectionCarousel = () => {
     }
   };
 
+  const navigateToCollection = (event, index) => {
+    event.preventDefault();
+    setCurrentSlide(index);
+    window.location.hash = artCollectionLinks[index].section;
+    document.getElementById("3d-environment-art")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <div id="3d-environment-art" className="relative overflow-hidden scroll-mt-24">
       {/* Section Title */}
@@ -441,19 +454,26 @@ const ArtCollectionCarousel = () => {
           variants={subtitleVariant}
           className="md:max-w-[671px] font-orbitron lg:text-[20px] text-[13px] tracking-[9%] leading-[162%] font-[900] text-white [text-shadow:_8px_12px_4px_rgba(0,0,0,1)] drop-shadow-xl"
         >
-          Here is work I did as a 3D artist, modeling characters and interior
-          spaces in Maya, while designing{" "}
+          Here is work I did as a 3D artist, modeling{" "}
+          <a
+            href="#3d-character-modeling"
+            onClick={(event) => navigateToCollection(event, 0)}
+            className="underline underline-offset-4 hover:text-blue-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+          >
+            characters
+          </a>{" "}
+          and{" "}
+          <a
+            href="#3d-interior-space"
+            onClick={(event) => navigateToCollection(event, 1)}
+            className="underline underline-offset-4 hover:text-blue-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+          >
+            interior spaces
+          </a>{" "}
+          in Maya, while designing{" "}
           <a
             href="#3d-environment-art"
-            onClick={(event) => {
-              event.preventDefault();
-              setCurrentSlide(2);
-              window.location.hash = "3d-environment-art";
-              document.getElementById("3d-environment-art")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }}
+            onClick={(event) => navigateToCollection(event, 2)}
             className="underline underline-offset-4 hover:text-blue-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
           >
             environments in Unreal

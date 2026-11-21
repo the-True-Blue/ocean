@@ -9,7 +9,7 @@ import Waterfall from "./components/waterfall/Waterfall";
 import Waterfall2 from "./components/waterfall/Waterfall2";
 import Footer from "./components/Footer";
 import MidWaterfall from "./components/waterfall/MidWaterfall";
-import { environmentArtLinks } from "./components/waterfall/environmentArtLinks";
+import { artCollectionLinks } from "./components/waterfall/artCollectionLinks";
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -44,7 +44,9 @@ function App() {
 
       setTimeout(() => {
         const section = document.getElementById(
-          environmentArtLinks.includes(hash) ? "3d-environment-art" : hash
+          artCollectionLinks.some(
+            (collection) => collection.section === hash || collection.items.includes(hash)
+          ) ? "3d-environment-art" : hash
         );
         if (section) {
           section.scrollIntoView({ behavior: "smooth" });

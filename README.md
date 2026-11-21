@@ -100,6 +100,31 @@ The project uses TailwindCSS for styling:
 - Global styles can be found in `src/index.css` and `src/App.css`
 - Component-specific styles are applied using Tailwind classes in the component files except for complex animations or styles foun in in `src/index.css` and `src/App.css`.
 
+## 3D Collection Direct Links
+
+Append a hash below to the website URL (for example,
+`https://your-domain.com/#3d-character-modeling`). Collection links scroll to
+the 3D collection and select its card on mobile. Image links also open the
+gallery at the specific image. Gallery arrows and dots update the URL so the
+current image can be shared; closing the gallery restores its collection hash.
+
+| Collection / Image | Hash |
+| --- | --- |
+| 3D Character Modeling | `#3d-character-modeling` |
+| Pumpkin Character - Front View | `#3d-character-modeling-pumpkin-front-view` |
+| Pumpkin Character - Side View | `#3d-character-modeling-pumpkin-side-view` |
+| Pumpkin Character - Alternative Design | `#3d-character-modeling-pumpkin-alternative-design` |
+| Pumpkin Character - Action Pose | `#3d-character-modeling-pumpkin-action-pose` |
+| Sonic Character - Core Design | `#3d-character-modeling-sonic-core-design` |
+| Sonic Character - Environment Integration | `#3d-character-modeling-sonic-environment-integration` |
+| Sonic Character - Final Render | `#3d-character-modeling-sonic-final-render` |
+| 3D Interior Space | `#3d-interior-space` |
+| Cozy Fireplace Scene | `#3d-interior-space-fireplace` |
+| Modern Living Room | `#3d-interior-space-living-room` |
+| Window View Scene | `#3d-interior-space-window` |
+
+Existing `#3d-environment-art` and its video-specific hashes remain supported.
+
 ## Dependencies
 
 This project uses the following major dependencies:
