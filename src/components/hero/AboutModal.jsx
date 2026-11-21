@@ -60,7 +60,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
 
   return createPortal(
       <div
-        className="fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-blue-950/90"
+        className="fixed inset-0 z-50 overflow-y-auto overscroll-contain backdrop-blur-xs"
         role="dialog"
         aria-modal="true"
         aria-label="About Me"
@@ -356,7 +356,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
                 }}
               />
             </div>
-            <div className="flex flex-row w-full rounded-xl overflow-hidden bg-[#0d2a5e]">
+            <div className="flex flex-row w-full rounded-xl overflow-hidden backdrop-blur-xl bg-[#0d2a5e]/10">
               <div className="w-2/5 p-3">
                 <div
                   className="w-full overflow-hidden rounded-lg shadow-lg border-teal-300 border"
@@ -455,7 +455,7 @@ const AboutModal = ({ isOpen, onClose, onOpenVideo, onOpenDemoReel }) => {
                   </div>
                 </div>
               </div>
-              <div className="max-w-[946px] w-full h-full font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border bg-blue-900/90">
+              <div className="max-w-[946px] w-full h-full font-inter ps-[60px] py-[24px] pe-[24px] text-white about-me-border backdrop-blur-xl bg-blue-500/10">
                 <h1 className="text-[25px] font-[800]">About Me</h1>
                 <p className="text-[11px] font-[400]">
                   Hey guys! I'm Dominique, but you can call me Dom for short. If it wasn't obvious already, 
@@ -772,7 +772,7 @@ My goal is to keep pushing how art and engineering elevate each other, and my mi
                 }}
               />
             </div>
-            <div className="flex flex-row w-full rounded-xl overflow-hidden bg-[#0d2a5e]">
+            <div className="flex flex-row w-full rounded-xl overflow-hidden backdrop-blur-xl bg-[#0d2a5e]/60">
               <div className="w-2/5 p-1.5">
                 <div
                   className="w-full overflow-hidden rounded-lg shadow-lg"

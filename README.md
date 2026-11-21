@@ -105,7 +105,8 @@ The project uses TailwindCSS for styling:
 The About Me modal uses `src/assets/hero/About-picture.webp`, an 800-pixel-wide
 lossless WebP web copy of the original PNG. Its intrinsic dimensions reserve
 space before loading, and the featured video loads only when played. About Me
-opens in an unblurred, scrollable overlay; background animations pause while
+retains its original blurred backdrop and translucent panel styling in a
+scrollable overlay; background animations pause while
 either About Me or the demo reel viewer is open.
 
 The About Me viewer (`#about`) includes a **Watch Demo Reel** button.
